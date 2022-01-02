@@ -195,7 +195,8 @@
         
 
         <div class="article-content markdown-body">
-            <div align="middle"><iframe width="560" height="315" src="https://www.youtube.com/embed/tHv9XMzEnjo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+            <meta name="referrer" content="no-referrer"/>
+<div align="middle"><iframe width="560" height="315" src="https://www.youtube.com/embed/tHv9XMzEnjo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
 <h3 id="什么是AAPT2-Android-Asset-Packaging-Tool"><a href="#什么是AAPT2-Android-Asset-Packaging-Tool" class="headerlink" title="什么是AAPT2(Android Asset Packaging Tool)"></a>什么是AAPT2(Android Asset Packaging Tool)</h3><p>在Android开发过程中，我们通过Gradle命令，启动一个构建任务，最终会生成构建产物“APK”文件。常规APK的构建流程如下：</p>
 <p><img  
@@ -233,6 +234,27 @@
 <blockquote>
 <p>通过把资源编译拆分为两个部分，AAPT2能够很好的提升资源编译的性能。例如，之前一个资源文件发生变动，AAPT需要做一全量编译，AAPT2只需要重新编译改变的文件，然后和其他未发生改变的文件进行链接即可。</p>
 </blockquote>
+<p>AAPT2常用命令：</p>
+<table>
+<thead>
+<tr>
+<th>二级命令</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>compile</td>
+<td>编译资源，用于链接</td>
+</tr>
+<tr>
+<td>link</td>
+<td>链接资源至一个apk</td>
+</tr>
+<tr>
+<td>…</td>
+<td>其它命令，通过<code>aapt2 -h</code>查看</td>
+</tr>
+</tbody></table>
 <h4 id="Compile命令"><a href="#Compile命令" class="headerlink" title="Compile命令"></a>Compile命令</h4><p>Complie指令用于编译资源，AAPT2提供多个选项与Compile命令搭配使用，如下：</p>
 <p><img  
                      lazyload
@@ -279,7 +301,43 @@
                      data-src="http://r4ymql1hs.hb-bkt.clouddn.com/Fk78t0MFXdipuau8L9D9IrFDY8CT"
                       alt="aapt2编译目录后产生的压缩文件.png"
                 ></p>
-<p>随便找其中的一个文件打开，是乱码的，那么这个FLAT文件是到底是什么？</p>
+<p>随便找其中的一个文件打开，是乱码的，那么这个FLAT文件是到底是什么？接下来就探讨这个话题。</p>
+<h4 id="FLAT文件"><a href="#FLAT文件" class="headerlink" title="FLAT文件"></a>FLAT文件</h4><p>FLAT文件是AAPT2编译的产物文件，也叫做AAPT2容器，文件由文件头和资源项两大部分组成。</p>
+<ol>
+<li>文件头</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Size(in bytes)</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4</td>
+<td>magic</td>
+<td>AAPT2容器文件标识，AAPT或0x54504141</td>
+</tr>
+<tr>
+<td>4</td>
+<td>version</td>
+<td>AAPT2容器版本</td>
+</tr>
+<tr>
+<td>4</td>
+<td>entry_count</td>
+<td>容器中包含的条目数(一个flat文件中可以包含多个资源项)</td>
+</tr>
+</tbody></table>
+<p>Size(in bytes)FieldDescription4magicAAPT2容器文件标识，AAPT或0x545041414versionAAPT2容器版本4entry_count容器中包含的条目数(一个flat文件中可以包含多个资源项)Size(in bytes)FieldDescription4magicAAPT2容器文件标识，AAPT或0x545041414versionAAPT2容器版本4entry_count容器中包含的条目数(一个flat文件中可以包含多个资源项)Size(in bytes)FieldDescription4magicAAPT2容器文件标识，AAPT或0x545041414versionAAPT2容器版本4entry_count容器中包含的条目数(一个flat文件中可以包含多个资源项)Size(in bytes)FieldDescription4magicAAPT2容器文件标识，AAPT或0x545041414versionAAPT2容器版本4entry_count容器中包含的条目数(一个flat文件中可以包含多个资源项)Size(in bytes)FieldDescription4magicAAPT2容器文件标识，AAPT或0x545041414versionAAPT2容器版本4entry_count容器中包含的条目数(一个flat文件中可以包含多个资源项)Size(in bytes)FieldDescription4magicAAPT2容器文件标识，AAPT或0x545041414versionAAPT2容器版本4entry_count容器中包含的条目数(一个flat文件中可以包含多个资源项)Size(in bytes)FieldDescription4magicAAPT2容器文件标识，AAPT或0x545041414versionAAPT2容器版本4entry_count容器中包含的条目数(一个flat文件中可以包含多个资源项)Size(in bytes)FieldDescription4magicAAPT2容器文件标识，AAPT或0x545041414versionAAPT2容器版本4entry_count容器中包含的条目数(一个flat文件中可以包含多个资源项)Size(in bytes)FieldDescription4magicAAPT2容器文件标识，AAPT或0x545041414versionAAPT2容器版本4entry_count容器中包含的条目数(一个flat文件中可以包含多个资源项)Size(in bytes)FieldDescription4magicAAPT2容器文件标识，AAPT或0x545041414versionAAPT2容器版本4entry_count容器中包含的条目数(一个flat文件中可以包含多个资源项)Size(in bytes)FieldDescription4magicAAPT2容器文件标识，AAPT或0x545041414versionAAPT2容器版本4entry_count容器中包含的条目数(一个flat文件中可以包含多个资源项)Size(in bytes)FieldDescription4magicAAPT2容器文件标识，AAPT或0x545041414versionAAPT2容器版本4entry_count容器中包含的条目数(一个flat文件中可以包含多个资源项)</p>
+<p>用<code>UltraEdit</code>编辑上面任意一个flat文件，内容如下：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://r4ymql1hs.hb-bkt.clouddn.com/FsFqakTFKfyvq4U4deD3pwN0AMt6"
+                      alt="UE打开flat文件.png"
+                ></p>
+<p>可以看到前4个字节是<code>0x54504141</code>(为啥不是0x41415054?因为是小端机器)，标识该文件是一个AAPT容器文件；紧接着4个字节是<code>0x00000001</code>表示该文件的版本号是1，接着4个字节</p>
 
         </div>
 
@@ -402,7 +460,7 @@
               <span>2020</span>
               -
             
-            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Shipeng He</a> 版权所有
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Shipeng He</a> 版权所有
         </div>
         
             <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -501,7 +559,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFAAPT2-Android-Asset-Packaging-Tool"><span class="nav-text">什么是AAPT2(Android Asset Packaging Tool)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AAPT2%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C"><span class="nav-text">AAPT2如何工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Compile%E5%91%BD%E4%BB%A4"><span class="nav-text">Compile命令</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFAAPT2-Android-Asset-Packaging-Tool"><span class="nav-text">什么是AAPT2(Android Asset Packaging Tool)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AAPT2%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C"><span class="nav-text">AAPT2如何工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Compile%E5%91%BD%E4%BB%A4"><span class="nav-text">Compile命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FLAT%E6%96%87%E4%BB%B6"><span class="nav-text">FLAT文件</span></a></li></ol></li></ol>
     </div>
 </div>
         </aside>

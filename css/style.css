@@ -512,7 +512,7 @@ button {
   transition-delay: 0s, 0s, 0s, 0s, 0s, 0s;
   transition-duration: 0.2s, 0.2s, 0.2s, 0.2s, 0.2s, 0.2s;
   transition-timing-function: ease, ease, ease, ease, linear, linear;
-  margin: 10px 0 2px;
+  margin: 10px auto 2px;
 }
 .markdown-body > table {
   border-spacing: 0;
