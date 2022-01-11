@@ -18,6 +18,8 @@ categories: [Android]
 
 
 
+加固原理：https://www.cnblogs.com/chenliangcl/p/9154052.html
+
 
 
 
