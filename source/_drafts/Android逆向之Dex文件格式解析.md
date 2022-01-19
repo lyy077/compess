@@ -189,3 +189,12 @@ struct DexHeader {
 
 
 
+### 参考链接
+
+[Android逆向笔记 —— DEX 文件格式解析](https://juejin.cn/post/6844903847647772686)
+
+[浅谈 Android Dex 文件](https://tech.youzan.com/qian-tan-android-dexwen-jian/)
+
+[一文读懂 DEX 文件格式解析](https://cloud.tencent.com/developer/article/1663852)
+
+[一篇文章带你搞懂DEX文件的结构](https://blog.csdn.net/sinat_18268881/article/details/55832757)
