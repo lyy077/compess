@@ -73,7 +73,7 @@ Java中的实现类为AppClassLoader，是与我们接触最多的类加载器�
 
 首先通过一张图，了解各个加载器之间的继承关系。
 
-![image](http://r4ymql1hs.hb-bkt.clouddn.com/202201131046618.png)
+![image](http://img.heshipeng.com/202201131046618.png)
 
 
 
@@ -122,7 +122,7 @@ Java中的实现类为AppClassLoader，是与我们接触最多的类加载器�
 
 4. 初始化：即调用<clinit>函数，对静态变量，静态代码块执行初始化工作。
 
-![image](http://r4ymql1hs.hb-bkt.clouddn.com/202201131057328.png)
+![image](http://img.heshipeng.com/202201131057328.png)
 
 
 
@@ -132,7 +132,7 @@ Java中的实现类为AppClassLoader，是与我们接触最多的类加载器�
 
 
 
-![android ClassLoader类源码](http://r4ymql1hs.hb-bkt.clouddn.com/202201131124371.png)
+![android ClassLoader类源码](http://img.heshipeng.com/202201131124371.png)
 
 打开AndroidXRef，Definition填写`ClassLoader`，搜索包位置`libcore`，如果不确定位置，可以选中全部，只不过搜索出来的结果不比较多，筛选起来麻烦一些。搜索出来一个ClassLoader.java文件，点击进入：
 
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
 执行结果如下：
 
-![image](http://r4ymql1hs.hb-bkt.clouddn.com/202201131142562.png)
+![image](http://img.heshipeng.com/202201131142562.png)
 
 
 
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
 
 如果一个类加载器收到了类加载请求，它并不会自己先去加载，而是把这个请求委派给父类的加载器去执行，如果父类加载器还存在其父类加载器，则进一步向上委托，依次递归，请求最终将到达顶层的启动类加载器，如果父类加载器可以完成类加载任务，就成功返回，倘若父类加载器无法完成此加载任务，子加载器才会尝试自己去加载，这就是双亲委派模式，即每个儿子都不愿意干活，每次有活就丢给父亲去干，直到父亲说这件事也干不了时，儿子自己想办法去完成，这就是双亲委派。
 
-![image](http://r4ymql1hs.hb-bkt.clouddn.com/202201131058935.png)
+![image](http://img.heshipeng.com/202201131058935.png)
 
 
 
@@ -352,7 +352,7 @@ public class DexClassLoader extends BaseDexClassLoader {
 
 运行程序，结果如下：
 
-![image](http://r4ymql1hs.hb-bkt.clouddn.com/202201131409909.png)
+![image](http://img.heshipeng.com/202201131409909.png)
 
 
 
@@ -426,7 +426,7 @@ public class MainActivity extends AppCompatActivity {
 
 运行项目，在手机设置中给应用开启sdcard读写权限，然后重新执行，结果报错：
 
-![执行结果](http://r4ymql1hs.hb-bkt.clouddn.com/202201131612910.png)
+![执行结果](http://img.heshipeng.com/202201131612910.png)
 
 想想也不可能成功，要是能跟问题一一样解决，那还叫两个问题吗🤪
 
@@ -546,7 +546,7 @@ private LoadedApk getPackageInfo(ApplicationInfo aInfo, CompatibilityInfo compat
 
 
 
-到这里一切真相大白了吧？前面**我们虽然用`DexClassLoader`通过对APK的动态加载成功加载了`TestActivity`到虚拟机，但是当系统启动该`Activity`的时候，依然会出现加载类失败的异常，因为`Activity`在启动时用到的是`PathClassLoader`**。前面在介绍`Android`的`ClassLoader`的时候提到过，`PathClassLoader`是`Android`默认使用的类加载器，一个`APK`中的`Activity`等类便是在其中加载，但是我们的`TestActivity`不存在与当前的`APK`，而是在外部的`dex`文件上，自然而然的就会出现上边找不到`Activity`的异常了。
+到这里一切真相大白了吧？前面**我们虽然用`DexClassLoader`通过对APK的动态加载成功加载了`TestActivity`到虚拟机，但是当系统启动该`Activity`的时候，依然会出现加载类失败的异常，因为`Activity`在启动时用到的是`PathClassLoader`**。前面在介绍`Android`的`ClassLoader`的时候提到过，`PathClassLoader`是`Android`默认使用的类加载器，一个`APK`中的`Activity`等类便是在其中加载，但是我们的`TestActivity`不存在于当前的`APK`，而是在外部的`dex`文件上，自然而然的就会出现上边找不到`Activity`的异常了。
 
 
 
@@ -559,7 +559,7 @@ private LoadedApk getPackageInfo(ApplicationInfo aInfo, CompatibilityInfo compat
 
 #### 方案一：替换`mClassLoader`为`DexClassLoader`
 
-![image-20220115213655318](http://r4ymql1hs.hb-bkt.clouddn.com/202201152137281.png)修改`MainActivity`的代码如下：
+![image-20220115213655318](http://img.heshipeng.com/202201152137281.png)修改`MainActivity`的代码如下：
 
   ```java
   public class MainActivity extends AppCompatActivity {
@@ -621,13 +621,13 @@ private LoadedApk getPackageInfo(ApplicationInfo aInfo, CompatibilityInfo compat
 
 运行项目，结果如预期：
 
-![image-20220115213932649](http://r4ymql1hs.hb-bkt.clouddn.com/202201152139770.png)
+![image-20220115213932649](http://img.heshipeng.com/202201152139770.png)
 
 
 
 #### 方案二：在`mClassLoader`和`BootClassLoader`之间插入`DexClassLoader`
 
-![image-20220115214708638](http://r4ymql1hs.hb-bkt.clouddn.com/202201152147745.png)
+![image-20220115214708638](http://img.heshipeng.com/202201152147745.png)
 
 修改`TestActivity`代码如下：
 
@@ -683,7 +683,7 @@ public class MainActivity extends Activity {
 
 运行项目，结果也如预期：
 
-![image-20220115231522507](http://r4ymql1hs.hb-bkt.clouddn.com/202201152315708.png)
+![image-20220115231522507](http://img.heshipeng.com/202201152315708.png)
 
 
 
