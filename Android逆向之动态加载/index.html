@@ -249,7 +249,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://r4ymql1hs.hb-bkt.clouddn.com/202201131046618.png"
+                     data-src="http://img.heshipeng.com/202201131046618.png"
                       alt="image"
                 ></p>
 <p>详细看下各个类加载器的作用：</p>
@@ -303,14 +303,14 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://r4ymql1hs.hb-bkt.clouddn.com/202201131057328.png"
+                     data-src="http://img.heshipeng.com/202201131057328.png"
                       alt="image"
                 ></p>
 <h5 id="编写代码测试Android-ClassLoader的继承关系"><a href="#编写代码测试Android-ClassLoader的继承关系" class="headerlink" title="编写代码测试Android ClassLoader的继承关系"></a>编写代码测试Android ClassLoader的继承关系</h5><p>动手之前先通过<a class="link"   target="_blank" rel="noopener" href="http://androidxref.com/" >Android源码阅读网站<i class="fas fa-external-link-alt"></i></a>，看下ClassLoader的源码：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://r4ymql1hs.hb-bkt.clouddn.com/202201131124371.png"
+                     data-src="http://img.heshipeng.com/202201131124371.png"
                       alt="android ClassLoader类源码"
                 ></p>
 <p>打开AndroidXRef，Definition填写<code>ClassLoader</code>，搜索包位置<code>libcore</code>，如果不确定位置，可以选中全部，只不过搜索出来的结果不比较多，筛选起来麻烦一些。搜索出来一个ClassLoader.java文件，点击进入：</p>
@@ -326,14 +326,14 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://r4ymql1hs.hb-bkt.clouddn.com/202201131142562.png"
+                     data-src="http://img.heshipeng.com/202201131142562.png"
                       alt="image"
                 ></p>
 <h4 id="双亲委派"><a href="#双亲委派" class="headerlink" title="双亲委派"></a>双亲委派</h4><h5 id="双亲委派的工作原理"><a href="#双亲委派的工作原理" class="headerlink" title="双亲委派的工作原理"></a>双亲委派的工作原理</h5><p>如果一个类加载器收到了类加载请求，它并不会自己先去加载，而是把这个请求委派给父类的加载器去执行，如果父类加载器还存在其父类加载器，则进一步向上委托，依次递归，请求最终将到达顶层的启动类加载器，如果父类加载器可以完成类加载任务，就成功返回，倘若父类加载器无法完成此加载任务，子加载器才会尝试自己去加载，这就是双亲委派模式，即每个儿子都不愿意干活，每次有活就丢给父亲去干，直到父亲说这件事也干不了时，儿子自己想办法去完成，这就是双亲委派。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://r4ymql1hs.hb-bkt.clouddn.com/202201131058935.png"
+                     data-src="http://img.heshipeng.com/202201131058935.png"
                       alt="image"
                 ></p>
 <h5 id="为什么会有双亲委派"><a href="#为什么会有双亲委派" class="headerlink" title="为什么会有双亲委派"></a>为什么会有双亲委派</h5><ol>
@@ -372,7 +372,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://r4ymql1hs.hb-bkt.clouddn.com/202201131409909.png"
+                     data-src="http://img.heshipeng.com/202201131409909.png"
                       alt="image"
                 ></p>
 <h3 id="解决第二个问题"><a href="#解决第二个问题" class="headerlink" title="解决第二个问题"></a>解决第二个问题</h3><p>如果不考虑双亲委派以及Activity生命周期的问题，我们是不是可以用类似于第一个问题的解决方案，采用DexClassLoader加载Activity类，然后使用Intent直接访问这个Activity呢？说干就干。</p>
@@ -405,7 +405,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://r4ymql1hs.hb-bkt.clouddn.com/202201131612910.png"
+                     data-src="http://img.heshipeng.com/202201131612910.png"
                       alt="执行结果"
                 ></p>
 <p>想想也不可能成功，要是能跟问题一一样解决，那还叫两个问题吗🤪</p>
@@ -432,7 +432,7 @@
 <h4 id="方案一：替换mClassLoader为DexClassLoader"><a href="#方案一：替换mClassLoader为DexClassLoader" class="headerlink" title="方案一：替换mClassLoader为DexClassLoader"></a>方案一：替换<code>mClassLoader</code>为<code>DexClassLoader</code></h4><p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://r4ymql1hs.hb-bkt.clouddn.com/202201152137281.png"
+                     data-src="http://img.heshipeng.com/202201152137281.png"
                       alt="image-20220115213655318"
                 >修改<code>MainActivity</code>的代码如下：</p>
   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        String sdcardPath = Environment.getExternalStorageDirectory().getAbsolutePath();</span><br><span class="line">        startActivityTest(<span class="keyword">this</span>, sdcardPath + File.separator + <span class="string">&quot;classes3.dex&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">replaceClassLoader</span><span class="params">(ClassLoader classLoader)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 加载ActivityThread类</span></span><br><span class="line">            Class&lt;?&gt; ActivityThreadClazz = classLoader.loadClass(<span class="string">&quot;android.app.ActivityThread&quot;</span>);</span><br><span class="line">            <span class="comment">// 获取currentActivityThread方法,从而获取ActivityThread实例</span></span><br><span class="line">            Method currentActivityThreadMethod = ActivityThreadClazz.getDeclaredMethod(<span class="string">&quot;currentActivityThread&quot;</span>);</span><br><span class="line">            currentActivityThreadMethod.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            Object activityThreadObj = currentActivityThreadMethod.invoke(<span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 获取ActivityThread的mPackage属性</span></span><br><span class="line">            Field mPackageField = ActivityThreadClazz.getDeclaredField(<span class="string">&quot;mPackages&quot;</span>);</span><br><span class="line">            mPackageField.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            <span class="comment">// 获取loadedApk对象</span></span><br><span class="line">            ArrayMap mPackageObj = (ArrayMap) mPackageField.get(activityThreadObj);</span><br><span class="line">            WeakReference wr = (WeakReference) mPackageObj.get(<span class="keyword">this</span>.getPackageName());</span><br><span class="line">            Object loadedApkObj = wr.get();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 替换mClassLoader</span></span><br><span class="line">            Class loadedApkClazz = classLoader.loadClass(<span class="string">&quot;android.app.LoadedApk&quot;</span>);</span><br><span class="line">            Field mClassLoader = loadedApkClazz.getDeclaredField(<span class="string">&quot;mClassLoader&quot;</span>);</span><br><span class="line">            mClassLoader.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            mClassLoader.set(loadedApkObj, classLoader);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException | NoSuchMethodException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchFieldException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startActivityTest</span><span class="params">(Context context, String dexFilePath)</span> </span>&#123;</span><br><span class="line">        Class&lt;?&gt; clazz = <span class="keyword">null</span>;</span><br><span class="line">        DexClassLoader dexClassLoader = <span class="keyword">new</span> DexClassLoader(dexFilePath, <span class="keyword">null</span>, <span class="keyword">null</span>, MainActivity.class.getClassLoader());</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            replaceClassLoader(dexClassLoader);</span><br><span class="line">            clazz = dexClassLoader.loadClass(<span class="string">&quot;com.example.dexclass.TestActivity&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        context.startActivity(<span class="keyword">new</span> Intent(context, clazz));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -441,13 +441,13 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://r4ymql1hs.hb-bkt.clouddn.com/202201152139770.png"
+                     data-src="http://img.heshipeng.com/202201152139770.png"
                       alt="image-20220115213932649"
                 ></p>
 <h4 id="方案二：在mClassLoader和BootClassLoader之间插入DexClassLoader"><a href="#方案二：在mClassLoader和BootClassLoader之间插入DexClassLoader" class="headerlink" title="方案二：在mClassLoader和BootClassLoader之间插入DexClassLoader"></a>方案二：在<code>mClassLoader</code>和<code>BootClassLoader</code>之间插入<code>DexClassLoader</code></h4><p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://r4ymql1hs.hb-bkt.clouddn.com/202201152147745.png"
+                     data-src="http://img.heshipeng.com/202201152147745.png"
                       alt="image-20220115214708638"
                 ></p>
 <p>修改<code>TestActivity</code>代码如下：</p>
@@ -461,7 +461,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://r4ymql1hs.hb-bkt.clouddn.com/202201152315708.png"
+                     data-src="http://img.heshipeng.com/202201152315708.png"
                       alt="image-20220115231522507"
                 ></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>到此，我们开篇提到的2个问题已经解决，通过解决这2个问题，我们对类加载器，<code>Android</code>常用的类加载器，双亲委派，普通类的加载以及包含生命周期的组件类的加载有了一定的认知。接下来会开始慢慢走近加壳。</p>
