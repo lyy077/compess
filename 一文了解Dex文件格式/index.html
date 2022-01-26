@@ -11,7 +11,7 @@
     
     <title>
         
-            Android逆向之Dex文件格式解析 |
+            一文了解Dex文件格式 |
         
         拾光的逆羽
     </title>
@@ -154,7 +154,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Android逆向之Dex文件格式解析</span>
+            <span class="title-hover-animation">一文了解Dex文件格式</span>
         </div>
 
         
@@ -194,11 +194,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/%E9%80%86%E5%90%91/">逆向</a>&nbsp;
+                        <a href="/tags/android/">android</a>&nbsp;
                     </li>
                 
                     <li>
-                        | <a href="/tags/android/">android</a>&nbsp;
+                        | <a href="/tags/%E9%80%86%E5%90%91/">逆向</a>&nbsp;
                     </li>
                 
             </ul>
@@ -227,7 +227,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202201191407214.png"
+                     data-src="https://img.heshipeng.com/202201191407214.png"
                       alt="img"
                 ></p>
 <p>可以形象理解为Java源代码编译成<code>.class</code>文件，然后通过<code>dx</code>工具生成<code>dex</code>文件。</p>
@@ -247,7 +247,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202201201103425.png"
+                     data-src="https://img.heshipeng.com/202201201103425.png"
                       alt="image-20220120110317295"
                 ></p>
 <p>然后用xxd命令打开上边生成的<code>dex</code>文件。</p>
@@ -391,7 +391,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202201201134897.png"
+                     data-src="https://img.heshipeng.com/202201201134897.png"
                       alt="image-20220120113433764"
                 ></p>
 <p>保存之后，执行如下Python代码：</p>
@@ -402,7 +402,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202201201435024.png"
+                     data-src="https://img.heshipeng.com/202201201435024.png"
                       alt="image-20220120143546894"
                 ></p>
 <p>保存之后，执行如下Python代码：</p>
@@ -413,7 +413,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202201201502294.png"
+                     data-src="https://img.heshipeng.com/202201201502294.png"
                       alt="image-20220120150229254"
                 ></p>
 <h5 id="4-验证headerSize"><a href="#4-验证headerSize" class="headerlink" title="4. 验证headerSize"></a>4. 验证headerSize</h5><p>headerSize占<code>0000 0070</code>也即112个字节。我们通过DexHeader这个结构体可以算出来：</p>
@@ -431,7 +431,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202201201647843.png"
+                     data-src="https://img.heshipeng.com/202201201647843.png"
                       alt="image-20220120164703702"
                 ></p>
 <p>dex中的字符串采用了一种叫做MUTF-8这样的编码，它是经过传统的UTF-8编码修改的。在MTUF-8中，它的头部存放的是由uleb128编码的字符的个数。所以第一个字节<code>06</code>表示的含义是字符串的字节数是6个，然后我们往后推6个字节，即<code>3C 69 6E 69 74 3E</code>，对照ASCII码表含义如下：</p>
@@ -629,7 +629,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202201211414388.png"
+                     data-src="https://img.heshipeng.com/202201211414388.png"
                       alt="img"
                 ></p>
 <p>可以看到，这个数据结构由三个变量组成。第一个shortyIdx它指向的是我们上面分析的DexStringId列表的索引，代表的是方法声明字符串。第二个returnTypeIdx它指向的是 我们上边分析的DexTypeId列表的索引，代表的是方法返回类型字符串。第三个parametersOff指向的是DexTypeList的位置索引，这又是一个新的数据结构了，先说一下这里面 存储的是方法的参数列表。可以看到这三个参数，有方法声明字符串，有返回类型，有方法的参数列表，这基本上就确定了我们一个方法的大体内容。</p>
@@ -649,7 +649,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202201211501796.png"
+                     data-src="https://img.heshipeng.com/202201211501796.png"
                       alt="image-20220121150146530"
                 ></p>
 <p>这里<code>DexTypeList</code>数据结构，我们先看前4个字节，代表<code>DexTypeItem</code>的个数，<code>0000 0001</code>也就是1，说明只有一个<code>DexTypeItem</code>，每一个占2个字节，就是<code>00 03</code>，查看type_ids表格，找到索引为3的，即<code>Ljava/lang/String;</code>，说明有一个<code>String</code>类型的参数。第三个方法原型类似，就不展开了。整理三个方法原型如下表格：</p>
@@ -692,7 +692,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202201211552340.png"
+                     data-src="https://img.heshipeng.com/202201211552340.png"
                       alt="img"
                 ></p>
 <p>这里我们<code>Hello.dex</code>的<code>fieldIdsSize</code>为<code>0000 0001</code>，说明只存在一个DexField，<code>fieldIdOff</code>为<code>0000 00e8</code>，找到地址为<code>e8h</code>然后取出后边8个字节，即<code>04 00 01 00 0c 00 00 00</code>，其中前2个字节<code>0004</code>，表示class_idx，表示成员所在的类在类型区域的索引，查表得<code>Ljava/lang/System;</code>。中间2个字节<code>0001</code>，表示type_idx，表示该成员自身的类型在类型区域的索引，查表得<code>Ljava/io/PrintStream;</code>。最后4个字节<code>0000 000c</code>，表示name_idx，表示该成员的名字在字符串区域的索引，查表得<code>out</code>。所以<code>Hello.dex</code>中仅包含一个成员为<code>java.io.PrintStream java.lang.System.out</code>。</p>
@@ -703,7 +703,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202201211612575.png"
+                     data-src="https://img.heshipeng.com/202201211612575.png"
                       alt="img"
                 ></p>
 <p><code>methodIdsSize</code>和<code>methodIdsOff</code>分表为<code>0000 0004</code>和<code>0000 00f0</code>，即该dex文件一共包含4个方法，方法id区的偏移地址为<code>f0h</code>，我们找到这个地址，然后取出后边4*(2+2+4)个字节，如下：</p>
@@ -756,7 +756,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202201211647542.png"
+                     data-src="https://img.heshipeng.com/202201211647542.png"
                       alt="img"
                 ></p>
 <p>在开始分析这个类的结构之前，先看<code>DexFile.h</code>中定义的一组枚举值：</p>
@@ -797,21 +797,22 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202201211830586.png"
+                     data-src="https://img.heshipeng.com/202201211830586.png"
                       alt="img"
                 ></p>
 <p>dex文件结构思维导图：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202201211832915.awebp"
+                     data-src="https://img.heshipeng.com/202201211832915.awebp"
                       alt="img"
                 ></p>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a class="link"   target="_blank" rel="noopener" href="https://juejin.cn/post/6844903847647772686" >Android逆向笔记 —— DEX 文件格式解析<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a class="link"   target="_blank" rel="noopener" href="https://juejin.cn/post/6844903847647772686" >Android逆向笔记 —— DEX 文件格式解析<i class="fas fa-external-link-alt"></i></a></p>
 <p><a class="link"   target="_blank" rel="noopener" href="https://tech.youzan.com/qian-tan-android-dexwen-jian/" >浅谈 Android Dex 文件<i class="fas fa-external-link-alt"></i></a></p>
 <p><a class="link"   target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1663852" >一文读懂 DEX 文件格式解析<i class="fas fa-external-link-alt"></i></a></p>
 <p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_18268881/article/details/55832757" >一篇文章带你搞懂DEX文件的结构<i class="fas fa-external-link-alt"></i></a></p>
 <p><a class="link"   target="_blank" rel="noopener" href="http://androidxref.com/9.0.0_r3/xref/dalvik/libdex/DexFile.h" >DexFile.h<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://book.douban.com/subject/20556210/" >Android软件安全与逆向分析-非虫<i class="fas fa-external-link-alt"></i></a></p>
 
         </div>
 
@@ -819,11 +820,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>本文标题：Android逆向之Dex文件格式解析</li>
+        <li>本文标题：一文了解Dex文件格式</li>
         <li>本文作者：Shipeng He</li>
         <li>创建时间：2022-01-17 17:27:25</li>
         <li>
-            本文链接：https://blog.heshipeng.com/Android逆向之Dex文件格式解析/
+            本文链接：https://blog.heshipeng.com/一文了解Dex文件格式/
         </li>
         <li>
             版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -838,11 +839,11 @@
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
-                        <a href="/tags/%E9%80%86%E5%90%91/">#逆向</a>&nbsp;
+                        <a href="/tags/android/">#android</a>&nbsp;
                     </li>
                 
                     <li class="tag-item">
-                        <a href="/tags/android/">#android</a>&nbsp;
+                        <a href="/tags/%E9%80%86%E5%90%91/">#逆向</a>&nbsp;
                     </li>
                 
             </ul>
@@ -858,7 +859,7 @@
                            href="/Android%E9%80%86%E5%90%91%E4%B9%8B%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">Android逆向之加壳与脱壳</span>
+                                <span class="post-nav-title-item">Android逆向之动态加载</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -1033,7 +1034,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dex%E6%96%87%E4%BB%B6%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-text">Dex文件是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0Dex%E6%96%87%E4%BB%B6"><span class="nav-text">构造Dex文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E-java%E5%88%B0-class"><span class="nav-text">从.java到.class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E-class%E5%88%B0-dex"><span class="nav-text">从.class到.dex</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dex%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3"><span class="nav-text">Dex格式详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#header"><span class="nav-text">header</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E9%AA%8C%E8%AF%81checksum"><span class="nav-text">1. 验证checksum</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E9%AA%8C%E8%AF%81signature"><span class="nav-text">2. 验证signature</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E9%AA%8C%E8%AF%81fileSize"><span class="nav-text">3. 验证fileSize</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E9%AA%8C%E8%AF%81headerSize"><span class="nav-text">4. 验证headerSize</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string-ids"><span class="nav-text">string_ids</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#type-ids"><span class="nav-text">type_ids</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#proto-ids"><span class="nav-text">proto_ids</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#field-ids"><span class="nav-text">field_ids</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#method-ids"><span class="nav-text">method_ids</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#class-def"><span class="nav-text">class_def</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dex%E6%96%87%E4%BB%B6%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-text">Dex文件是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0Dex%E6%96%87%E4%BB%B6"><span class="nav-text">构造Dex文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E-java%E5%88%B0-class"><span class="nav-text">从.java到.class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E-class%E5%88%B0-dex"><span class="nav-text">从.class到.dex</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dex%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3"><span class="nav-text">Dex格式详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#header"><span class="nav-text">header</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E9%AA%8C%E8%AF%81checksum"><span class="nav-text">1. 验证checksum</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E9%AA%8C%E8%AF%81signature"><span class="nav-text">2. 验证signature</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E9%AA%8C%E8%AF%81fileSize"><span class="nav-text">3. 验证fileSize</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E9%AA%8C%E8%AF%81headerSize"><span class="nav-text">4. 验证headerSize</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string-ids"><span class="nav-text">string_ids</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#type-ids"><span class="nav-text">type_ids</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#proto-ids"><span class="nav-text">proto_ids</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#field-ids"><span class="nav-text">field_ids</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#method-ids"><span class="nav-text">method_ids</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#class-def"><span class="nav-text">class_def</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol>
     </div>
 </div>
         </aside>

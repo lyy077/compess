@@ -194,11 +194,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/android/">android</a>&nbsp;
+                        <a href="/tags/aapt2/">aapt2</a>&nbsp;
                     </li>
                 
                     <li>
-                        | <a href="/tags/aapt2/">aapt2</a>&nbsp;
+                        | <a href="/tags/android/">android</a>&nbsp;
                     </li>
                 
             </ul>
@@ -224,7 +224,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/FmSi0GYeL8d3wSapWsPae4kr28Om"
+                     data-src="https://img.heshipeng.com/FmSi0GYeL8d3wSapWsPae4kr28Om"
                       alt="android构建.png"
                 ></p>
 <p>（引用自Google官方文档）</p>
@@ -239,7 +239,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/Fi1D2FYTzHg-7TmjhGnER91BjQ5H"
+                     data-src="https://img.heshipeng.com/Fi1D2FYTzHg-7TmjhGnER91BjQ5H"
                       alt="aapt2路径.png"
                 ></p>
 <p>所以AAPT的作用，总结起来就是<strong>在APK打包的过程中对静态资源文件进行编译，打包</strong>。</p>
@@ -281,7 +281,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/FnCbyMrXOigcxISFpeojInoEP4Fh"
+                     data-src="https://img.heshipeng.com/FnCbyMrXOigcxISFpeojInoEP4Fh"
                       alt="aapt2命令选项.png"
                 ></p>
 <p>Compile的一般用法如下：</p>
@@ -293,7 +293,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/FqQVM_68gVDZVPVS-x3kVehUf5Po"
+                     data-src="https://img.heshipeng.com/FqQVM_68gVDZVPVS-x3kVehUf5Po"
                       alt="aapt2编译报错.png"
                 ></p>
 <p>新建一个目录drawable-hdpi，把用来测试的图片放在这个目录下，然后执行命令：</p>
@@ -304,7 +304,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/FtTzF2KXRLIASXXu-IKcovhR9wGH"
+                     data-src="https://img.heshipeng.com/FtTzF2KXRLIASXXu-IKcovhR9wGH"
                       alt="android studio打包产生的flat文件.png"
                 ></p>
 <p>当然Compile也支持编译多个文件。</p>
@@ -320,7 +320,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/Fiu1UOXFwhx9Vj8_8jHACQLIXW7N"
+                     data-src="https://img.heshipeng.com/Fiu1UOXFwhx9Vj8_8jHACQLIXW7N"
                       alt="aapt2 compile编译目录.png"
                 ></p>
 <p>随便找其中的一个文件打开，是乱码的，那么这个FLAT文件是到底是什么？我们先接着看aapt2的链接阶段，晚点再探讨这个话题。</p>
@@ -360,7 +360,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/FsFqakTFKfyvq4U4deD3pwN0AMt6"
+                     data-src="https://img.heshipeng.com/FsFqakTFKfyvq4U4deD3pwN0AMt6"
                       alt="UE打开flat文件.png"
                 ></p>
 <p>可以看到前4个字节是<code>0x54504141</code>(为啥不是0x41415054?因为是小端机器)，标识该文件是一个AAPT容器文件；紧接着4个字节是<code>0x00000001</code>表示该文件的版本号是1，接着4个字节是<code>0x000000001</code>表示该文件只有一个资源项。</p>
@@ -411,7 +411,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/Ft1NO7v_GkvR_Rn5N_cfJYQL4doZ"
+                     data-src="https://img.heshipeng.com/Ft1NO7v_GkvR_Rn5N_cfJYQL4doZ"
                       alt="资源文件大小.png"
                 ></p>
 <p>接下来就是资源数据了，接下来看下RES_FILE文件的格式：</p>
@@ -458,7 +458,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/FrdQkv6mPBGr6Akv0YhonaOTyH07"
+                     data-src="https://img.heshipeng.com/FrdQkv6mPBGr6Akv0YhonaOTyH07"
                       alt="RES_FILE类型的flat文件格式.png"
                 ></p>
 <p>接着看刚才打开的.flat文件，<code>0000003F</code>4个字节，也即63表示该RES_FILE的header长度是63个字节，然后接着8个字节<code>0x000000000001BF7B</code>表示数据文件的长度，也即114555个字节。</p>
@@ -472,7 +472,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/FqcguIF45SpTniymtYf6H89zRQQ5"
+                     data-src="https://img.heshipeng.com/FqcguIF45SpTniymtYf6H89zRQQ5"
                       alt="RES_FILE格式图示.png"
                 ></p>
 <p>另一种格式<code>RES_TABLE</code>格式比较简单，其实就是ResourceTable的<code>protobuf</code>序列化结果。数据结构如下：</p>
@@ -525,11 +525,11 @@
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
-                        <a href="/tags/android/">#android</a>&nbsp;
+                        <a href="/tags/aapt2/">#aapt2</a>&nbsp;
                     </li>
                 
                     <li class="tag-item">
-                        <a href="/tags/aapt2/">#aapt2</a>&nbsp;
+                        <a href="/tags/android/">#android</a>&nbsp;
                     </li>
                 
             </ul>
