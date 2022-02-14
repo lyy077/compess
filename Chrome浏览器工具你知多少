@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Shipeng He">
+    <meta name="baidu-site-verification" content="code-ALXTDYlBtB" />
+    <meta name="google-site-verification" content="code-ALXTDYlBtB" />
+    
+    <title>
+        
+            JS逆向之Chrome浏览器工具你知多少？ |
+        
+        拾光的逆羽
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.jpeg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                拾光的逆羽
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">JS逆向之Chrome浏览器工具你知多少？</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpeg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Shipeng He</span>
+                        
+                            <span class="author-label">菜鸟</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-02-11 14:46:51</span>
+        <span class="mobile">2022-02-11 14:46</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/JS%E9%80%86%E5%90%91/">JS逆向</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E9%80%86%E5%90%91/">逆向</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JS/">JS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <div align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/AIhtECdAGFA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+
+
+
+<h4 id="Network面板"><a href="#Network面板" class="headerlink" title="Network面板"></a>Network面板</h4><h5 id="Network面板介绍"><a href="#Network面板介绍" class="headerlink" title="Network面板介绍"></a>Network面板介绍</h5><p>网络面板分为5个部分：控制器面板，过滤器面板，概览部分，请求列表以及概要部分。</p>
+<p><strong>Controls（控制器）</strong>：使用这些选项可以控制Network面板的外观和功能。</p>
+<p><strong>Filter（过滤器）</strong>：使用这些选项可以控制在Requests Table中显示哪些资源。按住Command/Ctrl键可以点选多个过滤器。</p>
+<p><strong>Overview（概览）</strong>：此图表显示了资源检索时间的时间线。如果看到多条竖线堆叠在一起，说明这些资源同时被检索。</p>
+<p><strong>Requests Table（请求列表）</strong>：此表格列出了检索的每一个资源。默认情况下，此表格按照时间顺序排序，最早的资源在顶部。点击资源的名称可以显示更多信息，右键点击Timeline以外的任何一个表格标题可以添加或者移除信息列。</p>
+<p><strong>Summary（概要）</strong>：此窗格可以一目了然地知道请求总数，传输的数据量和加载时间。</p>
+<ol>
+<li>控制器面板</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202111457134.png"
+                      alt="image-20220211145738994"
+                ></p>
+<ul>
+<li>第一个按钮控制浏览器是否抓包，如果为红色表示正在抓包，点击之后变灰色表示停止抓包。</li>
+<li>第二个按钮表示清除按钮，点击之后会清除请求列表。</li>
+<li>第三个按钮表示过滤器的打开与关闭按钮，点击这个按钮控制下方过滤器打开还是关闭。</li>
+<li>第四个按钮表示打开一个检索，用得不多。</li>
+<li>第五个按钮表示是否要跨页面保存请求列表。☑️上表示保留跨页面请求信息，什么意思呢？就是我打开一个A页面，得到了一个请求列表，我再次访问B页面，C页面…无论是什么页面，只要是同一个窗口，所有的请求列表都会保存。</li>
+<li>第六个按钮表示是否禁用浏览器缓存。一般来说☑️上，然后每一个请求都会去请求新的资源。</li>
+<li>第七个按钮表示慢速网络模拟。可以使用slow 3G或offline，可以看到浏览器页面在不同网络环境下的样子。</li>
+</ul>
+<ol start="2">
+<li>过滤器</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202111525047.png"
+                      alt="image-20220211152552978"
+                ></p>
+<p>通过点选不同类型比如Ajax，JS，CSS等来过滤不同的请求，同时支持点选多个类型的按钮来在请求列表展示多个类型的请求。</p>
+<p>前面Filter过滤框还提供了定制化筛选的功能，可以通过输入一些路由的关键词去搜索，也可以通过类似于正则的方式去搜索。比如：</p>
+<p>domain:*.nightteam.cn：表示domain为*.nightteam.cn的请求。</p>
+<p>status-code:301：表示状态码为301的请求。</p>
+<p>set-cookie-domain:bbs.nightteam.cn：表示进行set-cookie的操作的domain。</p>
+<ol start="3">
+<li>请求列表</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202111538766.png"
+                      alt="image-20220211153842703"
+                ></p>
+<p>标题栏里面比较关键的是Initiator这一栏，表示请求是由哪里发起的。Other表示发起者通过动作发起，而不是某一个具体的JS发起。bbs.nightteam.cn是我们通过浏览器地址栏输入地址后回车发起的，所以这里显示other，而其它的请求都是可以找到具体调用的JS文件。通过定位到某一个请求的发起文件，我们可以在该文件中增加断点进行调试，所以这一栏比较重要。</p>
+<p>点击某一个具体的请求，可以看到它的请求头信息，响应头信息，预览页面，耗时，Cookie信息等。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202111549405.png"
+                      alt="image-20220211154903286"
+                ></p>
+<p>选中某一个请求，然后右键选择Copy-&gt;Copy as cURL得到该请求的cURL命令。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202111551191.png"
+                      alt="image-20220211155142085"
+                ></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">&#x27;https://bbs.nightteam.cn/&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;authority: bbs.nightteam.cn&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;cache-control: max-age=0&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;sec-ch-ua: &quot; Not A;Brand&quot;;v=&quot;99&quot;, &quot;Chromium&quot;;v=&quot;98&quot;, &quot;Google Chrome&quot;;v=&quot;98&quot;&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;sec-ch-ua-mobile: ?0&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;sec-ch-ua-platform: &quot;macOS&quot;&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;upgrade-insecure-requests: 1&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;sec-fetch-site: none&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;sec-fetch-mode: navigate&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;sec-fetch-user: ?1&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;sec-fetch-dest: document&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;accept-language: zh-CN,zh;q=0.9,en;q=0.8&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;cookie: __yjs_duid=1_4110af544673b8e7f7ad03205cd2f8dc1644394949170; WoQu_2132_saltkey=YrDr0Zud; WoQu_2132_lastvisit=1644391349; popnotice=ss10; __8qcehdE7ZaRq2q6M__=5df749990f6140450200d728b907dcbe500b; WoQu_2132_sid=uh3oVX; WoQu_2132_st_p=0%7C1644476217%7C06bfc6a3958129a26420eb3777962f3c; WoQu_2132_visitedfid=39D38D37; WoQu_2132_viewid=tid_2275; WoQu_2132_lastact=1644476217%09home.php%09misc&#x27;</span> \</span><br><span class="line">  --compressed</span><br></pre></td></tr></table></figure>
+
+<p>可以直接在类Unix系统的控制台中去执行这个cURL命令，也可以把这个命令导入到PostMan中去执行。具体步骤是：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202111556685.png"
+                      alt="image-20220211155646608"
+                ></p>
+<p>点击Shift键，然后鼠标悬停在某一个请求上，如果展示绿色背景，表示绿色背景的请求依赖你当前悬停的请求。如果展示红色背景，表示当前悬停的请求依赖红色背景的请求。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202111608727.png"
+                      alt="image-20220211160819614"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202111608906.png"
+                      alt="image-20220211160845852"
+                ></p>
+<h4 id="Source面板"><a href="#Source面板" class="headerlink" title="Source面板"></a>Source面板</h4><p>source面板分为三个部分：文件导航窗口，代码编辑器窗格， 调试窗格。</p>
+<p>文件导航窗口：可以对文件目录进行浏览；</p>
+<p>编辑器窗格：代码编辑，设置断点；</p>
+<p>调试窗格：包含调试所用的常用选项。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202111658856.png"
+                      alt="image-20220211165847739"
+                ></p>
+<h5 id="文件导航窗格"><a href="#文件导航窗格" class="headerlink" title="文件导航窗格"></a>文件导航窗格</h5><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141036679.png"
+                      alt="image-20220214103607974"
+                ></p>
+<ul>
+<li>page面板</li>
+</ul>
+<p>以文件目录形式展示当前页面。包含当前网站的页面，静态资源等。</p>
+<ul>
+<li>FileSystem面板</li>
+</ul>
+<p>可以让开发者工具加载本地的文件系统，并且能在编辑框口修改编辑，由此化身IDE。这里做一个示范：</p>
+<p>第一步：点击<code>Add folder to workspace</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141045585.png"
+                      alt="image-20220214104511894"
+                ></p>
+<p>第二步：选择要上传的文件夹</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141046182.png"
+                      alt="image-20220214104624359"
+                ></p>
+<p>第三步：点击允许，让开发者工具具备读写该文件夹的权限</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141047198.png"
+                      alt="image-20220214104720311"
+                ></p>
+<p>然后就可以看到我们上传的文件夹以及相关的JS文件了：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141053302.png"
+                      alt="image-20220214105309274"
+                ></p>
+<p>我们可对其进行编辑修改，打上断点调试等。</p>
+<ul>
+<li>Overrides面板</li>
+</ul>
+<p>Overrides面板可以很容易的将远程资源下载一份在本地，然后可以在开发者工具下进行编辑，并且开发者工具会展示我们编辑后的文件。换句话说，就是直接将一些请求代理到本地的文件中。这里同样做一个演示：</p>
+<p>前三步跟FileSystem类似：点击<code>Select folder for overrides</code>，然后选择本地文件夹，之后点击允许赋予开发者工具读写该文件夹的权限。接着要点击选中<code>Enable Local Overrides</code>：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141126711.png"
+                      alt="image-20220214112558071"
+                ></p>
+<p>然后回到Network面板，点击浏览器刷新按钮刷新当前页面，选中一个我们需要代理到本地的请求，右键选择<code>Save for overrides</code>：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141132844.png"
+                      alt="image-20220214113204817"
+                ></p>
+<p>这时，我们刚才添加的文件夹里面就有了保存的代理请求：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141133043.png"
+                      alt="image-20220214113325024"
+                ></p>
+<p>然后我们修改本地的这个文件，比如将这个页面的<code>招聘求职</code>改为<code>MLGJ求职</code>：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141138509.png"
+                      alt="image-20220214113851477"
+                ></p>
+<p>然后，保存刷新这个页面，就成功的将该请求代理到本地文件：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141140600.png"
+                      alt="image-20220214113954313"
+                ></p>
+<ul>
+<li>Content scripts</li>
+</ul>
+<p>chrome插件加载的一些脚本，如果有过chrome浏览器插件开发的经验的话，对这个概念应该会很熟悉。在JS逆向中这个用的不多，后面会有专门的文章介绍chrome浏览器插件开发。</p>
+<ul>
+<li>Snippets</li>
+</ul>
+<p>我们都知道，有时候需要调试一行JS代码，会在浏览器的Console控制台上去调试，如果需要在浏览器中调试一个代码片段呢？在Console中一行行的输入执行就显得很麻烦了。这个Snippets就可以帮我们解决这个问题，可以通过点击<code>New snippet</code>按钮，添加一些代码片段，然后选中某一个代码片段文件，右键<code>Run</code>去执行该代码片段：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141158016.png"
+                      alt="image-20220214115844902"
+                ></p>
+<h5 id="代码编辑器窗格"><a href="#代码编辑器窗格" class="headerlink" title="代码编辑器窗格"></a>代码编辑器窗格</h5><p>可以在编辑器中打开文件，断点调试或者格式化等。下面演示一下各个功能。</p>
+<ol>
+<li>代码格式化</li>
+</ol>
+<p>打开Page面板下网站的一个JS文件，如果JS是展示在一行，可以点击下面的一对<code>&#123;&#125;</code>进行格式化：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141406960.png"
+                      alt="image-20220214140646923"
+                ></p>
+<ol start="2">
+<li>添加简单断点</li>
+</ol>
+<p>在我们上边格式化之后的JS文件，选中某一行，单击该行的行号，即可添加断点：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141408998.png"
+                      alt="image-20220214140844097"
+                ></p>
+<ol start="3">
+<li>添加条件断点</li>
+</ol>
+<p>在前面介绍的Snippets代码片段中添加一个片段文件，内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;Script snippet #1 start&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span> (<span class="number">5</span> &gt; i) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i)</span><br><span class="line">    <span class="keyword">debugger</span>;</span><br><span class="line">    i++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;Script snippet #1 end&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这段代码比较简单，当i小于5的时候进入循环，停在断点处。下面开始条件断点的设置：</p>
+<p>先单击要添加条件断点的那一行的行号，右键，选择<code>Add conditional breakpoint</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141509714.png"
+                      alt="image-20220214150928211"
+                ></p>
+<p>然后在这个条件输入框中，输入一个条件，比如这里我们是<code>i = 10</code>:</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141453523.png"
+                      alt="image-20220214145305065"
+                ></p>
+<p>设置好条件断点之后，断点会变成黄色，区别于普通断点：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141454079.png"
+                      alt="image-20220214145448231"
+                ></p>
+<p>为了便于观察i的值，可以在最右边的调试窗格变量监控一栏添加观察i的值。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141456576.png"
+                      alt="image-20220214145615800"
+                ></p>
+<p>最后右键运行该文件，如果条件断点正确的打上的话，变量监控值会看到i的值为10：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141511114.png"
+                      alt="image-20220214151148079"
+                ></p>
+<h5 id="调试窗格"><a href="#调试窗格" class="headerlink" title="调试窗格"></a>调试窗格</h5><ol>
+<li>XHR/fetch Breakpoints</li>
+</ol>
+<p>XHR断点触发需要满足2个条件：一个是基于XHR的生命周期发生改变，一个是XHR的URL与我们设置的字符串相匹配。常用的是第二种。我们现在以百度作为一个演示。</p>
+<p>打开百度网站首页，点击登录，然后打开Network面板，选择Fetch/XHR，我们进行一个抓包，只抓XHR请求的包，结果如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141542127.png"
+                      alt="image-20220214154210085"
+                ></p>
+<p>我们选择其中任意一个，比如下面一个请求，回到调试窗格，然后点击新增一个XHR断点，填入该请求的URL或者一部分：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141544801.png"
+                      alt="image-20220214154422755"
+                ></p>
+<p>然后我们退出登录后重新点击登录百度，可以看到设置的断点生效了：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141546839.png"
+                      alt="image-20220214154605187"
+                ></p>
+<ol start="2">
+<li>DOM Breakpoint</li>
+</ol>
+<p>还是以百度为例，切换到元素面板，然后随便选择一个DOM元素，右键Break on：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141552746.png"
+                      alt="image-20220214155229706"
+                ></p>
+<p>有三种类型的断点，子元素改变/属性改变/节点删除。选择其中一个，即添加成功：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141554612.png"
+                      alt="image-20220214155406742"
+                ></p>
+<p>由于DOM Breakpoint在逆向中不是很常用，所以做一个了解即可。</p>
+<ol start="3">
+<li>Event Listener Breakpoint</li>
+</ol>
+<p>基于事件监听的断点。同样还是以百度为例，点击登录到登录页面，可以看到页面上是一个登录按钮的，这个登录按钮就是触发的submit事件。我们在调试窗格上找到Event Listener Breakpoints，然后打开Control，选中Submit：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141600745.png"
+                      alt="image-20220214160042544"
+                ></p>
+<p>然后我们点击登录页面的登录按钮，如无意外，断点成功打上：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141602842.png"
+                      alt="image-20220214160209183"
+                ></p>
+<ol start="4">
+<li>断点控制按钮</li>
+</ol>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141603925.png"
+                      alt="image-20220214160335416"
+                ></p>
+<p>第一个按钮：执行到下一个断点，如果没有下一个断点，则按照正常执行顺序执行到下一行代码。</p>
+<p>第二个按钮：执行到下一行代码。</p>
+<p>第三个按钮：点击进入下一个待执行的函数调用中去。</p>
+<p>第四个按钮：跳出当前的函数调用。</p>
+<p>第六个按钮：去除所有断点，恢复正常执行的方法。</p>
+<ol start="5">
+<li>Call Stack</li>
+</ol>
+<p>断点的调用栈列表。</p>
+<ol start="6">
+<li>Scope</li>
+</ol>
+<p>断点所在作用域内容。</p>
+<h4 id="Console面板"><a href="#Console面板" class="headerlink" title="Console面板"></a>Console面板</h4><p>在逆向中，console这个交互环境，经常用来输出一些变量的值。有一个方法<code>console.count</code>提一下，经常用来统计某一个方法的调用次数。用法比较简单，如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141626994.png"
+                      alt="image-20220214162607942"
+                ></p>
+<p>console面板还有一些骚操作，如下：</p>
+<ul>
+<li>console.table</li>
+</ul>
+<p>我们可以在console中使用console.table，以表格形式展示数据。这里做一个示例：</p>
+<p>打开console控制台，定义一个变量，内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [&#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;zhangsan&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">21</span>&#125;, &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;lisi&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">22</span>&#125;]</span><br></pre></td></tr></table></figure>
+
+<p>然后我们调用<code>console.table</code>输出这个变量：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141630189.png"
+                      alt="image-20220214163035142"
+                ></p>
+<ul>
+<li>copy</li>
+</ul>
+<p>可以在console中调用copy方法，将某一个变量的值复制到剪切板，比如上边的data，我们调用copy(data)就可以将data的内容复制到剪切板了。</p>
+<ul>
+<li>$</li>
+</ul>
+<p>$_ 表达的是上一次表达式计算的值。</p>
+<p>$可以当作document.querySelect使用。</p>
+<p>$$可以当作document.querySelectAll来使用。</p>
+<p>$x可以当作xpath选择器来使用。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141639033.png"
+                      alt="image-20220214163953998"
+                ></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文介绍了浏览器开发者工具的使用技巧，主要介绍了三个面板：Console面板，Network面板和Source面板，是JS逆向必须掌握的知识。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202141656805.png"
+                      alt="开发者工具的使用介绍和技巧"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：JS逆向之Chrome浏览器工具你知多少？</li>
+        <li>本文作者：Shipeng He</li>
+        <li>创建时间：2022-02-11 14:46:51</li>
+        <li>
+            本文链接：https://blog.heshipeng.com/Chrome浏览器工具你知多少?/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E9%80%86%E5%90%91/">#逆向</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/JS/">#JS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/JS%E9%80%86%E5%90%91%E4%B9%8B%E8%B0%83%E7%94%A8JS%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">JS逆向之调用JS的两种方式</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script 
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script >
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '5167adeb62c9c9a59956',
+                    clientSecret: '8f4116c8b36633d863779e56e746184d2f795ae4',
+                    repo: 'beyond-heshipeng.github.io',
+                    owner: 'beyond-heshipeng',
+                    admin: ['beyond-heshipeng'],
+                    id: __gitalk__pathname,
+                    language: 'zh-CN'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('false') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Shipeng He</a> 版权所有
+        </div>
+        
+        <div class="theme-info info-item">
+        </div>
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">鄂ICP备2022001140号</a></div>
+        
+        
+    </div>
+</footer>
+
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Network%E9%9D%A2%E6%9D%BF"><span class="nav-text">Network面板</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Network%E9%9D%A2%E6%9D%BF%E4%BB%8B%E7%BB%8D"><span class="nav-text">Network面板介绍</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Source%E9%9D%A2%E6%9D%BF"><span class="nav-text">Source面板</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%AF%BC%E8%88%AA%E7%AA%97%E6%A0%BC"><span class="nav-text">文件导航窗格</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%BC%96%E8%BE%91%E5%99%A8%E7%AA%97%E6%A0%BC"><span class="nav-text">代码编辑器窗格</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E7%AA%97%E6%A0%BC"><span class="nav-text">调试窗格</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Console%E9%9D%A2%E6%9D%BF"><span class="nav-text">Console面板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="post-scripts">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+
+</body>
+</html>
