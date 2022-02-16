@@ -18,7 +18,7 @@ date: 2022-01-01 10:54:45
 
 在Android开发过程中，我们通过Gradle命令，启动一个构建任务，最终会生成构建产物“APK”文件。常规APK的构建流程如下：
 
-![android构建.png](http://img.heshipeng.com/FmSi0GYeL8d3wSapWsPae4kr28Om)
+![android构建.png](https://img.heshipeng.com/FmSi0GYeL8d3wSapWsPae4kr28Om)
 
 （引用自Google官方文档）
 
@@ -31,7 +31,7 @@ date: 2022-01-01 10:54:45
 
 AAPT2的可执行文件随Android SDK的Build Tools一起发布，在Android Studio的build-tools文件夹中就包含AAPT2工具，目录为（SDK目录/build-tools/version/aapt2）。
 
-![aapt2路径.png](http://img.heshipeng.com/Fi1D2FYTzHg-7TmjhGnER91BjQ5H)
+![aapt2路径.png](https://img.heshipeng.com/Fi1D2FYTzHg-7TmjhGnER91BjQ5H)
 
 所以AAPT的作用，总结起来就是**在APK打包的过程中对静态资源文件进行编译，打包**。
 
@@ -62,7 +62,7 @@ AAPT2常用命令：
 
 Complie指令用于编译资源，AAPT2提供多个选项与Compile命令搭配使用，如下：
 
-![aapt2命令选项.png](http://img.heshipeng.com/FnCbyMrXOigcxISFpeojInoEP4Fh)
+![aapt2命令选项.png](https://img.heshipeng.com/FnCbyMrXOigcxISFpeojInoEP4Fh)
 
 Compile的一般用法如下：
 
@@ -72,7 +72,7 @@ aapt2 compile path-to-input-files [options] -o output-directory/
 
 > Compile 命令会对输入的资源文件的路径做校验，输入文件的路径必须满足path/resource-type[config]/file，否则会编译报错：error: bad resource path.
 
-![aapt2编译报错.png](http://img.heshipeng.com/FqQVM_68gVDZVPVS-x3kVehUf5Po)
+![aapt2编译报错.png](https://img.heshipeng.com/FqQVM_68gVDZVPVS-x3kVehUf5Po)
 
 新建一个目录drawable-hdpi，把用来测试的图片放在这个目录下，然后执行命令：
 
@@ -84,7 +84,7 @@ aapt2 compile drawable-hdpi/aapt2路径.png -o .
 
 在Android Studio中，可以在app/build/intermediates/merged_res/debug/ 目录下找到编译生成的.flat文件。
 
-![android studio打包产生的flat文件.png](http://img.heshipeng.com/FtTzF2KXRLIASXXu-IKcovhR9wGH)
+![android studio打包产生的flat文件.png](https://img.heshipeng.com/FtTzF2KXRLIASXXu-IKcovhR9wGH)
 
 当然Compile也支持编译多个文件。
 
@@ -106,7 +106,7 @@ aapt2 compile --dir ./res -o resource.ap_
 
 可以看到产生了一个压缩文件，用命令`unzip -lv resource.ap_`查看，可以看到里面是一堆`.flat`的文件
 
-![aapt2 compile编译目录.png](http://img.heshipeng.com/Fiu1UOXFwhx9Vj8_8jHACQLIXW7N)
+![aapt2 compile编译目录.png](https://img.heshipeng.com/Fiu1UOXFwhx9Vj8_8jHACQLIXW7N)
 
 随便找其中的一个文件打开，是乱码的，那么这个FLAT文件是到底是什么？我们先接着看aapt2的链接阶段，晚点再探讨这个话题。
 
@@ -143,7 +143,7 @@ FLAT文件是AAPT2编译的产物文件，也叫做AAPT2容器，文件由文件
 
 用`UltraEdit`编辑上面任意一个flat文件，内容如下：
 
-![UE打开flat文件.png](http://img.heshipeng.com/FsFqakTFKfyvq4U4deD3pwN0AMt6)
+![UE打开flat文件.png](https://img.heshipeng.com/FsFqakTFKfyvq4U4deD3pwN0AMt6)
 
 可以看到前4个字节是`0x54504141`(为啥不是0x41415054?因为是小端机器)，标识该文件是一个AAPT容器文件；紧接着4个字节是`0x00000001`表示该文件的版本号是1，接着4个字节是`0x000000001`表示该文件只有一个资源项。
 
@@ -180,7 +180,7 @@ entry_type值分为两种类型:
 
 接着8个字节`0x000000000001BFC8`表示该资源文件的长度，转为十进制，也即114632个字节。换算成以k为单位，就是111.95k，我们查看资源文件大小也刚好是112k。
 
-![资源文件大小.png](http://img.heshipeng.com/Ft1NO7v_GkvR_Rn5N_cfJYQL4doZ)
+![资源文件大小.png](https://img.heshipeng.com/Ft1NO7v_GkvR_Rn5N_cfJYQL4doZ)
 
 接下来就是资源数据了，接下来看下RES_FILE文件的格式：
 
@@ -195,7 +195,7 @@ entry_type值分为两种类型:
 
 可以用一张图看下完整的RES_FILE类型的flat文件的格式：
 
-![RES_FILE类型的flat文件格式.png](http://img.heshipeng.com/FrdQkv6mPBGr6Akv0YhonaOTyH07)
+![RES_FILE类型的flat文件格式.png](https://img.heshipeng.com/FrdQkv6mPBGr6Akv0YhonaOTyH07)
 
 接着看刚才打开的.flat文件，`0000003F`4个字节，也即63表示该RES_FILE的header长度是63个字节，然后接着8个字节`0x000000000001BF7B`表示数据文件的长度，也即114555个字节。
 
@@ -209,7 +209,7 @@ entry_type值分为两种类型:
 
 最后用一张图看下上边分析的RES_FILE格式：
 
-![RES_FILE格式图示.png](http://img.heshipeng.com/FqcguIF45SpTniymtYf6H89zRQQ5)
+![RES_FILE格式图示.png](https://img.heshipeng.com/FqcguIF45SpTniymtYf6H89zRQQ5)
 
 另一种格式`RES_TABLE`格式比较简单，其实就是ResourceTable的`protobuf`序列化结果。数据结构如下：
 

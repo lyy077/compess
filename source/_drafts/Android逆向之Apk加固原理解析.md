@@ -124,7 +124,7 @@ private void handleBindApplication(AppBindData data) {
 
 站在`ClassLoader`的角度看整个`App`加载的流程如下：
 
-![image-20220118141628602](http://img.heshipeng.com/202201181416237.png)
+![image-20220118141628602](https://img.heshipeng.com/202201181416237.png)
 
 如果一个`app`没有加壳，在第二步`PathClassLoader`自然而然的加载的是`app`所有的类信息，如果加壳了，则`PathClassLoader`加载的只有壳的代码，当前还没有加载`app` 真正的代码，也就是壳解密后释放的代码。
 
@@ -134,9 +134,95 @@ private void handleBindApplication(AppBindData data) {
 
 通过前面`app`运行流程的了解可以知道`app`最先获得执行权限的是`app`中声明的`Application`类中的`attachBaseContext`和`onCreate`函数。因此，壳要想完成应用中加固代码的解密以及应用执行权的交付就都是在这两个函数上做文章。下面这张图大致讲了加壳应用的运行流程。
 
-![下载](http://img.heshipeng.com/202201181444463.png)
+![下载](https://img.heshipeng.com/202201181444463.png)
 
 当壳在函数`attachBaseContext`和`onCreate`中执行完加密的`dex`文件的解密后，通过自定义的`Classloader`在内存中加载解密后的`dex`文件。为了解决后续应用在加载执行解密后的`dex`文件中的`Class`和`Method`的问题，接下来就是通过利用`java`的反射修复一系列的变量。其中最为重要的一个变量就是应用运行中的`Classloader`，只有`Classloader`被修正后，应用才能够正常的加载并调用`dex`中的类和方法，否则的话由于`Classloader`的双亲委派机制，最终会报`ClassNotFound`异常，应用崩溃退出。
 
 
 
+### 简单实现第一代壳
+
+第一代壳也称落地加载，简单来说就是对源APK进行加密，然后再套上一层壳，在运行时对源APK进行解密并动态加载。整个流程如下图：
+
+![第一代加壳](https://img.heshipeng.com/202201251726564.png)
+
+可以看到我们一个需要三个对象，首先是源Apk也就是待加固的Apk，然后是壳程序Apk，作用是对源Apk进行解密，最后是加密工具，负责加密源Apk与壳Dex合并成新的Dex。
+
+
+
+概括一下要做的事情：首先创建一个源Apk与壳程序Apk，然后用某种加密算法对源Apk进行加密，再将加密后的Apk文件与壳Apk中的Dex文件进行合并，得到一个新的Dex文件，最后用这个新的Dex文件替换壳程序Apk中的Dex文件即可。此时便得到了一个全新的Apk，该Apk就是加壳后的结果，它的主要工作是运行时解密源Apk，然后通过动态加载技术，使源Apk中的相关组件类运行起来。
+
+
+
+这个过程需要对动态加载技术和Dex文件格式有一个基本的了解，如果对这两点不太懂的话，可以看看我前面写过的2篇文章：[Android逆向之动态加载](http://blog.heshipeng.com/Android%E9%80%86%E5%90%91%E4%B9%8B%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD/) 以及 [一文了解Dex文件格式](http://blog.heshipeng.com/Android%E9%80%86%E5%90%91%E4%B9%8BDex%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90/)。
+
+
+
+了解完原理之后，看看代码实现，整个过程需要三个项目：
+
+* 源程序项目(需要加密的apk)
+* 加壳项目(对源apk进行加密，和脱壳项目的dex进行合并)
+* 脱壳项目(解密源apk和加载apk)
+
+
+
+#### 源Apk
+
+新建项目`SourceApk`，然后新建一个MyApplication代码如下：
+
+```java
+public class MyApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.i("MyApplication", "source apk onCreate: " + this);
+    }
+}
+```
+
+新建SubActivity代码如下：
+
+```java
+public class SubActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        TextView content = new TextView(this);
+        content.setText("I am Source Apk SubMainActivity");
+        setContentView(content);
+        Log.i("SubActivity", "app:"+getApplicationContext());
+    }
+}
+```
+
+最后修改布局MainActivity代码如下：
+
+```java
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        TextView content = new TextView(this);
+        content.setText("I am Source Apk");
+        content.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SubActivity.class);
+            startActivity(intent);
+        });
+
+        setContentView(R.layout.activity_main);
+        Log.i("MainActivity","app: " + this);
+    }
+}
+```
+
+代码比较简单，都只是简单的打印了一些信息。
+
+
+
+##### 壳程序项目
+
+加壳程序其实就是一个Java项目，它的工作就是加密源apk，然后将其写入脱壳dex文件中，修改文件头，得到一个新的dex文件即可。
+
+新建项目`DexShellTools`,

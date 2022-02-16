@@ -61,6 +61,5 @@ CPPFLAGS="-I$(brew --prefix zlib)/include" \
 
 构建需要几分钟时间，构建完成后，会生成一个`Python.exe`文件，执行`./python.exe`命令，可以看到有效的REPL：
 
-![image-20220107172013585](http://img.heshipeng.com/202201071720051.png)
-
+![image-20220107172013585](https://img.heshipeng.com/202201071720051.png)
 
