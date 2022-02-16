@@ -11,7 +11,7 @@
     
     <title>
         
-            大端还是小端？ |
+            JS逆向之EditThisCookie工具篇 |
         
         拾光的逆羽
     </title>
@@ -154,7 +154,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">大端还是小端？</span>
+            <span class="title-hover-animation">JS逆向之EditThisCookie工具篇</span>
         </div>
 
         
@@ -173,8 +173,8 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-01-05 20:54:45</span>
-        <span class="mobile">2022-01-05 20:54</span>
+        <span class="pc">2022-02-16 10:26:34</span>
+        <span class="mobile">2022-02-16 10:26</span>
     </span>
     
         <span class="article-categories article-meta-item">
@@ -182,7 +182,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%9D%82%E8%B0%88/">计算机杂谈</a>&nbsp;
+                        <a href="/categories/JS%E9%80%86%E5%90%91/">JS逆向</a>&nbsp;
                     </li>
                 
             </ul>
@@ -194,7 +194,15 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">数据存储</a>&nbsp;
+                        <a href="/tags/%E9%80%86%E5%90%91/">逆向</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JS/">JS</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/EditThisCookie/">EditThisCookie</a>&nbsp;
                     </li>
                 
             </ul>
@@ -213,65 +221,116 @@
         
 
         <div class="article-content markdown-body">
-            <div align="middle"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=3560361&auto=1&height=66"></iframe></div>
-
-
-
-<h3 id="什么是大端-什么是小端"><a href="#什么是大端-什么是小端" class="headerlink" title="什么是大端? 什么是小端?"></a>什么是大端? 什么是小端?</h3><p>在搞明白大小端之前，先看2个概念，<strong>高低字节</strong>和<strong>高低地址</strong></p>
-<h4 id="高低字节"><a href="#高低字节" class="headerlink" title="高低字节"></a>高低字节</h4><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202201051209394.png"
-                      alt="image-20220105120910483"
-                ></p>
-<p>高低字节类似于数字表示的位数，如果把unsigned int看成是千位的话，从左到右依次千位，百位，十位，个位，左高右低。</p>
-<ul>
-<li>对于一个字节的数据(char/unsigned char/bool)而言，没有高低字节之分。</li>
-<li>只有大于一个字节以上的数据才要区分高低字节。</li>
-</ul>
-<h4 id="高低地址"><a href="#高低地址" class="headerlink" title="高低地址"></a>高低地址</h4><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202201051355138.png"
-                      alt="image-20220105135527049"
-                ></p>
-<ul>
-<li>计算机的基本存储单位是字节(byte)，1byte = 8bit，从00000000到11111111表示的范围是[0,255]。</li>
-<li>对于内存中的每一个字节(byte)，都有一个索引编号，就是指针，也即地址，索引是从0开始，从左到右依次增大，所以左边被称为低地址，右边被称为高地址。</li>
-</ul>
-<h4 id="大端，小端"><a href="#大端，小端" class="headerlink" title="大端，小端"></a>大端，小端</h4><p>盗用维基百科上的2张图来解释下大小端。</p>
+            <p>在做爬虫开发的时候经常会遇到查看或者修改Cookies的时候，比如说我们可能会有这么一些需求，比如编辑Cookies，编辑它的内容或者有效期；或者是说删除Cookies，实现某个页面的退出，或者说测试某个Cookie是否有效等；或者说添加某个Cookie，比如说在未登录状态下添加某个Cookie然后绕过登录；或者说导入导出某些Cookie，有时候我们需要把Cookie持久化存储在另一台电脑上，那么我们可能需要一些导入导出机制。这个时候我们可以借助一款浏览器插件叫做EditThisCookie来帮助我们轻松的完成上面提到的需求，本文将介绍这个插件的使用方法。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>打开<a class="link"   target="_blank" rel="noopener" href="https://chrome.google.com/webstore/category/extensions?hl=zh-CN" >Chrome 网上商店<i class="fas fa-external-link-alt"></i></a>，搜索EditThisCookie，然后点击添加至Chrome即可。</p>
+<p>添加完之后，点击浏览器右上角的扩展程序小图标，然后点击EditThisCookie的固定按钮，将EditThisCookie固定到菜单栏，方便以后使用。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202201051401228.png"
-                      alt="大端"
+                     data-src="http://img.heshipeng.com/202202161043581.png"
+                      alt="image-20220216104323796"
                 ></p>
-<p>根据大端的定义：数据的<strong>高字节</strong>保存在内存的低地址中，数据的<strong>低字节</strong>保存在内存的高地址中。</p>
+<h4 id="功能介绍"><a href="#功能介绍" class="headerlink" title="功能介绍"></a>功能介绍</h4><h5 id="管理Cookies"><a href="#管理Cookies" class="headerlink" title="管理Cookies"></a>管理Cookies</h5><p>我们以editthiscookie.com为例，浏览器地址输入该网址，然后打开Chrome的开发者工具，可以看到多了一个EditThisCookie的窗格：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202201051407227.png"
-                      alt="小端"
+                     data-src="http://img.heshipeng.com/202202161137466.png"
+                      alt="image-20220216113706345"
                 ></p>
-<p>根据小端的定义：数据的<strong>低字节</strong>保存在内存的<strong>低地址</strong>中，数据的<strong>高字节</strong>保存在内存的<strong>高地址</strong>中。</p>
-<p>比如十六进制数<code>0xDC6E35FF</code>，从左到右依次是高字节到低字节，因为从左到右同时是由低地址到高地址，如果按照小端存储，则<code>0xDC6E35FF</code>在内存中对应存储为<code>0xFF356EDC</code>，如果按照大端存储，则应该是<code>0xDC6E35FF</code>。</p>
-<h3 id="如何判断大端还是小端"><a href="#如何判断大端还是小端" class="headerlink" title="如何判断大端还是小端"></a>如何判断大端还是小端</h3><p>用<code>python</code>查看：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">&quot;import sys; print(sys.byteorder)&quot;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>用<code>c</code>查看：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0x11223344</span>;</span><br><span class="line">    <span class="keyword">char</span> *p;</span><br><span class="line"></span><br><span class="line">    p = (<span class="keyword">char</span> *) &amp;i;</span><br><span class="line">    <span class="keyword">if</span> (*p == <span class="number">0x44</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Little endian\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Big endian\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>参考链接：</p>
-<ul>
-<li><p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/lwfcgz/article/details/50476051" >判断计算机是大端还是小端<i class="fas fa-external-link-alt"></i></a></p>
-</li>
-<li><p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/c41741b5c19d" >谈内存<i class="fas fa-external-link-alt"></i></a></p>
-</li>
-</ul>
+<p>可以看到当前网站的Cookie以一个表格的形式呈现，我们可以在这个表格里对某些Cookie进行修改，删除等操作。但是没法添加。</p>
+<p>我们也可以用开发者工具自带的Cookie管理窗口：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202161140028.png"
+                      alt="image-20220216114048001"
+                ></p>
+<p>可以对Cookie进行CURD操作，也比较方便。这里显示的Cookie不仅仅是editthiscookie.com这个domain下的Cookie，不过我们可以用上面的Filter进行过滤，如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202161142574.png"
+                      alt="image-20220216114257547"
+                ></p>
+<p>除了上面2种方式，我们还可以点击EditThisCookie这个图标：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202161145990.png"
+                      alt="image-20220216114525960"
+                ></p>
+<p>可以看到这里除了能对Cookie进行CURD操作外，还可以对Cookie进行批量操作，比如删除所有Cookie。还可以进行Cookie的导入导出等。</p>
+<h5 id="导出Cookie"><a href="#导出Cookie" class="headerlink" title="导出Cookie"></a>导出Cookie</h5><p>点击浏览器右上角EditThisCookie小图标，然后点击设置</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202161346254.png"
+                      alt="image-20220216134602208"
+                ></p>
+<p>点击选项，选择Cookie的导出格式，这里我们选择JSON：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202161346304.png"
+                      alt="image-20220216134645420"
+                ></p>
+<p>然后回到前一个页面，点击导出Cookie按钮：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202161350923.png"
+                      alt="image-20220216135001882"
+                ></p>
+<p>此时Cookie并以JSON的形式复制到了剪切板，我们找一个文本文件粘贴，可以得到Cookie的内容：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202161351394.png"
+                      alt="image-20220216135141980"
+                ></p>
+<p>这种JSON格式的Cookie就可以直接放到程序中使用了。</p>
+<h4 id="Cookie导入导出小实验"><a href="#Cookie导入导出小实验" class="headerlink" title="Cookie导入导出小实验"></a>Cookie导入导出小实验</h4><p>首先我们登录github.com，登录之后主页可以看到个人信息：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202161359075.png"
+                      alt="image-20220216135949035"
+                ></p>
+<p>接着我们用EditThisCookie导出Cookie并保存到一个文本文件：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202161401623.png"
+                      alt="image-20220216140120593"
+                ></p>
+<p>然后打开开发者工具，选择Application，选择Cookie，然后右键Clear，清除该站点所有的Cookie：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202161402640.png"
+                      alt="image-20220216140235247"
+                ></p>
+<p>这时我们刷新该页面，发现我们成功退出了github：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202161403657.png"
+                      alt="image-20220216140324742"
+                ></p>
+<p>然后我们点击EditThisCookie，导入刚才保存的Cookie：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202161404572.png"
+                      alt="image-20220216140419364"
+                ></p>
+<p>然后刷新页面，发现我们又重新登录了github：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://img.heshipeng.com/202202161405794.png"
+                      alt="image-20220216140504490"
+                ></p>
 
         </div>
 
@@ -279,11 +338,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>本文标题：大端还是小端？</li>
+        <li>本文标题：JS逆向之EditThisCookie工具篇</li>
         <li>本文作者：Shipeng He</li>
-        <li>创建时间：2022-01-05 20:54:45</li>
+        <li>创建时间：2022-02-16 10:26:34</li>
         <li>
-            本文链接：https://blog.heshipeng.com/大端还是小端/
+            本文链接：https://blog.heshipeng.com/JS逆向之EditThisCookie工具篇/
         </li>
         <li>
             版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -298,7 +357,15 @@
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
-                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">#数据存储</a>&nbsp;
+                        <a href="/tags/%E9%80%86%E5%90%91/">#逆向</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/JS/">#JS</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/EditThisCookie/">#EditThisCookie</a>&nbsp;
                     </li>
                 
             </ul>
@@ -307,29 +374,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/Android%E9%80%86%E5%90%91%E4%B9%8B%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">Android逆向之动态加载</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/%E4%B8%80%E6%96%87%E4%BA%86%E8%A7%A3Android%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94AAPT2/"
+                           href="/JS%E9%80%86%E5%90%91%E4%B9%8BCharles%E5%B7%A5%E5%85%B7%E7%AF%87/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">一文了解Android构建工具——AAPT2</span>
+                                <span class="post-nav-title-item">JS逆向之Charles工具篇</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -504,7 +556,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%A7%E7%AB%AF-%E4%BB%80%E4%B9%88%E6%98%AF%E5%B0%8F%E7%AB%AF"><span class="nav-text">什么是大端? 什么是小端?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E4%BD%8E%E5%AD%97%E8%8A%82"><span class="nav-text">高低字节</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E4%BD%8E%E5%9C%B0%E5%9D%80"><span class="nav-text">高低地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%A7%E7%AB%AF%EF%BC%8C%E5%B0%8F%E7%AB%AF"><span class="nav-text">大端，小端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E5%A4%A7%E7%AB%AF%E8%BF%98%E6%98%AF%E5%B0%8F%E7%AB%AF"><span class="nav-text">如何判断大端还是小端</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D"><span class="nav-text">功能介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%A1%E7%90%86Cookies"><span class="nav-text">管理Cookies</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%BC%E5%87%BACookie"><span class="nav-text">导出Cookie</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cookie%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E5%B0%8F%E5%AE%9E%E9%AA%8C"><span class="nav-text">Cookie导入导出小实验</span></a></li></ol>
     </div>
 </div>
         </aside>
