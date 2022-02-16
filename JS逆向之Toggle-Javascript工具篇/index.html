@@ -11,7 +11,7 @@
     
     <title>
         
-            JS逆向之EditThisCookie工具篇 |
+            JS逆向之Toggle Javascript工具篇 |
         
         拾光的逆羽
     </title>
@@ -154,7 +154,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">JS逆向之EditThisCookie工具篇</span>
+            <span class="title-hover-animation">JS逆向之Toggle Javascript工具篇</span>
         </div>
 
         
@@ -173,8 +173,8 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-02-16 10:26:34</span>
-        <span class="mobile">2022-02-16 10:26</span>
+        <span class="pc">2022-02-16 15:05:12</span>
+        <span class="mobile">2022-02-16 15:05</span>
     </span>
     
         <span class="article-categories article-meta-item">
@@ -202,7 +202,7 @@
                     </li>
                 
                     <li>
-                        | <a href="/tags/EditThisCookie/">EditThisCookie</a>&nbsp;
+                        | <a href="/tags/Toggle-Javascript/">Toggle Javascript</a>&nbsp;
                     </li>
                 
             </ul>
@@ -221,116 +221,46 @@
         
 
         <div class="article-content markdown-body">
-            <p>在做爬虫开发的时候经常会遇到查看或者修改Cookies的时候，比如说我们可能会有这么一些需求，比如编辑Cookies，编辑它的内容或者有效期；或者是说删除Cookies，实现某个页面的退出，或者说测试某个Cookie是否有效等；或者说添加某个Cookie，比如说在未登录状态下添加某个Cookie然后绕过登录；或者说导入导出某些Cookie，有时候我们需要把Cookie持久化存储在另一台电脑上，那么我们可能需要一些导入导出机制。这个时候我们可以借助一款浏览器插件叫做EditThisCookie来帮助我们轻松的完成上面提到的需求，本文将介绍这个插件的使用方法。</p>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>打开<a class="link"   target="_blank" rel="noopener" href="https://chrome.google.com/webstore/category/extensions?hl=zh-CN" >Chrome 网上商店<i class="fas fa-external-link-alt"></i></a>，搜索EditThisCookie，然后点击添加至Chrome即可。</p>
-<p>添加完之后，点击浏览器右上角的扩展程序小图标，然后点击EditThisCookie的固定按钮，将EditThisCookie固定到菜单栏，方便以后使用。</p>
+            <p>Javascript，它是网站的一部分，我们的网站大部分情况下都会有Javascript的执行。有了它，我们整个网站的功能会变得更加的强大。但是对于我们爬虫来说，比如说我们用requests来请求某一个网站的时候，我们得到的结果实际上可能与浏览器得到的真实看到的结果或者说在浏览器开发者工具Eelements窗口看到的结果是不一样的。这个就是由于Javascript页面的渲染导致的结果不同，这样就会对爬虫产生一个较大的干扰。如果我们能禁用后期的Javascript渲染，就可以在浏览器中看到真实的结果与我们requests请求得到的结果一致了，这样就非常方便了，那么如何做到这一个功能呢？这篇文章就会介绍Toggle Javascript的Chrome插件。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>打开<a class="link"   target="_blank" rel="noopener" href="https://chrome.google.com/webstore/category/extensions?hl=zh-CN" >Chrome 网上商店<i class="fas fa-external-link-alt"></i></a>，搜索Toggle Javascript，然后点击添加至Chrome即可。</p>
+<p>添加完之后，点击浏览器右上角的扩展程序小图标，然后点击Toggle Javascript的固定按钮，将Toggle Javascript固定到菜单栏，方便以后使用。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161043581.png"
-                      alt="image-20220216104323796"
+                     data-src="http://img.heshipeng.com/202202161513854.png"
+                      alt="image-20220216151324812"
                 ></p>
-<h4 id="功能介绍"><a href="#功能介绍" class="headerlink" title="功能介绍"></a>功能介绍</h4><h5 id="管理Cookies"><a href="#管理Cookies" class="headerlink" title="管理Cookies"></a>管理Cookies</h5><p>我们以editthiscookie.com为例，浏览器地址输入该网址，然后打开Chrome的开发者工具，可以看到多了一个EditThisCookie的窗格：</p>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>通过点击Toggle Javascript按钮来暂停或恢复JS的执行。以一个小说网站<a class="link"   target="_blank" rel="noopener" href="https://g.hongshu.com/nan.html" >红薯网<i class="fas fa-external-link-alt"></i></a>为例：</p>
+<p>我们随便点开一个小说的某一章：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161137466.png"
-                      alt="image-20220216113706345"
+                     data-src="http://img.heshipeng.com/202202161520089.png"
+                      alt="image-20220216152044654"
                 ></p>
-<p>可以看到当前网站的Cookie以一个表格的形式呈现，我们可以在这个表格里对某些Cookie进行修改，删除等操作。但是没法添加。</p>
-<p>我们也可以用开发者工具自带的Cookie管理窗口：</p>
+<p>这个页面实际上有部分内容是用Javascript渲染生成的，如果我们用requests请求的话，得到的页面的效果，就是我们禁用掉Javascript之后的效果，我们点击Toggle Javascript小图标：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161140028.png"
-                      alt="image-20220216114048001"
+                     data-src="http://img.heshipeng.com/202202161523551.png"
+                      alt="image-20220216152307901"
                 ></p>
-<p>可以对Cookie进行CURD操作，也比较方便。这里显示的Cookie不仅仅是editthiscookie.com这个domain下的Cookie，不过我们可以用上面的Filter进行过滤，如下：</p>
+<p>我们可以看到标点符号没了，整个语句也变得不通顺了。我们如果用正常的requests请求的话就会得到这样一个效果。</p>
+<p>打开开发者工具，切换到Network面板，刷新页面，我们查看原生的请求，Preview的结果与我们通过Toggle Javascript禁用JS的结果是一摸一样的。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161142574.png"
-                      alt="image-20220216114257547"
+                     data-src="http://img.heshipeng.com/202202161526590.png"
+                      alt="image-20220216152557041"
                 ></p>
-<p>除了上面2种方式，我们还可以点击EditThisCookie这个图标：</p>
+<p>我们再看一下源码，有一些文字有一些span的占位符，后期通过JS渲染替换这些占位符，就可以渲染出真正的页面内容：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161145990.png"
-                      alt="image-20220216114525960"
+                     data-src="http://img.heshipeng.com/202202161528961.png"
+                      alt="image-20220216152850619"
                 ></p>
-<p>可以看到这里除了能对Cookie进行CURD操作外，还可以对Cookie进行批量操作，比如删除所有Cookie。还可以进行Cookie的导入导出等。</p>
-<h5 id="导出Cookie"><a href="#导出Cookie" class="headerlink" title="导出Cookie"></a>导出Cookie</h5><p>点击浏览器右上角EditThisCookie小图标，然后点击设置</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161346254.png"
-                      alt="image-20220216134602208"
-                ></p>
-<p>点击选项，选择Cookie的导出格式，这里我们选择JSON：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161346304.png"
-                      alt="image-20220216134645420"
-                ></p>
-<p>然后回到前一个页面，点击导出Cookie按钮：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161350923.png"
-                      alt="image-20220216135001882"
-                ></p>
-<p>此时Cookie并以JSON的形式复制到了剪切板，我们找一个文本文件粘贴，可以得到Cookie的内容：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161351394.png"
-                      alt="image-20220216135141980"
-                ></p>
-<p>这种JSON格式的Cookie就可以直接放到程序中使用了。</p>
-<h4 id="Cookie导入导出小实验"><a href="#Cookie导入导出小实验" class="headerlink" title="Cookie导入导出小实验"></a>Cookie导入导出小实验</h4><p>首先我们登录github.com，登录之后主页可以看到个人信息：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161359075.png"
-                      alt="image-20220216135949035"
-                ></p>
-<p>接着我们用EditThisCookie导出Cookie并保存到一个文本文件：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161401623.png"
-                      alt="image-20220216140120593"
-                ></p>
-<p>然后打开开发者工具，选择Application，选择Cookie，然后右键Clear，清除该站点所有的Cookie：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161402640.png"
-                      alt="image-20220216140235247"
-                ></p>
-<p>这时我们刷新该页面，发现我们成功退出了github：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161403657.png"
-                      alt="image-20220216140324742"
-                ></p>
-<p>然后我们点击EditThisCookie，导入刚才保存的Cookie：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161404572.png"
-                      alt="image-20220216140419364"
-                ></p>
-<p>然后刷新页面，发现我们又重新登录了github：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161405794.png"
-                      alt="image-20220216140504490"
-                ></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Toggle Javascript是一款Chrome浏览器插件，其主要功能是禁用或者执行页面的JS，在爬虫开发的过程中，通过该工具可以迅速的得到requests请求之后的页面结果，非常方便。</p>
 
         </div>
 
@@ -338,11 +268,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>本文标题：JS逆向之EditThisCookie工具篇</li>
+        <li>本文标题：JS逆向之Toggle Javascript工具篇</li>
         <li>本文作者：Shipeng He</li>
-        <li>创建时间：2022-02-16 10:26:34</li>
+        <li>创建时间：2022-02-16 15:05:12</li>
         <li>
-            本文链接：https://blog.heshipeng.com/JS逆向之EditThisCookie工具篇/
+            本文链接：https://blog.heshipeng.com/JS逆向之Toggle-Javascript工具篇/
         </li>
         <li>
             版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -365,7 +295,7 @@
                     </li>
                 
                     <li class="tag-item">
-                        <a href="/tags/EditThisCookie/">#EditThisCookie</a>&nbsp;
+                        <a href="/tags/Toggle-Javascript/">#Toggle Javascript</a>&nbsp;
                     </li>
                 
             </ul>
@@ -374,29 +304,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/JS%E9%80%86%E5%90%91%E4%B9%8BToggle-Javascript%E5%B7%A5%E5%85%B7%E7%AF%87/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">JS逆向之Toggle Javascript工具篇</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/JS%E9%80%86%E5%90%91%E4%B9%8BCharles%E5%B7%A5%E5%85%B7%E7%AF%87/"
+                           href="/JS%E9%80%86%E5%90%91%E4%B9%8BEditThisCookie%E5%B7%A5%E5%85%B7%E7%AF%87/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">JS逆向之Charles工具篇</span>
+                                <span class="post-nav-title-item">JS逆向之EditThisCookie工具篇</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -571,7 +486,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D"><span class="nav-text">功能介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%A1%E7%90%86Cookies"><span class="nav-text">管理Cookies</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%BC%E5%87%BACookie"><span class="nav-text">导出Cookie</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cookie%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E5%B0%8F%E5%AE%9E%E9%AA%8C"><span class="nav-text">Cookie导入导出小实验</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-text">使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol>
     </div>
 </div>
         </aside>
