@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Shipeng He">
+    <meta name="baidu-site-verification" content="code-ALXTDYlBtB" />
+    <meta name="google-site-verification" content="code-ALXTDYlBtB" />
+    
+    <title>
+        
+            JS逆向简单案例一二 |
+        
+        拾光的逆羽
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.jpeg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                拾光的逆羽
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">JS逆向简单案例一二</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpeg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Shipeng He</span>
+                        
+                            <span class="author-label">初级攻城狮</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-02-23 00:23:57</span>
+        <span class="mobile">2022-02-23 00:23</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/JS%E9%80%86%E5%90%91/">JS逆向</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E9%80%86%E5%90%91/">逆向</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JS/">JS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <div align="middle"><iframe width="560" height="315" src="https://www.youtube.com/embed/MYFRc6q1bwI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+
+
+
+<p>通过几个简单的案例对<a class="link"   target="_blank" rel="noopener" href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/" >JS逆向从入门到放弃<i class="fas fa-external-link-alt"></i></a>的基础篇的前6章的知识加以运用和巩固。</p>
+<h5 id="某道翻译"><a href="#某道翻译" class="headerlink" title="某道翻译"></a>某道翻译</h5><p>首先抓包，分析请求的类型，参数特点，返回值特点。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231113102.png"
+                      alt="image-20220223111325964"
+                ></p>
+<p>通过网络面板Fetch/XHR，找到需要的网络请求。</p>
+<p>查看返回结果为明文，不存在加密。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">&quot;translateResult&quot;</span>:[[&#123;<span class="attr">&quot;tgt&quot;</span>:<span class="string">&quot;I love you&quot;</span>,<span class="attr">&quot;src&quot;</span>:<span class="string">&quot;我爱你&quot;</span>&#125;]],<span class="attr">&quot;errorCode&quot;</span>:<span class="number">0</span>,<span class="attr">&quot;type&quot;</span>:<span class="string">&quot;zh-CHS2en&quot;</span>,<span class="attr">&quot;smartResult&quot;</span>:&#123;<span class="attr">&quot;entries&quot;</span>:[<span class="string">&quot;&quot;</span>,<span class="string">&quot;I love you\r\n&quot;</span>],<span class="attr">&quot;type&quot;</span>:<span class="number">1</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>查看参数，大部分参数都是常量，只有salt, sign, Its, bv看着像是动态生成的。Its从名字和内容看，推测是13位的时间戳。sign和bv都是32位，且是字母和数字的混合，初步推算是md5加密。salt前13位跟Its一样，多了一位，推测是14位时间戳？🤪</p>
+<p>接下来断点调试参数生成的逻辑。通常有2种方式：第一种是根据参数名称，全局搜索查找相应的JS代码；第二种是根据请求的Initiator调用栈逐步分析参数生成的位置；第三种打上XHR/fetch Breakpoints断点进行调试，然后分析Call Stack。</p>
+<p>第一种方法，打开开发者工具的全局搜索，搜索sign关键词：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231404320.png"
+                      alt="image-20220223140405239"
+                ></p>
+<p>然后很轻松的找到了发送XHR请求的参数data这个object</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231407464.png"
+                      alt="image-20220223140657071"
+                ></p>
+<p>鼠标悬停到generateSaltSign(t)这个方法上，然后会展示点击进入到这个方法：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231427262.png"
+                      alt="image-20220223142733567"
+                ></p>
+<p>可以看到代码比较简单，将它改写成Python代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_salt_sign</span>(<span class="params">content</span>):</span></span><br><span class="line">    n = content[:<span class="number">5000</span>]</span><br><span class="line">    t = md5(navigator[<span class="string">&quot;appVersion&quot;</span>])</span><br><span class="line">    r = <span class="built_in">str</span>(<span class="built_in">int</span>(time() * <span class="number">1000</span>))</span><br><span class="line">    i = r + <span class="built_in">str</span>(random.randint(<span class="number">0</span>, <span class="number">9</span>))</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="string">&quot;lts&quot;</span>: r,</span><br><span class="line">        <span class="string">&quot;bv&quot;</span>: t,</span><br><span class="line">        <span class="string">&quot;salt&quot;</span>: i,</span><br><span class="line">        <span class="string">&quot;sign&quot;</span>: md5(<span class="string">&quot;fanyideskweb&quot;</span> + n + i + <span class="string">&quot;Y2FYu%TNSbMCxc3t2u^XT&quot;</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中的生成sign的最后一串常量会根据用户的Cookie发生变化。我们之前的推测基本都是对的，除了salt。salt是13位时间戳加上随机的一个数字。</p>
+<p>有了几个关键参数的生成代码，我们从Network面板复制出XHR请求的cURL，然后找一个在线的cURL to Python工具，快速生成Python代码，然后补上我们写好的generate_salt_sign方法，运行代码，结果如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231453817.png"
+                      alt="image-20220223145314773"
+                ></p>
+<h5 id="某度翻译"><a href="#某度翻译" class="headerlink" title="某度翻译"></a>某度翻译</h5><p>老规矩，先抓包。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231508799.png"
+                      alt="image-20220223150801765"
+                ></p>
+<p>找到一个XHR请求，返回结果为明文，不需要解密。参数有2个sign和token，token目测是md5。用第一种方式，打开开发者工具，全局搜索sign，发现搜索出来的结果非常多，主要是存在很多干扰，比如assign。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231524904.png"
+                      alt="image-20220223152341564"
+                ></p>
+<p>这里介绍一个小技巧，如果搜索出来的干扰比较多的时候，不妨搜索“**,关键词:**”试试，为什么如此操作？因为发送XHR请求的时候，data都放在一个object中，我们知道，JS的Object格式都长这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">object = &#123;</span><br><span class="line">	<span class="attr">key1</span>: value,</span><br><span class="line">	<span class="attr">key2</span>: value2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后JS文件基本都会压缩，所以要搜索的参数自然前边有个逗号，后边有个封号。我们按照这种方式搜索，结果如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231541228.png"
+                      alt="image-20220223154110965"
+                ></p>
+<p>可以看到明显搜索结果更加精确了，结果也少了。然后我们逐条分析，最终定位到我们参数生成的代码地方，然后打上断点开始调试：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231543795.png"
+                      alt="image-20220223154356745"
+                ></p>
+<p>没有想到的是token竟然是一个常量。我们看他的值：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231544557.png"
+                      alt="image-20220223154444310"
+                ></p>
+<p>那就更简单了，只需要找到sign的生成方法即可。可以看到sign是调用了一个L方法生成，接受一个参数e，这个e是我们传入的要翻译的text。我们点击进入L方法：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231546855.png"
+                      alt="image-20220223154647115"
+                ></p>
+<p>好了，接下来就到了扣JS和补全JS的环节了。我们扣出来这个方法，然后用node去执行：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231621844.png"
+                      alt="image-20220223162130736"
+                ></p>
+<p>报错，i未定义，我们分析代码，补全i的定义：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231638927.png"
+                      alt="image-20220223163824429"
+                ></p>
+<p>运行接着报错，意料之中，</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231623640.png"
+                      alt="image-20220223162330599"
+                ></p>
+<p>u没有定义，我们从这一行代码可以看到，u的值来自于window这个object：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231624988.png"
+                      alt="image-20220223162424396"
+                ></p>
+<p>这个l是一个固定的字符串，值为”gtk”，然后u这是取得object的这个gtk属性，也是一个定植，那么我们补全这个window即可：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231628932.png"
+                      alt="image-20220223162840470"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231638074.png"
+                      alt="image-20220223163853288"
+                ></p>
+<p>然后接着运行代码，接着报错：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231639894.png"
+                      alt="image-20220223163920006"
+                ></p>
+<p>n这个方法没有定义，我们回到源码，将n的定义拷贝进来：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231643928.png"
+                      alt="image-20220223164310865"
+                ></p>
+<p>然后再次运行代码，终于拿到了sign的值：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231657096.png"
+                      alt="image-20220223165713366"
+                ></p>
+<p>这里很明显看到我们扣出来的JS比较大， 如果对代码进行分析然后改写成Python会比较麻烦，所以利用<a class="link"   target="_blank" rel="noopener" href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E8%B0%83%E7%94%A8JS%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/" >JS逆向之调用JS的两种方式<i class="fas fa-external-link-alt"></i></a>，将JS代码用express框架做成一个服务供Python端去调用。效果如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231657620.png"
+                      alt="image-20220223165732284"
+                ></p>
+<p>然后就是比较机械性的工作了，复制cURL转成Python代码，然后修改sign通过走接口去获取，最后贴一张最终执行的效果图：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231708067.png"
+                      alt="image-20220223170807972"
+                ></p>
+<h5 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h5><p>通过几个简单的案例，回顾了下开发者面板的一些使用方式，包括全局搜索，断点调试跟踪，调用栈分析，扣JS以及Python调用JS的几种方式。代码已经上传，关注公众号，回复代码即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202202231720872.jpg"
+                      alt="qrcode_for_gh_509fdefd3c81_258"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：JS逆向简单案例一二</li>
+        <li>本文作者：Shipeng He</li>
+        <li>创建时间：2022-02-23 00:23:57</li>
+        <li>
+            本文链接：https://blog.heshipeng.com/JS逆向简单案例一二/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E9%80%86%E5%90%91/">#逆向</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/JS/">#JS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/JS%E9%80%86%E5%90%91%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">JS逆向从入门到放弃</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%B8%B8%E8%A7%81%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E7%9A%84%E5%A4%84%E7%90%86/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">JS逆向之常见代码混淆的处理</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script 
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script >
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '5167adeb62c9c9a59956',
+                    clientSecret: '8f4116c8b36633d863779e56e746184d2f795ae4',
+                    repo: 'beyond-heshipeng.github.io',
+                    owner: 'beyond-heshipeng',
+                    admin: ['beyond-heshipeng'],
+                    id: __gitalk__pathname,
+                    language: 'zh-CN'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('false') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Shipeng He</a> 版权所有
+        </div>
+        
+        <div class="theme-info info-item">
+        </div>
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">鄂ICP备2022001140号</a></div>
+        
+        
+    </div>
+</footer>
+
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%90%E9%81%93%E7%BF%BB%E8%AF%91"><span class="nav-text">某道翻译</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%90%E5%BA%A6%E7%BF%BB%E8%AF%91"><span class="nav-text">某度翻译</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-text">总结：</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="post-scripts">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+
+</body>
+</html>
