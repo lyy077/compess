@@ -227,7 +227,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161513854.png"
+                     data-src="http://img.heshipeng.com/202202161513854.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220216151324812"
                 ></p>
 <h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>通过点击Toggle Javascript按钮来暂停或恢复JS的执行。以一个小说网站<a class="link"   target="_blank" rel="noopener" href="https://g.hongshu.com/nan.html" >红薯网<i class="fas fa-external-link-alt"></i></a>为例：</p>
@@ -235,14 +235,14 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161520089.png"
+                     data-src="http://img.heshipeng.com/202202161520089.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220216152044654"
                 ></p>
 <p>这个页面实际上有部分内容是用Javascript渲染生成的，如果我们用requests请求的话，得到的页面的效果，就是我们禁用掉Javascript之后的效果，我们点击Toggle Javascript小图标：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161523551.png"
+                     data-src="http://img.heshipeng.com/202202161523551.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220216152307901"
                 ></p>
 <p>我们可以看到标点符号没了，整个语句也变得不通顺了。我们如果用正常的requests请求的话就会得到这样一个效果。</p>
@@ -250,14 +250,14 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161526590.png"
+                     data-src="http://img.heshipeng.com/202202161526590.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220216152557041"
                 ></p>
 <p>我们再看一下源码，有一些文字有一些span的占位符，后期通过JS渲染替换这些占位符，就可以渲染出真正的页面内容：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161528961.png"
+                     data-src="http://img.heshipeng.com/202202161528961.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220216152850619"
                 ></p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Toggle Javascript是一款Chrome浏览器插件，其主要功能是禁用或者执行页面的JS，在爬虫开发的过程中，通过该工具可以迅速的得到requests请求之后的页面结果，非常方便。</p>

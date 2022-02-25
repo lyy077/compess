@@ -230,7 +230,7 @@
 <h5 id="控制器面板"><a href="#控制器面板" class="headerlink" title="控制器面板"></a>控制器面板</h5><p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202111457134.png"
+                     data-src="http://img.heshipeng.com/202202111457134.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220211145738994"
                 ></p>
 <ul>
@@ -256,7 +256,7 @@
 <h5 id="请求列表"><a href="#请求列表" class="headerlink" title="请求列表"></a>请求列表</h5><p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202111538766.png"
+                     data-src="http://img.heshipeng.com/202202111538766.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220211153842703"
                 ></p>
 <p>标题栏里面比较关键的是Initiator这一栏，表示请求是由哪里发起的。Other表示发起者通过动作发起，而不是某一个具体的JS发起。bbs.nightteam.cn是我们通过浏览器地址栏输入地址后回车发起的，所以这里显示other，而其它的请求都是可以找到具体调用的JS文件。通过定位到某一个请求的发起文件，我们可以在该文件中增加断点进行调试，所以这一栏比较重要。</p>
@@ -264,14 +264,14 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202111549405.png"
+                     data-src="http://img.heshipeng.com/202202111549405.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220211154903286"
                 ></p>
 <p>选中某一个请求，然后右键选择Copy-&gt;Copy as cURL得到该请求的cURL命令。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202111551191.png"
+                     data-src="http://img.heshipeng.com/202202111551191.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220211155142085"
                 ></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">&#x27;https://bbs.nightteam.cn/&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;authority: bbs.nightteam.cn&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;cache-control: max-age=0&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;sec-ch-ua: &quot; Not A;Brand&quot;;v=&quot;99&quot;, &quot;Chromium&quot;;v=&quot;98&quot;, &quot;Google Chrome&quot;;v=&quot;98&quot;&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;sec-ch-ua-mobile: ?0&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;sec-ch-ua-platform: &quot;macOS&quot;&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;upgrade-insecure-requests: 1&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;sec-fetch-site: none&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;sec-fetch-mode: navigate&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;sec-fetch-user: ?1&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;sec-fetch-dest: document&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;accept-language: zh-CN,zh;q=0.9,en;q=0.8&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;cookie: __yjs_duid=1_4110af544673b8e7f7ad03205cd2f8dc1644394949170; WoQu_2132_saltkey=YrDr0Zud; WoQu_2132_lastvisit=1644391349; popnotice=ss10; __8qcehdE7ZaRq2q6M__=5df749990f6140450200d728b907dcbe500b; WoQu_2132_sid=uh3oVX; WoQu_2132_st_p=0%7C1644476217%7C06bfc6a3958129a26420eb3777962f3c; WoQu_2132_visitedfid=39D38D37; WoQu_2132_viewid=tid_2275; WoQu_2132_lastact=1644476217%09home.php%09misc&#x27;</span> \</span><br><span class="line">  --compressed</span><br></pre></td></tr></table></figure>
@@ -280,14 +280,14 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202111556685.png"
+                     data-src="http://img.heshipeng.com/202202111556685.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220211155646608"
                 ></p>
 <p>点击Shift键，然后鼠标悬停在某一个请求上，如果展示绿色背景，表示绿色背景的请求依赖你当前悬停的请求。如果展示红色背景，表示当前悬停的请求依赖红色背景的请求。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202111608727.png"
+                     data-src="http://img.heshipeng.com/202202111608727.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220211160819614"
                 ></p>
 <p><img  
@@ -303,13 +303,13 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202111658856.png"
+                     data-src="http://img.heshipeng.com/202202111658856.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220211165847739"
                 ></p>
 <h5 id="文件导航窗格"><a href="#文件导航窗格" class="headerlink" title="文件导航窗格"></a>文件导航窗格</h5><p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141036679.png"
+                     data-src="http://img.heshipeng.com/202202141036679.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214103607974"
                 ></p>
 <ul>
@@ -324,14 +324,14 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141045585.png"
+                     data-src="http://img.heshipeng.com/202202141045585.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214104511894"
                 ></p>
 <p>第二步：选择要上传的文件夹</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141046182.png"
+                     data-src="http://img.heshipeng.com/202202141046182.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214104624359"
                 ></p>
 <p>第三步：点击允许，让开发者工具具备读写该文件夹的权限</p>
@@ -345,7 +345,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141053302.png"
+                     data-src="http://img.heshipeng.com/202202141053302.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214105309274"
                 ></p>
 <p>我们可对其进行编辑修改，打上断点调试等。</p>
@@ -357,35 +357,35 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141126711.png"
+                     data-src="http://img.heshipeng.com/202202141126711.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214112558071"
                 ></p>
 <p>然后回到Network面板，点击浏览器刷新按钮刷新当前页面，选中一个我们需要代理到本地的请求，右键选择<code>Save for overrides</code>：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141132844.png"
+                     data-src="http://img.heshipeng.com/202202141132844.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214113204817"
                 ></p>
 <p>这时，我们刚才添加的文件夹里面就有了保存的代理请求：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141133043.png"
+                     data-src="http://img.heshipeng.com/202202141133043.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214113325024"
                 ></p>
 <p>然后我们修改本地的这个文件，比如将这个页面的<code>招聘求职</code>改为<code>MLGJ求职</code>：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141138509.png"
+                     data-src="http://img.heshipeng.com/202202141138509.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214113851477"
                 ></p>
 <p>然后，保存刷新这个页面，就成功的将该请求代理到本地文件：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141140600.png"
+                     data-src="http://img.heshipeng.com/202202141140600.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214113954313"
                 ></p>
 <ul>
@@ -399,7 +399,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141158016.png"
+                     data-src="http://img.heshipeng.com/202202141158016.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214115844902"
                 ></p>
 <h5 id="代码编辑器窗格"><a href="#代码编辑器窗格" class="headerlink" title="代码编辑器窗格"></a>代码编辑器窗格</h5><p>可以在编辑器中打开文件，断点调试或者格式化等。下面演示一下各个功能。</p>
@@ -410,7 +410,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141406960.png"
+                     data-src="http://img.heshipeng.com/202202141406960.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214140646923"
                 ></p>
 <ol start="2">
@@ -420,7 +420,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141408998.png"
+                     data-src="http://img.heshipeng.com/202202141408998.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214140844097"
                 ></p>
 <ol start="3">
@@ -434,35 +434,35 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141509714.png"
+                     data-src="http://img.heshipeng.com/202202141509714.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214150928211"
                 ></p>
 <p>然后在这个条件输入框中，输入一个条件，比如这里我们是<code>i = 10</code>:</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141453523.png"
+                     data-src="http://img.heshipeng.com/202202141453523.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214145305065"
                 ></p>
 <p>设置好条件断点之后，断点会变成黄色，区别于普通断点：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141454079.png"
+                     data-src="http://img.heshipeng.com/202202141454079.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214145448231"
                 ></p>
 <p>为了便于观察i的值，可以在最右边的调试窗格变量监控一栏添加观察i的值。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141456576.png"
+                     data-src="http://img.heshipeng.com/202202141456576.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214145615800"
                 ></p>
 <p>最后右键运行该文件，如果条件断点正确的打上的话，变量监控值会看到i的值为10：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141511114.png"
+                     data-src="http://img.heshipeng.com/202202141511114.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214151148079"
                 ></p>
 <h5 id="调试窗格"><a href="#调试窗格" class="headerlink" title="调试窗格"></a>调试窗格</h5><ol>
@@ -473,21 +473,21 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141542127.png"
+                     data-src="http://img.heshipeng.com/202202141542127.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214154210085"
                 ></p>
 <p>我们选择其中任意一个，比如下面一个请求，回到调试窗格，然后点击新增一个XHR断点，填入该请求的URL或者一部分：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141544801.png"
+                     data-src="http://img.heshipeng.com/202202141544801.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214154422755"
                 ></p>
 <p>然后我们退出登录后重新点击登录百度，可以看到设置的断点生效了：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141546839.png"
+                     data-src="http://img.heshipeng.com/202202141546839.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214154605187"
                 ></p>
 <ol start="2">
@@ -497,14 +497,14 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141552746.png"
+                     data-src="http://img.heshipeng.com/202202141552746.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214155229706"
                 ></p>
 <p>有三种类型的断点，子元素改变/属性改变/节点删除。选择其中一个，即添加成功：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141554612.png"
+                     data-src="http://img.heshipeng.com/202202141554612.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214155406742"
                 ></p>
 <p>由于DOM Breakpoint在逆向中不是很常用，所以做一个了解即可。</p>
@@ -515,14 +515,14 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141600745.png"
+                     data-src="http://img.heshipeng.com/202202141600745.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214160042544"
                 ></p>
 <p>然后我们点击登录页面的登录按钮，如无意外，断点成功打上：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141602842.png"
+                     data-src="http://img.heshipeng.com/202202141602842.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214160209183"
                 ></p>
 <ol start="4">
@@ -551,7 +551,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141626994.png"
+                     data-src="http://img.heshipeng.com/202202141626994.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214162607942"
                 ></p>
 <p>console面板还有一些骚操作，如下：</p>
@@ -583,14 +583,14 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141639033.png"
+                     data-src="http://img.heshipeng.com/202202141639033.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220214163953998"
                 ></p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文介绍了浏览器开发者工具的使用技巧，主要介绍了三个面板：Console面板，Network面板和Source面板，是JS逆向必须掌握的知识。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202141656805.png"
+                     data-src="http://img.heshipeng.com/202202141656805.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="开发者工具的使用介绍和技巧"
                 ></p>
 
