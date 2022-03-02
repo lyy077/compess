@@ -221,6 +221,9 @@
 
 
 
+<blockquote>
+<p>免责声明：<strong>本文章中所有内容仅供学习交流，抓包内容、敏感网址、数据接口均已做脱敏处理，严禁用于商业用途和非法用途，否则由此产生的一切后果均与作者无关，若有侵权，请联系我立即删除！</strong></p>
+</blockquote>
 <p>在很多情况下，我们可能需要在网页中自动执行某些复杂的代码，帮助我们完成一些操作。比如抢票，刷单，爬虫等。通常我们可以开发Chrome浏览器插件来实现这种功能，但是开发浏览器插件的话得先要去学习浏览器插件开发流程，原理等。有没有什么成本比较低的方式？有的，这里我们介绍的主角叫做 Tampermonkey，也叫油猴。这个插件的功能非常强大，利用它我们几乎可以在网页中执行任何 JavaScript 代码，实现我们想要的功能。同时，我们还可以将Tampermonkey 应用到 JavaScript 逆向分析中，去帮助我们更方便地分析一些 JavaScript 加密和混淆代码。</p>
 <h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>打开<a class="link"   target="_blank" rel="noopener" href="https://chrome.google.com/webstore/category/extensions?hl=zh-CN" >Chrome 网上商店<i class="fas fa-external-link-alt"></i></a>，搜索Tampermonkey，然后点击添加至Chrome即可。</p>
 <p>添加完之后，点击浏览器右上角的扩展程序小图标，然后点击Tampermonkey的固定按钮，将Tampermonkey固定到菜单栏，方便以后使用。</p>
@@ -353,7 +356,8 @@
                      data-src="https://img.heshipeng.com/202202241611836.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220224161105604"
                 ></p>
-<h5 id="一个简单的案例"><a href="#一个简单的案例" class="headerlink" title="一个简单的案例"></a>一个简单的案例</h5><p>以某征信信息网站为例，我们抓包查看请求：</p>
+<h5 id="一个简单的案例"><a href="#一个简单的案例" class="headerlink" title="一个简单的案例"></a>一个简单的案例</h5><p>网址：aHR0cDovL3F5eHkuc2NqZ2ouYmVpamluZy5nb3YuY24vaG9tZQ==</p>
+<p>以某征信信息网站为例，我们抓包查看请求：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -434,6 +438,21 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">JS逆向之无限Debugger</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">
