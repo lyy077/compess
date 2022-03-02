@@ -324,6 +324,7 @@
                      data-src="https://img.heshipeng.com/202203021518960.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220302151850796"
                 ></p>
+<p>解释下上面for循环代码的含义，由于前面我们提到的无论是txsdefwsw还是endebug方法，都是通过匿名定时器来实现无限debugger的，<strong>匿名定时器无法根据定时器的名字来取消定时器，但是定时器的id基本都是1～1000，所以我们穷举这1000个id暴力取消这些匿名定时器</strong>。这不妨也是一种小技巧。</p>
 <p>启用之后，我们刷新页面，就可以看到页面上已经加载出来数据了：</p>
 <p><img  
                      lazyload
