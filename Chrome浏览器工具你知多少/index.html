@@ -164,7 +164,7 @@
                     <div class="author">
                         <span class="name">Shipeng He</span>
                         
-                            <span class="author-label">初级攻城狮</span>
+                            <span class="author-label">中级攻城狮</span>
                         
                     </div>
                     <div class="meta-info">
@@ -544,7 +544,17 @@
 <ol start="5">
 <li>Call Stack</li>
 </ol>
-<p>断点的调用栈列表。</p>
+<p>断点的调用栈列表。下面用一张图说一下调用栈顺序。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202203031119009.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220303111929970"
+                ></p>
+<p>为了表述方便，把上边的几个方法分别重新命名，如上图。在栈顶的最后被调用，在栈底的最新被调用。调用顺序如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    B()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    A()   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    XMLHttpRequest.send()  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至于XMLHttpRequest.send接下来会调用哪一个方法，我们无从得知。此外，注意到那个蓝色箭头，表示当前调试执行的代码所在的方法，如果我们点开了很多文件，想快速回到我们正在调试的那一行代码可以通过鼠标点击调用栈栈顶的方法即可返回到调用处。</p>
 <ol start="6">
 <li>Scope</li>
 </ol>
