@@ -237,6 +237,43 @@
 <li>分析加密。</li>
 <li>补全加密逻辑。</li>
 </ol>
+<h5 id="颜文字网络表情编码解混淆"><a href="#颜文字网络表情编码解混淆" class="headerlink" title="颜文字网络表情编码解混淆"></a>颜文字网络表情编码解混淆</h5><p>将Javascript代码转换为颜文字网络表情的编码以达到混淆的目的。</p>
+<p>原理：这类混淆通常都是使用构造函数将字符串作为代码运行。</p>
+<p>例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sum = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;return a + b&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(sum(<span class="number">2</span>, <span class="number">6</span>))</span><br></pre></td></tr></table></figure>
+
+<p>解决办法：</p>
+<pre><code>1. 直接将混淆后的代码粘贴至控制台通过VM查看源代码。
+1. 删除代码结尾的&quot;(&#39;_&#39;)&quot;，替换为toString()或将修改后的代码粘贴至控制台执行。
+</code></pre>
+<h5 id="符号组成的代码反混淆"><a href="#符号组成的代码反混淆" class="headerlink" title="符号组成的代码反混淆"></a>符号组成的代码反混淆</h5><p>将Javascript代码转换成仅由符号组成的代码以达到混淆的目的。</p>
+<p>原理：这类混淆同常使用构造函数将字符串作为代码运行。</p>
+<p>转换流程：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>(<span class="string">&quot;alert(1)&quot;</span>)();</span><br><span class="line">(<span class="number">0</span>)[<span class="string">&quot;constructor&quot;</span>][<span class="string">&quot;constructor&quot;</span>](<span class="string">&quot;alert(1)&quot;</span>)();</span><br><span class="line">$ = <span class="string">&quot;constructor&quot;</span>;</span><br><span class="line">$$ = <span class="string">&quot;alert(1)&quot;</span>;</span><br><span class="line">$_ = ~[];</span><br><span class="line">($_)[$][$]($$)();</span><br></pre></td></tr></table></figure>
+
+<p>解决办法：</p>
+<pre><code>1. 直接将混淆后的代码贴到控制台通过VM查看源代码。
+1. 删除代码结尾的()，替换为toString()，将修改后的代码粘贴至控制台运行。
+</code></pre>
+<h5 id="Jsfuck反混淆"><a href="#Jsfuck反混淆" class="headerlink" title="Jsfuck反混淆"></a>Jsfuck反混淆</h5><p>将JS代码转换成只有6种符号，()[]!+，的编码，以达到混淆的目的。</p>
+<p>解决办法：</p>
+<pre><code>1. 直接将混淆后的代码粘贴至控制台通过VM查看源码。
+1. 删除代码结尾的()替换为toString，修改后粘贴至控制台执行。
+1. 如果代码最后不是()，而是)，找到最后一对()包裹的代码，将其抽离出来单独执行。
+</code></pre>
+<h5 id="Packed混淆"><a href="#Packed混淆" class="headerlink" title="Packed混淆"></a>Packed混淆</h5><p>将JS代码打包成以eval开头，特征字符串是function(p, a, c, k, e, r)或者是function(p, a, c, k, e, d)的代码。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span>(<span class="function"><span class="keyword">function</span> (<span class="params">p, a, c, k, e, d</span>) </span>&#123;</span><br><span class="line">    e = <span class="function"><span class="keyword">function</span> (<span class="params">c</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (c &lt; a ? <span class="string">&quot;&quot;</span> : e(<span class="built_in">parseInt</span>(c / a))) + ((c = c % a) &gt; <span class="number">35</span> ? <span class="built_in">String</span>.fromCharCode(c + <span class="number">29</span>) : c.toString(<span class="number">36</span>))</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="string">&#x27;&#x27;</span>.replace(<span class="regexp">/^/</span>, <span class="built_in">String</span>)) &#123;</span><br><span class="line">        <span class="keyword">while</span> (c--) d[e(c)] = k[c] || e(c);</span><br><span class="line">        k = [<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> d[e]</span><br><span class="line">        &#125;];</span><br><span class="line">        e = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;\\w+&#x27;</span></span><br><span class="line">        &#125;;</span><br><span class="line">        c = <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ;</span><br><span class="line">    <span class="keyword">while</span> (c--) <span class="keyword">if</span> (k[c]) p = p.replace(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">&#x27;\\b&#x27;</span> + e(c) + <span class="string">&#x27;\\b&#x27;</span>, <span class="string">&#x27;g&#x27;</span>), k[c]);</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;(<span class="string">&#x27;0&#x27;</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="string">&#x27;hello!||&#x27;</span>.split(<span class="string">&#x27;|&#x27;</span>), <span class="number">0</span>, &#123;&#125;))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>反混淆方法：</p>
+<p>将eval改成console.log，在控制台上输出。</p>
+<h5 id="AST混淆反混淆"><a href="#AST混淆反混淆" class="headerlink" title="AST混淆反混淆"></a>AST混淆反混淆</h5><p>通过字符串编码，字符串常量编码，数值编码，数组混淆，数组乱序，花指令，流程平坦化，逗号表达式混淆等方式，对JS代码进行混淆。</p>
+<p>处理方式：（扣JS，补JS）</p>
+<pre><code>1. 找到入口方法
+1. 整理主要逻辑
+1. 修改逻辑代码补全缺失的逻辑
+1. 完成代码的整理
+</code></pre>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>以上几种混淆中常见的是AST混淆，后边会有专门的文章介绍AST混淆的原理，如何手动反混淆以及借助相关的工具实现反混淆。</p>
 
         </div>
 
@@ -487,7 +524,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93"><span class="nav-text">加密分析流程总结</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93"><span class="nav-text">加密分析流程总结</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%A2%9C%E6%96%87%E5%AD%97%E7%BD%91%E7%BB%9C%E8%A1%A8%E6%83%85%E7%BC%96%E7%A0%81%E8%A7%A3%E6%B7%B7%E6%B7%86"><span class="nav-text">颜文字网络表情编码解混淆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E7%BB%84%E6%88%90%E7%9A%84%E4%BB%A3%E7%A0%81%E5%8F%8D%E6%B7%B7%E6%B7%86"><span class="nav-text">符号组成的代码反混淆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Jsfuck%E5%8F%8D%E6%B7%B7%E6%B7%86"><span class="nav-text">Jsfuck反混淆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Packed%E6%B7%B7%E6%B7%86"><span class="nav-text">Packed混淆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AST%E6%B7%B7%E6%B7%86%E5%8F%8D%E6%B7%B7%E6%B7%86"><span class="nav-text">AST混淆反混淆</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol>
     </div>
 </div>
         </aside>
