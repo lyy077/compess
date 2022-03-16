@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Shipeng He">
+    <meta name="baidu-site-verification" content="code-ALXTDYlBtB" />
+    <meta name="google-site-verification" content="code-ALXTDYlBtB" />
+    
+    <title>
+        
+            JS逆向中用到的常见的编码和加密 |
+        
+        拾光的逆羽
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.jpeg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                拾光的逆羽
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">JS逆向中用到的常见的编码和加密</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpeg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Shipeng He</span>
+                        
+                            <span class="author-label">中级攻城狮</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-03-02 21:51:19</span>
+        <span class="mobile">2022-03-02 21:51</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/JS%E9%80%86%E5%90%91/">JS逆向</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E9%80%86%E5%90%91/">逆向</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JS/">JS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h4 id="ASCII码"><a href="#ASCII码" class="headerlink" title="ASCII码"></a>ASCII码</h4><h5 id="ASCII码是什么"><a href="#ASCII码是什么" class="headerlink" title="ASCII码是什么"></a>ASCII码是什么</h5><p>ASCII ((American Standard Code for Information Interchange): 美国信息交换标准代码）是基于<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%8B%89%E4%B8%81%E5%AD%97%E6%AF%8D/1936851" >拉丁字母<i class="fas fa-external-link-alt"></i></a>的一套电脑<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BC%96%E7%A0%81/80092" >编码<i class="fas fa-external-link-alt"></i></a>系统，主要用于显示现代<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%8B%B1%E8%AF%AD/109997" >英语<i class="fas fa-external-link-alt"></i></a>和其他<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%A5%BF%E6%AC%A7/3028649" >西欧<i class="fas fa-external-link-alt"></i></a>语言。它是最通用的<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BF%A1%E6%81%AF%E4%BA%A4%E6%8D%A2/716328" >信息交换<i class="fas fa-external-link-alt"></i></a>标准，并等同于<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%9B%BD%E9%99%85/766689" >国际<i class="fas fa-external-link-alt"></i></a>标准ISO/IEC 646。ASCII第一次以规范标准的类型发表是在1967年，最后一次更新则是在1986年，到目前为止共定义了128个字符。</p>
+<h5 id="ASCII码的背景"><a href="#ASCII码的背景" class="headerlink" title="ASCII码的背景"></a>ASCII码的背景</h5><p>在计算机中，所有的数据在<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%AD%98%E5%82%A8" >存储<i class="fas fa-external-link-alt"></i></a>和运算时都要使用<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BA%8C%E8%BF%9B%E5%88%B6/361457" >二进制<i class="fas fa-external-link-alt"></i></a>数表示（因为计算机用<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%AB%98%E7%94%B5%E5%B9%B3/9753092" >高电平<i class="fas fa-external-link-alt"></i></a>和<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BD%8E%E7%94%B5%E5%B9%B3/6946314" >低电平<i class="fas fa-external-link-alt"></i></a>分别表示1和0），例如，像a、b、c、d这样的52个字母（包括大写）以及0、1等数字还有一些常用的符号（例如*、#、@等）在计算机中存储时也要使用<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0/108101" >二进制数<i class="fas fa-external-link-alt"></i></a>来表示，而具体用哪些二进制数字表示哪个符号，当然每个人都可以约定自己的一套（这就叫<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BC%96%E7%A0%81" >编码<i class="fas fa-external-link-alt"></i></a>），而大家如果要想互相通信而不造成混乱，那么大家就必须使用相同的编码规则，于是美国有关的标准化组织就出台了ASCII<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BC%96%E7%A0%81/80092" >编码<i class="fas fa-external-link-alt"></i></a>，统一规定了上述常用符号用哪些二进制数来表示。</p>
+<h5 id="Python代码演示"><a href="#Python代码演示" class="headerlink" title="Python代码演示"></a>Python代码演示</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">_ = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="keyword">lambda</span> x: <span class="built_in">print</span>(<span class="string">f&quot;ascii of <span class="subst">&#123;x&#125;</span> is&quot;</span>, <span class="built_in">ord</span>(x)), <span class="string">&quot;abcd&quot;</span>))</span><br><span class="line"><span class="comment"># ascii of a is 97</span></span><br><span class="line"><span class="comment"># ascii of b is 98</span></span><br><span class="line"><span class="comment"># ascii of c is 99</span></span><br><span class="line"><span class="comment"># ascii of d is 100</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h4><h5 id="什么是Base64"><a href="#什么是Base64" class="headerlink" title="什么是Base64"></a>什么是Base64</h5><p><strong>Base64</strong>（基底64）是一种基于64个可打印字符来表示<a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%BA%8C%E8%BF%9B%E5%88%B6" >二进制数据<i class="fas fa-external-link-alt"></i></a>的表示方法。由于2^6=64，所以每6个<a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%BD%8D%E5%85%83" >比特<i class="fas fa-external-link-alt"></i></a>为一个单元，对应某个可打印字符。3个<a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%AD%97%E8%8A%82" >字节<i class="fas fa-external-link-alt"></i></a>相当于24个比特，对应于4个Base64单元，即3个字节可由4个可打印字符来表示。在Base64中的可打印字符包括<a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%8B%89%E4%B8%81%E5%AD%97%E6%AF%8D" >字母<i class="fas fa-external-link-alt"></i></a><code>A-Z</code>、<code>a-z</code>、<a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%95%B0%E5%AD%97" >数字<i class="fas fa-external-link-alt"></i></a><code>0-9</code>，这样共有62个字符，此外两个可打印符号在不同的系统中而不同。一些如<a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Uuencode" >uuencode<i class="fas fa-external-link-alt"></i></a>的其他编码方法，和之后<a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=BinHex&action=edit&redlink=1" >BinHex<i class="fas fa-external-link-alt"></i></a>的版本使用不同的64字符集来代表6个二进制数字，但是不被称为Base64。</p>
+<p>Base64常用于在通常处理文本<a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE" >数据<i class="fas fa-external-link-alt"></i></a>的场合，表示、传输、存储一些二进制数据，包括<a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/MIME" >MIME<i class="fas fa-external-link-alt"></i></a>的<a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6" >电子邮件<i class="fas fa-external-link-alt"></i></a>及<a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/XML" >XML<i class="fas fa-external-link-alt"></i></a>的一些复杂数据。</p>
+<p>编码“Man”的结果为<code>TWFu</code>，详细原理如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202203161514327.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220316151444204"
+                ></p>
+<h4 id="md5信息指纹"><a href="#md5信息指纹" class="headerlink" title="md5信息指纹"></a>md5信息指纹</h4><p><strong>MD5消息摘要算法</strong>（英语：MD5 Message-Digest Algorithm），一种被广泛使用的<a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%AF%86%E7%A2%BC%E9%9B%9C%E6%B9%8A%E5%87%BD%E6%95%B8" >密码散列函数<i class="fas fa-external-link-alt"></i></a>，可以产生出一个128位（16个字符(BYTES)）的散列值（hash value），用于确保信息传输完整一致。</p>
+<h5 id="Python代码演示-1"><a href="#Python代码演示-1" class="headerlink" title="Python代码演示"></a>Python代码演示</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">md5</span>(<span class="params">text: <span class="built_in">str</span></span>):</span></span><br><span class="line">    m = hashlib.md5()</span><br><span class="line">    m.update(text.encode(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line">    <span class="keyword">return</span> m.hexdigest()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">file_md5</span>(<span class="params">filename: <span class="built_in">str</span></span>):</span></span><br><span class="line">    m = hashlib.md5()</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> chunk <span class="keyword">in</span> <span class="built_in">iter</span>(<span class="keyword">lambda</span>: f.read(<span class="number">4096</span>), <span class="string">b&quot;&quot;</span>):</span><br><span class="line">        	m.update(chunk)</span><br><span class="line">            </span><br><span class="line">    <span class="keyword">return</span> m.hexdigest()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(md5(<span class="string">&quot;123456&quot;</span>))  <span class="comment"># e10adc3949ba59abbe56e057f20f883e</span></span><br><span class="line"><span class="built_in">print</span>(file_md5(<span class="string">&quot;xxx.json&quot;</span>)) <span class="comment"># eea7fb16ddf174c2f92cac5adb6ce7bc</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="AES-加密"><a href="#AES-加密" class="headerlink" title="AES 加密"></a>AES 加密</h4><p>AES，高级加密标准（Advanced Encryption Standard）。是用来替代 DES，目前比较流行的对称加密算法。对称加密算法也就是加密和解密用相同的密钥。</p>
+<h5 id="Python代码实现"><a href="#Python代码实现" class="headerlink" title="Python代码实现"></a>Python代码实现</h5><ol>
+<li><strong>ECB 模式</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BLOCK_SIZE = <span class="number">16</span>  <span class="comment"># Bytes</span></span><br><span class="line">pad = <span class="keyword">lambda</span> s: s + (BLOCK_SIZE - <span class="built_in">len</span>(s) % BLOCK_SIZE) * \</span><br><span class="line">                <span class="built_in">chr</span>(BLOCK_SIZE - <span class="built_in">len</span>(s) % BLOCK_SIZE)</span><br><span class="line">unpad = <span class="keyword">lambda</span> s: s[:-<span class="built_in">ord</span>(s[<span class="built_in">len</span>(s) - <span class="number">1</span>:])]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">aesEncrypt</span>(<span class="params">key, data</span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    AES的ECB模式加密方法</span></span><br><span class="line"><span class="string">    :param key: 密钥</span></span><br><span class="line"><span class="string">    :param data:被加密字符串（明文）</span></span><br><span class="line"><span class="string">    :return:密文</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    key = key.encode(<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">    <span class="comment"># 字符串补位</span></span><br><span class="line">    data = pad(data)</span><br><span class="line">    cipher = AES.new(key, AES.MODE_ECB)</span><br><span class="line">    <span class="comment"># 加密后得到的是bytes类型的数据，使用Base64进行编码,返回byte字符串</span></span><br><span class="line">    result = cipher.encrypt(data.encode())</span><br><span class="line">    encodestrs = base64.b64encode(result)</span><br><span class="line">    enctext = encodestrs.decode(<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(enctext)</span><br><span class="line">    <span class="keyword">return</span> enctext</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">aesDecrypt</span>(<span class="params">key, data</span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param key: 密钥</span></span><br><span class="line"><span class="string">    :param data: 加密后的数据（密文）</span></span><br><span class="line"><span class="string">    :return:明文</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    key = key.encode(<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">    data = base64.b64decode(data)</span><br><span class="line">    cipher = AES.new(key, AES.MODE_ECB)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 去补位</span></span><br><span class="line">    text_decrypted = unpad(cipher.decrypt(data))</span><br><span class="line">    text_decrypted = text_decrypted.decode(<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(text_decrypted)</span><br><span class="line">    <span class="keyword">return</span> text_decrypted</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    key = <span class="string">&#x27;5c44c819appsapi0&#x27;</span></span><br><span class="line"></span><br><span class="line">    data = <span class="string">&#x27;herish acorn&#x27;</span></span><br><span class="line"></span><br><span class="line">    ecdata = aesEncrypt(key, data)  <span class="comment"># 0FyQSXu3Q9Q13JGf4F74jA==</span></span><br><span class="line">    aesDecrypt(key, ecdata)			<span class="comment"># herish acorn</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<ol start="2">
+<li><strong>CBC 模式</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Cipher  <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 密钥（key）, 密斯偏移量（iv） CBC模式加密</span></span><br><span class="line"></span><br><span class="line">BLOCK_SIZE = <span class="number">16</span>  <span class="comment"># Bytes</span></span><br><span class="line">pad = <span class="keyword">lambda</span> s: s + (BLOCK_SIZE - <span class="built_in">len</span>(s) % BLOCK_SIZE) * \</span><br><span class="line">                <span class="built_in">chr</span>(BLOCK_SIZE - <span class="built_in">len</span>(s) % BLOCK_SIZE)</span><br><span class="line">unpad = <span class="keyword">lambda</span> s: s[:-<span class="built_in">ord</span>(s[<span class="built_in">len</span>(s) - <span class="number">1</span>:])]</span><br><span class="line"></span><br><span class="line">vi = <span class="string">&#x27;0102030405060708&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">AES_Encrypt</span>(<span class="params">key, data</span>):</span></span><br><span class="line">    data = pad(data)</span><br><span class="line">    <span class="comment"># 字符串补位</span></span><br><span class="line">    cipher = AES.new(key.encode(<span class="string">&#x27;utf8&#x27;</span>), AES.MODE_CBC, vi.encode(<span class="string">&#x27;utf8&#x27;</span>))</span><br><span class="line">    encryptedbytes = cipher.encrypt(data.encode(<span class="string">&#x27;utf8&#x27;</span>))</span><br><span class="line">    <span class="comment"># 加密后得到的是bytes类型的数据，使用Base64进行编码,返回byte字符串</span></span><br><span class="line">    encodestrs = base64.b64encode(encryptedbytes)</span><br><span class="line">    <span class="comment"># 对byte字符串按utf-8进行解码</span></span><br><span class="line">    enctext = encodestrs.decode(<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> enctext</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">AES_Decrypt</span>(<span class="params">key, data</span>):</span></span><br><span class="line">    data = data.encode(<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">    encodebytes = base64.decodebytes(data)</span><br><span class="line">    <span class="comment"># 将加密数据转换位bytes类型数据</span></span><br><span class="line">    cipher = AES.new(key.encode(<span class="string">&#x27;utf8&#x27;</span>), AES.MODE_CBC, vi.encode(<span class="string">&#x27;utf8&#x27;</span>))</span><br><span class="line">    text_decrypted = cipher.decrypt(encodebytes)</span><br><span class="line">    <span class="comment"># 去补位</span></span><br><span class="line">    text_decrypted = unpad(text_decrypted)</span><br><span class="line">    text_decrypted = text_decrypted.decode(<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(text_decrypted)</span><br><span class="line">    <span class="keyword">return</span> text_decrypted</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    key = <span class="string">&#x27;5c44c819appsapi0&#x27;</span></span><br><span class="line"></span><br><span class="line">    data = <span class="string">&#x27;herish acorn&#x27;</span></span><br><span class="line">    enctext = AES_Encrypt(key, data)	<span class="comment"># svAg4qrFNphvwS47DLSb2A==</span></span><br><span class="line">    <span class="built_in">print</span>(enctext)						<span class="comment"># herish acorn</span></span><br><span class="line"></span><br><span class="line">    AES_Decrypt(key, enctext)</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：JS逆向中用到的常见的编码和加密</li>
+        <li>本文作者：Shipeng He</li>
+        <li>创建时间：2022-03-02 21:51:19</li>
+        <li>
+            本文链接：https://blog.heshipeng.com/JS逆向中用到的常见的编码和加密/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E9%80%86%E5%90%91/">#逆向</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/JS/">#JS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">JS代码安全防护原理——AST混淆原理</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">JS逆向之快速定位关键代码</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script 
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script >
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '5167adeb62c9c9a59956',
+                    clientSecret: '8f4116c8b36633d863779e56e746184d2f795ae4',
+                    repo: 'beyond-heshipeng.github.io',
+                    owner: 'beyond-heshipeng',
+                    admin: ['beyond-heshipeng'],
+                    id: __gitalk__pathname,
+                    language: 'zh-CN'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('false') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Shipeng He</a> 版权所有
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+        </div>
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">鄂ICP备2022001140号</a></div>
+        
+        
+    </div>
+</footer>
+
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#ASCII%E7%A0%81"><span class="nav-text">ASCII码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ASCII%E7%A0%81%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-text">ASCII码是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ASCII%E7%A0%81%E7%9A%84%E8%83%8C%E6%99%AF"><span class="nav-text">ASCII码的背景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Python%E4%BB%A3%E7%A0%81%E6%BC%94%E7%A4%BA"><span class="nav-text">Python代码演示</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Base64"><span class="nav-text">Base64</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFBase64"><span class="nav-text">什么是Base64</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#md5%E4%BF%A1%E6%81%AF%E6%8C%87%E7%BA%B9"><span class="nav-text">md5信息指纹</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Python%E4%BB%A3%E7%A0%81%E6%BC%94%E7%A4%BA-1"><span class="nav-text">Python代码演示</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AES-%E5%8A%A0%E5%AF%86"><span class="nav-text">AES 加密</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Python%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-text">Python代码实现</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
