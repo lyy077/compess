@@ -11,7 +11,7 @@
     
     <title>
         
-            JS逆向简单案例一二 |
+            JS逆向案例——某远海运公司webpack抠JS |
         
         拾光的逆羽
     </title>
@@ -152,7 +152,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">JS逆向简单案例一二</span>
+            <span class="title-hover-animation">JS逆向案例——某远海运公司webpack抠JS</span>
         </div>
 
         
@@ -171,8 +171,8 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-02-23 00:23:57</span>
-        <span class="mobile">2022-02-23 00:23</span>
+        <span class="pc">2022-04-03 23:28:00</span>
+        <span class="mobile">2022-04-03 23:28</span>
     </span>
     
         <span class="article-categories article-meta-item">
@@ -199,6 +199,10 @@
                         | <a href="/tags/JS/">JS</a>&nbsp;
                     </li>
                 
+                    <li>
+                        | <a href="/tags/WebPack/">WebPack</a>&nbsp;
+                    </li>
+                
             </ul>
         </span>
     
@@ -219,185 +223,114 @@
         
 
         <div class="article-content markdown-body">
-            <div align="middle"><iframe width="560" height="315" src="https://www.youtube.com/embed/MYFRc6q1bwI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-
-
-
-<blockquote>
+            <blockquote>
 <p>免责声明：<strong>本文章中所有内容仅供学习交流，抓包内容、敏感网址、数据接口均已做脱敏处理，严禁用于商业用途和非法用途，否则由此产生的一切后果均与作者无关，若有侵权，请联系我立即删除！</strong></p>
 </blockquote>
-<p>通过几个简单的案例对<a class="link"   target="_blank" rel="noopener" href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/" >JS逆向从入门到放弃<i class="fas fa-external-link-alt"></i></a>的基础篇的前6章的知识加以运用和巩固。</p>
-<h5 id="某道翻译"><a href="#某道翻译" class="headerlink" title="某道翻译"></a>某道翻译</h5><p>网址：aHR0cHM6Ly9mYW55aS55b3VkYW8uY29tLw==</p>
-<p>首先抓包，分析请求的类型，参数特点，返回值特点。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231113102.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223111325964"
-                ></p>
-<p>通过网络面板Fetch/XHR，找到需要的网络请求。</p>
-<p>查看返回结果为明文，不存在加密。</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">&quot;translateResult&quot;</span>:[[&#123;<span class="attr">&quot;tgt&quot;</span>:<span class="string">&quot;I love you&quot;</span>,<span class="attr">&quot;src&quot;</span>:<span class="string">&quot;我爱你&quot;</span>&#125;]],<span class="attr">&quot;errorCode&quot;</span>:<span class="number">0</span>,<span class="attr">&quot;type&quot;</span>:<span class="string">&quot;zh-CHS2en&quot;</span>,<span class="attr">&quot;smartResult&quot;</span>:&#123;<span class="attr">&quot;entries&quot;</span>:[<span class="string">&quot;&quot;</span>,<span class="string">&quot;I love you\r\n&quot;</span>],<span class="attr">&quot;type&quot;</span>:<span class="number">1</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>查看参数，大部分参数都是常量，只有salt, sign, Its, bv看着像是动态生成的。Its从名字和内容看，推测是13位的时间戳。sign和bv都是32位，且是字母和数字的混合，初步推算是md5加密。salt前13位跟Its一样，多了一位，推测是14位时间戳？🤪</p>
-<p>接下来断点调试参数生成的逻辑。通常有2种方式：第一种是根据参数名称，全局搜索查找相应的JS代码；第二种是根据请求的Initiator调用栈逐步分析参数生成的位置；第三种打上XHR/fetch Breakpoints断点进行调试，然后分析Call Stack。</p>
-<p>第一种方法，打开开发者工具的全局搜索，搜索sign关键词：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231404320.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223140405239"
-                ></p>
-<p>然后很轻松的找到了发送XHR请求的参数data这个object</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231407464.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223140657071"
-                ></p>
-<p>鼠标悬停到generateSaltSign(t)这个方法上，然后会展示点击进入到这个方法：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231427262.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223142733567"
-                ></p>
-<p>可以看到代码比较简单，将它改写成Python代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_salt_sign</span>(<span class="params">content</span>):</span></span><br><span class="line">    n = content[:<span class="number">5000</span>]</span><br><span class="line">    t = md5(navigator[<span class="string">&quot;appVersion&quot;</span>])</span><br><span class="line">    r = <span class="built_in">str</span>(<span class="built_in">int</span>(time() * <span class="number">1000</span>))</span><br><span class="line">    i = r + <span class="built_in">str</span>(random.randint(<span class="number">0</span>, <span class="number">9</span>))</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="string">&quot;lts&quot;</span>: r,</span><br><span class="line">        <span class="string">&quot;bv&quot;</span>: t,</span><br><span class="line">        <span class="string">&quot;salt&quot;</span>: i,</span><br><span class="line">        <span class="string">&quot;sign&quot;</span>: md5(<span class="string">&quot;fanyideskweb&quot;</span> + n + i + <span class="string">&quot;Y2FYu%TNSbMCxc3t2u^XT&quot;</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>其中的生成sign的最后一串常量会根据用户的Cookie发生变化。我们之前的推测基本都是对的，除了salt。salt是13位时间戳加上随机的一个数字。</p>
-<p>有了几个关键参数的生成代码，我们从Network面板复制出XHR请求的cURL，然后找一个在线的cURL to Python工具，快速生成Python代码，然后补上我们写好的generate_salt_sign方法，运行代码，结果如下：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231453817.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223145314773"
-                ></p>
-<h5 id="某度翻译"><a href="#某度翻译" class="headerlink" title="某度翻译"></a>某度翻译</h5><p>网址：aHR0cHM6Ly9mYW55aS55b3VkYW8uY29tLw==</p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>webpack抠JS的一个案例，用来熟练如何从webpack打包的JS代码中抠关键的JS代码。</p>
+<h4 id="抠JS过程"><a href="#抠JS过程" class="headerlink" title="抠JS过程"></a>抠JS过程</h4><p>网址：aHR0cHM6Ly9zeW5jb25odWIuY29zY29zaGlwcGluZy5jb20v</p>
+<p>目标：登录接口的密码加密JS代码分析。</p>
 <p>老规矩，先抓包。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231508799.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223150801765"
+                     data-src="https://img.heshipeng.com/202204041509227.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220404150944421"
                 ></p>
-<p>找到一个XHR请求，返回结果为明文，不需要解密。参数有2个sign和token，token目测是md5。用第一种方式，打开开发者工具，全局搜索sign，发现搜索出来的结果非常多，主要是存在很多干扰，比如assign。</p>
+<p>可以看到登录请求的密码这个参数是加密的。</p>
+<p>搜索关键词<code>password</code>，找到一个疑似加密的函数，如下：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231524904.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223152341564"
+                     data-src="https://img.heshipeng.com/202204041624199.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220404162426120"
                 ></p>
-<p>这里介绍一个小技巧，如果搜索出来的干扰比较多的时候，不妨搜索“**,关键词:**”试试，为什么如此操作？因为发送XHR请求的时候，data都放在一个object中，我们知道，JS的Object格式都长这样：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">object = &#123;</span><br><span class="line">	<span class="attr">key1</span>: value,</span><br><span class="line">	<span class="attr">key2</span>: value2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>点进去看到加密的地方：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202204041633567.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220404163306525"
+                ></p>
+<p>接着点进去看这个<code>o.a</code>函数：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202204041634530.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220404163401493"
+                ></p>
+<p>可以看到，对密码采用了RSA加密，然后进行Base64编码。然后看下代码结构，很显然是按照webpack模块化编程进行组织的。</p>
+<p>按照前面介绍的——<a class="link"   target="_blank" rel="noopener" href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/" >JS逆向之webpack扣JS思路<i class="fas fa-external-link-alt"></i></a>——这篇文章总结的方法：</p>
+<ol>
+<li>找到模块加载器。</li>
+</ol>
+<p>快速定位模块加载器，一般可以通过搜索<code>&#125;(&#123;</code>，迅速定位到，但是包含加密函数的JS文件中并未找到模块加载器，没有找到的话，我们自己写一个好了。代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e[n])</span><br><span class="line">        <span class="keyword">return</span> e[n].exports;</span><br><span class="line">    <span class="keyword">var</span> u = e[n] = &#123;</span><br><span class="line">        <span class="attr">i</span>: n,</span><br><span class="line">        <span class="attr">l</span>: !<span class="number">1</span>,</span><br><span class="line">        <span class="attr">exports</span>: &#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> c[n].call(u.exports, u, u.exports, b),</span><br><span class="line">        u.l = !<span class="number">0</span>,</span><br><span class="line">        u.exports</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>然后JS文件基本都会压缩，所以要搜索的参数自然前边有个逗号，后边有个封号。我们按照这种方式搜索，结果如下：</p>
+
+
+<ol start="2">
+<li>构造自执行。</li>
+</ol>
+<p>这个也比较简单，我们把上边的代码，稍微做修改：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">!<span class="function"><span class="keyword">function</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> e = &#123;&#125;;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (e[n])</span><br><span class="line">            <span class="keyword">return</span> e[n].exports;</span><br><span class="line">        <span class="keyword">var</span> u = e[n] = &#123;</span><br><span class="line">            <span class="attr">i</span>: n,</span><br><span class="line">            <span class="attr">l</span>: !<span class="number">1</span>,</span><br><span class="line">            <span class="attr">exports</span>: &#123;&#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> c[n].call(u.exports, u, u.exports, b),</span><br><span class="line">        u.l = !<span class="number">0</span>,</span><br><span class="line">        u.exports</span><br><span class="line">    &#125;</span><br><span class="line">    encode = b;</span><br><span class="line">&#125;(&#123;</span><br><span class="line">	<span class="comment">// TODO</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>找到并抠出需要的模块。</li>
+</ol>
+<p>抠JS就变成了一道填空题，把加密方法依赖到的模块抠出来，作为参数填到上边自执行函数中去。我们先抠出加密方法， 观察下依赖哪些模块：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> r = n(<span class="string">&quot;XBrZ&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> t = r.pki.publicKeyFromPem(</span><br><span class="line">    <span class="string">&quot;-----BEGIN PUBLIC KEY-----\n MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsy4xppPDUT2eAOR5h0cyydzxtKB9O80A\n GjUT6FmDgg6CwelpnE0C2h2JQyP1gCveJs6GDwSDn20RVVpD67f//YPYErjaH/CBOxNG3k5IkW1o\n Qx04uqFNMtWvjzk0aFh2eJLsBi7Ha4elw3WySg00B8oZCL4VBay4ML9kyOAjjCj5jHCX8a2yxIMJ\n IF+EjW3kBR68IMwBvuDL45Qa0oB24vTffaSEs+hGjMTQvoCciOfti3pmEAlVc438/cBgAhK5cIMf\n IMElxYAVvmsDy0I7RCUTrajetKjX94Q+JuQUxnIHNC3IVtYsl1x0lNRtb93IhlRCkZ9djOu350eq\n hZIOXQIDAQAB\n  -----END PUBLIC KEY-----&quot;</span>).encrypt(e, <span class="string">&quot;RSA-OAEP&quot;</span>, &#123;</span><br><span class="line">    <span class="attr">md</span>: r.md.sha256.create(),</span><br><span class="line">    <span class="attr">mgf1</span>: &#123;</span><br><span class="line">        <span class="attr">md</span>: r.md.sha1.create()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">return</span> <span class="built_in">window</span>.btoa(t)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>通过debug知e是我们填入的密码——即123456，唯一用到的模块是键为<code>XBrZ</code>的模块。我们全局搜索<code>XBrZ: </code>找到对应的模块定义：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231541228.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223154110965"
+                     data-src="https://img.heshipeng.com/202204041656123.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220404165620085"
                 ></p>
-<p>可以看到明显搜索结果更加精确了，结果也少了。然后我们逐条分析，最终定位到我们参数生成的代码地方，然后打上断点开始调试：</p>
+<p>点进去发现这个模块又引用了很多其它的模块，如果按照模块一个一个的抠的话，比较费时。所以我们将这整个文件中定义的模块全部抠下来，作为我们上边定义的自执行函数的参数。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231543795.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223154356745"
+                     data-src="https://img.heshipeng.com/202204041656763.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220404165643735"
                 ></p>
-<p>没有想到的是token竟然是一个常量。我们看他的值：</p>
+<p>整理完了之后，我们将代码放到浏览器中检验一下，防止出错：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231544557.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223154444310"
+                     data-src="https://img.heshipeng.com/202204041701058.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220404170102015"
                 ></p>
-<p>那就更简单了，只需要找到sign的生成方法即可。可以看到sign是调用了一个L方法生成，接受一个参数e，这个e是我们传入的要翻译的text。我们点击进入L方法：</p>
+<p>不出意外的话就不会出意外，没有报错。</p>
+<ol start="4">
+<li>导出相应的模块。</li>
+</ol>
+<p>模块通过模块加载器加载，所以想要得到加密方法依赖的模块，只需要导出模块函数即可。定义一个全局变量，比如<code>encode</code>，然后将上边实现的模块加载函数赋值给这个全局变量即可。代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> encode;</span><br><span class="line"></span><br><span class="line">!<span class="function"><span class="keyword">function</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> e = &#123;&#125;;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (e[n])</span><br><span class="line">            <span class="keyword">return</span> e[n].exports;</span><br><span class="line">        <span class="keyword">var</span> u = e[n] = &#123;</span><br><span class="line">            <span class="attr">i</span>: n,</span><br><span class="line">            <span class="attr">l</span>: !<span class="number">1</span>,</span><br><span class="line">            <span class="attr">exports</span>: &#123;&#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> c[n].call(u.exports, u, u.exports, b),</span><br><span class="line">        u.l = !<span class="number">0</span>,</span><br><span class="line">        u.exports</span><br><span class="line">    &#125;</span><br><span class="line">    encode = b;</span><br><span class="line">&#125;(&#123;</span><br><span class="line">    <span class="comment">// 此处省略若干行模块函数的定义</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="5">
+<li>编写测试代码。</li>
+</ol>
+<p>对于这个案例而言，测试代码就是那一串加密代码，看能否如期的得到类似的加密字符串，就证明我们抠的JS没有问题，测试代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_pass</span>(<span class="params">passwd</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> r = encode(<span class="string">&quot;XBrZ&quot;</span>); <span class="comment">// 通过模块加载器加载XBrZ模块。</span></span><br><span class="line">    <span class="keyword">var</span> t = r.pki.publicKeyFromPem(<span class="string">&quot;-----BEGIN PUBLIC KEY-----\n MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsy4xppPDUT2eAOR5h0cyydzxtKB9O80A\n GjUT6FmDgg6CwelpnE0C2h2JQyP1gCveJs6GDwSDn20RVVpD67f//YPYErjaH/CBOxNG3k5IkW1o\n Qx04uqFNMtWvjzk0aFh2eJLsBi7Ha4elw3WySg00B8oZCL4VBay4ML9kyOAjjCj5jHCX8a2yxIMJ\n IF+EjW3kBR68IMwBvuDL45Qa0oB24vTffaSEs+hGjMTQvoCciOfti3pmEAlVc438/cBgAhK5cIMf\n IMElxYAVvmsDy0I7RCUTrajetKjX94Q+JuQUxnIHNC3IVtYsl1x0lNRtb93IhlRCkZ9djOu350eq\n hZIOXQIDAQAB\n  -----END PUBLIC KEY-----&quot;</span>).encrypt(passwd, <span class="string">&quot;RSA-OAEP&quot;</span>, &#123;</span><br><span class="line">        <span class="attr">md</span>: r.md.sha256.create(),</span><br><span class="line">        <span class="attr">mgf1</span>: &#123;</span><br><span class="line">            <span class="attr">md</span>: r.md.sha1.create()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">window</span>.btoa(t)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(get_pass(<span class="string">&quot;123456&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+
+
+<p>运行测试代码，正常的输出了密码加密之后的密文：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231546855.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223154647115"
+                     data-src="https://img.heshipeng.com/202204041709186.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220404170927135"
                 ></p>
-<p>好了，接下来就到了扣JS和补全JS的环节了。我们扣出来这个方法，然后用node去执行：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231621844.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223162130736"
-                ></p>
-<p>报错，i未定义，我们分析代码，补全i的定义：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231638927.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223163824429"
-                ></p>
-<p>运行接着报错，意料之中，</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231623640.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223162330599"
-                ></p>
-<p>u没有定义，我们从这一行代码可以看到，u的值来自于window这个object：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231624988.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223162424396"
-                ></p>
-<p>这个l是一个固定的字符串，值为”gtk”，然后u这是取得object的这个gtk属性，也是一个定植，那么我们补全这个window即可：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231628932.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223162840470"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231638074.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223163853288"
-                ></p>
-<p>然后接着运行代码，接着报错：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231639894.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223163920006"
-                ></p>
-<p>n这个方法没有定义，我们回到源码，将n的定义拷贝进来：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231643928.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223164310865"
-                ></p>
-<p>然后再次运行代码，终于拿到了sign的值：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231657096.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223165713366"
-                ></p>
-<p>这里很明显看到我们扣出来的JS比较大， 如果对代码进行分析然后改写成Python会比较麻烦，所以利用<a class="link"   target="_blank" rel="noopener" href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E8%B0%83%E7%94%A8JS%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/" >JS逆向之调用JS的两种方式<i class="fas fa-external-link-alt"></i></a>，将JS代码用express框架做成一个服务供Python端去调用。效果如下：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231657620.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223165732284"
-                ></p>
-<p>然后就是比较机械性的工作了，复制cURL转成Python代码，然后修改sign通过走接口去获取，最后贴一张最终执行的效果图：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231708067.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223170807972"
-                ></p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>通过几个简单的案例，回顾了下开发者面板的一些使用方式，包括全局搜索，断点调试跟踪，调用栈分析，扣JS以及Python调用JS的几种方式。代码已经上传，扫码关注公众号，公众号内回复关键字<code>01</code>，即可获取本文介绍案例的完整代码。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>从webpack组织的JS代码中抠JS，虽然看起来比较简单，但是如果遇到复杂一点的案例，并且对JS语法不太熟的话，还是有一定的难度的的，所以需要对这一块多多练习。后边关于webpack的，还会再出一些案例，一些更加复杂的案例。</p>
+<h4 id="关于代码的获取"><a href="#关于代码的获取" class="headerlink" title="关于代码的获取"></a>关于代码的获取</h4><p>扫码关注微信号——逆向一步步——，公众号内回复关键词<code>03</code>就可以获取本案例的全部代码。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -411,11 +344,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>本文标题：JS逆向简单案例一二</li>
+        <li>本文标题：JS逆向案例——某远海运公司webpack抠JS</li>
         <li>本文作者：Shipeng He</li>
-        <li>创建时间：2022-02-23 00:23:57</li>
+        <li>创建时间：2022-04-03 23:28:00</li>
         <li>
-            本文链接：https://blog.heshipeng.com/JS逆向简单案例一二/
+            本文链接：https://blog.heshipeng.com/JS逆向案例——某远海运公司webpack抠JS/
         </li>
         <li>
             版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -437,35 +370,24 @@
                         <a href="/tags/JS/">#JS</a>&nbsp;
                     </li>
                 
+                    <li class="tag-item">
+                        <a href="/tags/WebPack/">#WebPack</a>&nbsp;
+                    </li>
+                
             </ul>
         
 
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/JS%E9%80%86%E5%90%91%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%A4%B4%E7%A7%83/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">JS逆向从入门到头秃</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%B8%B8%E8%A7%81%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E7%9A%84%E5%A4%84%E7%90%86/"
+                           href="/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">JS逆向之常见代码混淆的处理</span>
+                                <span class="post-nav-title-item">JS逆向之webpack扣JS思路</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -654,7 +576,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%90%E9%81%93%E7%BF%BB%E8%AF%91"><span class="nav-text">某道翻译</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%90%E5%BA%A6%E7%BF%BB%E8%AF%91"><span class="nav-text">某度翻译</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%A0JS%E8%BF%87%E7%A8%8B"><span class="nav-text">抠JS过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E4%BB%A3%E7%A0%81%E7%9A%84%E8%8E%B7%E5%8F%96"><span class="nav-text">关于代码的获取</span></a></li></ol>
     </div>
 </div>
         </aside>
