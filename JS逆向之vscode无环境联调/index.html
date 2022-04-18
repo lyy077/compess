@@ -284,6 +284,47 @@
                      data-src="https://img.heshipeng.com/202204100027373.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
                       alt="image-20220410002734125"
                 ></p>
+<h5 id="用VS-Code进行调试"><a href="#用VS-Code进行调试" class="headerlink" title="用VS Code进行调试"></a>用VS Code进行调试</h5><p>首先看下左下角的这2个选项，如下图：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202204181659615.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220418165953520"
+                ></p>
+<p>Caught Exception指的是对于加了try catch的代码块，如果执行了catch逻辑(即代码抛了异常)，依然在抛异常的地方断住。如下图：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202204181710387.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220418171006294"
+                ></p>
+<p>Uncaught Exceptions指的是忽略try catch中的异常，在try 之外的代码块报错，才会断住。如图：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202204181714424.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220418171418283"
+                ></p>
+<p>一般会勾选Uncaught Exceptions，因为try中的代码抛异常属于正常逻辑。如果这俩选项都没勾选，也没有自定义断点，程序就会直接运行完，并不会断住。如下图：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202204181716202.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220418171636116"
+                ></p>
+<p>再说说调试用的的一组按钮，如下图：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202204181717469.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220418171746410"
+                ></p>
+<p>第一个按钮，表示继续，从当前停顿的地方一直执行到下一个断点，如果没有下一个断点，则按照程序的正常执行顺序，顺序执行一步。</p>
+<p>第二个按钮，表示单步执行，从当前位置开始，顺序执行一步，如果遇到函数调用，不进入函数内部顺序执行。</p>
+<p>第三个按钮，表示单步执行，从当前位置开始，顺序执行一步，如果遇到函数调用，进入到函数内部单步执行。</p>
+<p>第四个按钮，表示单步执行，如果当前调试是在函数内部单步执行，则跳过函数剩余的执行代码，回到函数调用处，往下执行一步。</p>
+<p>第五个按钮，重启程序。</p>
+<p>第六个按钮，停止。</p>
 
         </div>
 
@@ -534,7 +575,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E5%95%A5%E4%BD%BF%E7%94%A8VSCode"><span class="nav-text">为啥使用VSCode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85VSCode"><span class="nav-text">安装VSCode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%97%A0%E7%8E%AF%E5%A2%83%E8%81%94%E8%B0%83"><span class="nav-text">配置无环境联调</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E5%95%A5%E4%BD%BF%E7%94%A8VSCode"><span class="nav-text">为啥使用VSCode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85VSCode"><span class="nav-text">安装VSCode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%97%A0%E7%8E%AF%E5%A2%83%E8%81%94%E8%B0%83"><span class="nav-text">配置无环境联调</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%A8VS-Code%E8%BF%9B%E8%A1%8C%E8%B0%83%E8%AF%95"><span class="nav-text">用VS Code进行调试</span></a></li></ol>
     </div>
 </div>
         </aside>
