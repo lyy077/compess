@@ -192,15 +192,15 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/%E9%80%86%E5%90%91/">逆向</a>&nbsp;
+                        <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81/">验证码</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E9%80%86%E5%90%91/">逆向</a>&nbsp;
                     </li>
                 
                     <li>
                         | <a href="/tags/JS/">JS</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81/">验证码</a>&nbsp;
                     </li>
                 
             </ul>
@@ -488,7 +488,13 @@
 <ol start="2">
 <li>再看看userresponse如何生成的</li>
 </ol>
-<p>抠出生成userresponse的代码，然后反混淆为：<code>i7B.C(g7z, V7z.d.challenge)</code>，g7z是一个2位数的整数，每次都在变，既然这样我们不妨先试试用random随机生成，V7z.d.challenge是get.php返回的：</p>
+<p>抠出生成userresponse的代码，然后反混淆为：<code>i7B.C(g7z, V7z.d.challenge)</code>，g7z是拖拽鼠标滑动滑块的距离，可以通过轨迹数组计算出这个滑动的距离。</p>
+<p>代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> index = <span class="number">0</span>; index &lt; X1z.length; index++) &#123;</span><br><span class="line">	passtime += X1z[index][<span class="number">2</span>];</span><br><span class="line">	g7z += X1z[index][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line">g7z -= X1z[<span class="number">0</span>][<span class="number">0</span>];</span><br></pre></td></tr></table></figure>
+
+
+
+<p>V7z.d.challenge是get.php返回的：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -525,12 +531,31 @@
 
 
 
-<h5 id="查找bug"><a href="#查找bug" class="headerlink" title="查找bug"></a>查找bug</h5><p>从开始逆向极验滑块，到完整的抠出w的算法只花了一天时间，本来一切顺风顺水，本来以为so easy，但是去用抠出来的w参数去发起ajax.php请求时，一直不成功。然后就是各种查找bug，查找bug花了我四天时间…期间各种猜想都尝试过了，感觉当时想着要不算了。但是想着自己前后花了快一个星期的时间，不能轻易言弃。</p>
+<h5 id="查找bug"><a href="#查找bug" class="headerlink" title="查找bug"></a>查找bug</h5><p>从开始逆向极验滑块，到完整的抠出w的算法只花了一天时间，本来一切顺风顺水，本来以为so easy，但是去用抠出来的w参数去发起ajax.php请求时，一直不成功。然后就是各种查找bug，查找bug花了我四天时间…期间各种猜想都尝试过了，感觉当时想着要不算了。但是想着自己前后花了快一个星期的时间，不能轻易言弃。这里列举主要的几个问题。</p>
+<ol>
+<li>w参数的h7z和r7z两部分的关联性</li>
+</ol>
 <p>前面说过，w参数是由2部分组成h7z和r7z。两部分看起来没有关联，其实这里有一个坑，这俩是有关联的。我们再理一下思路：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">h7z = V0B.encrypt(g0b.wb())</span><br><span class="line">q7z = n0B.encypt(<span class="built_in">JSON</span>.stringify(Y7z), g0b.wb())</span><br><span class="line">r7z = p7B.Ha(q7z)</span><br></pre></td></tr></table></figure>
 
-<p>h7z和r7z的生成这俩都用到了一个随机字符串wb，但是这两个随机字符串必须一致!!!，就是说后端会解密h7z和r7z然后比较这两个随机字符串是否一致，如果不一致就会不通过。我前期就是在生成h7z和r7z的地方调用了2次wb，导致验证一直不通过。正确的做法调用一次wb，并用一个全局变量保存，然后生成h7z和r7z的地方直接去拿这个全局变量即可。另外导致一直通过的另外一部分原因是同名的对象有一些，再抠对象的时候一定要仔细，千万不能抠错。</p>
-<p>然后就是通过这个查找bug的过程，也学到了一些查找bug的技巧。比如这里的r7z和h7z可以先定位是h7z还是r7z的问题，定位到是哪半区的问题后，然后根据实际网站运行的结果和你自己编写的代码运行的结果一步步调试，2者结果为什么不一致，具体分析原因。也可以利用浏览器的override功能直接拿自己的代码去覆盖实际网站的去进行调试。</p>
+<p>h7z和r7z的生成这俩都用到了一个随机字符串wb，但是这两个随机字符串必须一致!!!，就是说后端会解密h7z和r7z然后比较这两个随机字符串是否一致，如果不一致就会不通过。我前期就是在生成h7z和r7z的地方调用了2次wb，导致验证一直不通过。正确的做法调用一次wb，并用一个全局变量保存，然后生成h7z和r7z的地方直接去拿这个全局变量即可。</p>
+<ol start="2">
+<li>同名的对象</li>
+</ol>
+<p>另外导致一直通过的另外一部分原因是同名的对象有一些，再抠对象的时候一定要仔细，千万不能抠错。</p>
+<ol start="3">
+<li>aa轨迹的确定</li>
+</ol>
+<p>跟某一个参数的值的时候，除了要在变量声明的地方分析变量值是如何变化的，还要注意在其它地方，尤其是逗号表达式的地方也隐藏着值的变化。比如：<code>j1r = (F7z = e7B[M9r.R8z(544)](F7z, V7z[M9r.R8z(190)][M9r.C8z(540)], V7z[M9r.R8z(190)][M9r.R8z(6)])</code>表面上是变量j1r的赋值，隐藏着变量F7z的值的变化。</p>
+<p>这里介绍一些查找bug的技巧：</p>
+<p>这里的w跟值包含2部分，r7z和h7z。可以先定位是h7z还是r7z的问题，定位到是哪半区的问题后，然后根据实际网站运行的结果和你自己编写的代码运行的结果一步步调试，2者结果为什么不一致，具体分析原因。</p>
+<p>也可以利用浏览器的override功能或者hook尽可能的多输出一些变量的值，对比自己程序运行的结果和网站输出的值，看是哪一步出现问题。我们在调bug的时候就利用了override替换js文件输出了很多日志，如下图：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202204281459340.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220428145928176"
+                ></p>
 
         </div>
 
@@ -557,15 +582,15 @@
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
+                        <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81/">#验证码</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
                         <a href="/tags/%E9%80%86%E5%90%91/">#逆向</a>&nbsp;
                     </li>
                 
                     <li class="tag-item">
                         <a href="/tags/JS/">#JS</a>&nbsp;
-                    </li>
-                
-                    <li class="tag-item">
-                        <a href="/tags/%E9%AA%8C%E8%AF%81%E7%A0%81/">#验证码</a>&nbsp;
                     </li>
                 
             </ul>
