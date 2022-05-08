@@ -345,7 +345,7 @@ mjx-container[display="true"] + br {
 </ul>
 </li>
 </ul>
-<ol start="3">
+<ol>
 <li>分析加密。</li>
 <li>补全加密逻辑。</li>
 </ol>
@@ -353,9 +353,6 @@ mjx-container[display="true"] + br {
 <p>原理：这类混淆通常都是使用构造函数将字符串作为代码运行。</p>
 <p>例如：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sum = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'return a + b'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(sum(<span class="number">2</span>, <span class="number">6</span>))</span><br></pre></td></tr></table></figure>
-
-
-
 <p>解决办法：</p>
 <ol>
 <li>直接将混淆后的代码粘贴至控制台通过VM查看源代码。</li>
@@ -365,7 +362,6 @@ mjx-container[display="true"] + br {
 <p>原理：这类混淆同常使用构造函数将字符串作为代码运行。</p>
 <p>转换流程：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>(<span class="string">"alert(1)"</span>)();</span><br><span class="line">(<span class="number">0</span>)[<span class="string">"constructor"</span>][<span class="string">"constructor"</span>](<span class="string">"alert(1)"</span>)();</span><br><span class="line">$ = <span class="string">"constructor"</span>;</span><br><span class="line">$$ = <span class="string">"alert(1)"</span>;</span><br><span class="line">$_ = ~[];</span><br><span class="line">($_)[$][$]($$)();</span><br></pre></td></tr></table></figure>
-
 <p>解决办法：</p>
 <ol>
 <li>直接将混淆后的代码贴到控制台通过VM查看源代码。</li>
@@ -378,12 +374,10 @@ mjx-container[display="true"] + br {
 </li>
 <li><p>删除代码结尾的()替换为toString，修改后粘贴至控制台执行。</p>
 </li>
-<li><p>如果代码最后不是()，而是)，找到最后一对()包裹的代码，将其抽离出来单独执行。</p>
-</li>
+<li>如果代码最后不是()，而是)，找到最后一对()包裹的代码，将其抽离出来单独执行。</li>
 </ol>
 <h5 id="Packed混淆"><a href="#Packed混淆" class="headerlink" title="Packed混淆"></a>Packed混淆</h5><p>将JS代码打包成以eval开头，特征字符串是function(p, a, c, k, e, r)或者是function(p, a, c, k, e, d)的代码。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span>(<span class="function"><span class="keyword">function</span> (<span class="params">p, a, c, k, e, d</span>) </span>{</span><br><span class="line">    e = <span class="function"><span class="keyword">function</span> (<span class="params">c</span>) </span>{</span><br><span class="line">        <span class="keyword">return</span> (c &lt; a ? <span class="string">""</span> : e(<span class="built_in">parseInt</span>(c / a))) + ((c = c % a) &gt; <span class="number">35</span> ? <span class="built_in">String</span>.fromCharCode(c + <span class="number">29</span>) : c.toString(<span class="number">36</span>))</span><br><span class="line">    };</span><br><span class="line">    <span class="keyword">if</span> (!<span class="string">''</span>.replace(<span class="regexp">/^/</span>, <span class="built_in">String</span>)) {</span><br><span class="line">        <span class="keyword">while</span> (c--) d[e(c)] = k[c] || e(c);</span><br><span class="line">        k = [<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>{</span><br><span class="line">            <span class="keyword">return</span> d[e]</span><br><span class="line">        }];</span><br><span class="line">        e = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'\\w+'</span></span><br><span class="line">        };</span><br><span class="line">        c = <span class="number">2</span>;</span><br><span class="line">    }</span><br><span class="line">    ;</span><br><span class="line">    <span class="keyword">while</span> (c--) <span class="keyword">if</span> (k[c]) p = p.replace(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'\\b'</span> + e(c) + <span class="string">'\\b'</span>, <span class="string">'g'</span>), k[c]);</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">}(<span class="string">'0'</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="string">'hello!||'</span>.split(<span class="string">'|'</span>), <span class="number">0</span>, {}))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>反混淆方法：</p>
 <p>将eval改成console.log，在控制台上输出。</p>
 <h5 id="AST混淆反混淆"><a href="#AST混淆反混淆" class="headerlink" title="AST混淆反混淆"></a>AST混淆反混淆</h5><p>通过字符串编码，字符串常量编码，数值编码，数组混淆，数组乱序，花指令，流程平坦化，逗号表达式混淆等方式，对JS代码进行混淆。</p>

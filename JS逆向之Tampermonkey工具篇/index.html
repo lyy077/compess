@@ -344,11 +344,10 @@ mjx-container[display="true"] + br {
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202241531095.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220224153116053"></p>
 <h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>Tampermonkey 运行的是 JavaScript 脚本，每个网站都能有对应的脚本运行，不同的脚本能完成不同的功能。这些脚本我们可以自定义，同样也可以用已经写好的很多脚本，毕竟有些轮子有了，我们就不需要再去造了。下面列举一些油猴脚本免费使用的网站：</p>
 <ul>
-<li><a class="link" target="_blank" rel="noopener" href="https://www.userscript.zone/?utm_source=tm.net&utm_medium=scripts&utm_campaign=0">Userscript.Zone Search<i class="fas fa-external-link-alt"></i></a>：是一个新网站，允许通过输入合适的URL或域来搜索用户脚本。</li>
+<li><a class="link" target="_blank" rel="noopener" href="https://www.userscript.zone/?utm_source=tm.net&amp;utm_medium=scripts&amp;utm_campaign=0">Userscript.Zone Search<i class="fas fa-external-link-alt"></i></a>：是一个新网站，允许通过输入合适的URL或域来搜索用户脚本。</li>
 </ul>
 <ul>
-<li><p><a class="link" target="_blank" rel="noopener" href="https://greasyfork.org/zh-CN">Greasy Fork<i class="fas fa-external-link-alt"></i></a>：最受欢迎的后起之秀，提供用户脚本的网站，可实现去掉视频播放广告，去水印等多种功能，可以直接安装使用，储存库中有大量的脚本资源。</p>
-</li>
+<li><a class="link" target="_blank" rel="noopener" href="https://greasyfork.org/zh-CN">Greasy Fork<i class="fas fa-external-link-alt"></i></a>：最受欢迎的后起之秀，提供用户脚本的网站，可实现去掉视频播放广告，去水印等多种功能，可以直接安装使用，储存库中有大量的脚本资源。</li>
 <li><p><a class="link" target="_blank" rel="noopener" href="https://openuserjs.org/">OpenUserJS<i class="fas fa-external-link-alt"></i></a>：继 GreasyFork 之后开始创办，在其储存库中也拥有大量的脚本资源 。</p>
 </li>
 <li><p><a class="link" target="_blank" rel="noopener" href="https://userscripts-mirror.org/">serscripts Mirror<i class="fas fa-external-link-alt"></i></a></p>
@@ -368,14 +367,15 @@ mjx-container[display="true"] + br {
 <ul>
 <li><p>@name表示该脚本的名称</p>
 </li>
-<li><p>@include表示脚本生效的域名，可以配置多个，每个单独一行，支持通配符。比如匹配所有的http：@include http://*，匹配所有的https：@include https://*，也可以将2者合并用一个简单的写法： @include *。</p>
+<li><p>@include表示脚本生效的域名，可以配置多个，每个单独一行，支持通配符。比如匹配所有的http：@include <a class="link" target="_blank" rel="noopener" href="http://\*，匹配所有的https：@include">http://\*，匹配所有的https：@include<i class="fas fa-external-link-alt"></i></a> <a href="https://\*，也可以将2者合并用一个简单的写法：">https://\*，也可以将2者合并用一个简单的写法：</a> @include *。</p>
 </li>
 <li><p>@grant表示授予的权限，比如GM_download表示下载权限，GM_openInTab表示打开tab的权限，GM_xmlhttpRequest表示发起异步请求的权限，GM_cookie表示获取cookie的权限等等</p>
 </li>
 <li><p><code>@run-at</code>确定了脚本的注入时机，在js逆向中也很重要。</p>
-<p>完整的脚本注释介绍如下：</p>
 </li>
 </ul>
+<p>  完整的脚本注释介绍如下：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -383,7 +383,8 @@ mjx-container[display="true"] + br {
 <th>作用</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>@name</td>
 <td>油猴脚本的名字</td>
 </tr>
@@ -427,10 +428,11 @@ mjx-container[display="true"] + br {
 <td>@updateURL</td>
 <td>脚本更新网址，当油猴扩展检查更新的时候，会尝试从这个网址下载脚本，然后比对版本号确认是否更新</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>我们自己创建一个脚本，内容如下：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ==UserScript==</span></span><br><span class="line"><span class="comment">// @name         Any Hello world</span></span><br><span class="line"><span class="comment">// @namespace    http://tampermonkey.net/</span></span><br><span class="line"><span class="comment">// @version      0.1</span></span><br><span class="line"><span class="comment">// @description  try to take over the world!</span></span><br><span class="line"><span class="comment">// @author       You</span></span><br><span class="line"><span class="comment">// @match        https://*</span></span><br><span class="line"><span class="comment">// @match        http://*</span></span><br><span class="line"><span class="comment">// @icon         https://www.google.com/s2/favicons?sz=64&amp;domain=baidu.com</span></span><br><span class="line"><span class="comment">// @grant        none</span></span><br><span class="line"><span class="comment">// ==/UserScript==</span></span><br><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line"><span class="meta">    'use strict'</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Hello, world"</span>);</span><br><span class="line">    <span class="comment">// Your code here...</span></span><br><span class="line">})();</span><br></pre></td></tr></table></figure>
-
 <p>脚本命名为Any Hello world，然后可以匹配到任意的http或者https协议的页面，脚本内容比较简单，只是简单的在控制台输出了一下Hello, world。我们保存下，就可以看到多了一个脚本：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202241609431.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220224160944930"></p>
 <p>然后我们打开任意一个页面，比如百度的首页，同时打开开发者工具，可以看到控制台上正常输出：</p>

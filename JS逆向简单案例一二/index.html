@@ -345,9 +345,6 @@ mjx-container[display="true"] + br {
 <p>通过网络面板Fetch/XHR，找到需要的网络请求。</p>
 <p>查看返回结果为明文，不存在加密。</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{<span class="attr">"translateResult"</span>:[[{<span class="attr">"tgt"</span>:<span class="string">"I love you"</span>,<span class="attr">"src"</span>:<span class="string">"我爱你"</span>}]],<span class="attr">"errorCode"</span>:<span class="number">0</span>,<span class="attr">"type"</span>:<span class="string">"zh-CHS2en"</span>,<span class="attr">"smartResult"</span>:{<span class="attr">"entries"</span>:[<span class="string">""</span>,<span class="string">"I love you\r\n"</span>],<span class="attr">"type"</span>:<span class="number">1</span>}}</span><br></pre></td></tr></table></figure>
-
-
-
 <p>查看参数，大部分参数都是常量，只有salt, sign, Its, bv看着像是动态生成的。Its从名字和内容看，推测是13位的时间戳。sign和bv都是32位，且是字母和数字的混合，初步推算是md5加密。salt前13位跟Its一样，多了一位，推测是14位时间戳？🤪</p>
 <p>接下来断点调试参数生成的逻辑。通常有2种方式：第一种是根据参数名称，全局搜索查找相应的JS代码；第二种是根据请求的Initiator调用栈逐步分析参数生成的位置；第三种打上XHR/fetch Breakpoints断点进行调试，然后分析Call Stack。</p>
 <p>第一种方法，打开开发者工具的全局搜索，搜索sign关键词：</p>
@@ -358,7 +355,6 @@ mjx-container[display="true"] + br {
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231427262.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223142733567"></p>
 <p>可以看到代码比较简单，将它改写成Python代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_salt_sign</span>(<span class="params">content</span>):</span></span><br><span class="line">    n = content[:<span class="number">5000</span>]</span><br><span class="line">    t = md5(navigator[<span class="string">"appVersion"</span>])</span><br><span class="line">    r = <span class="built_in">str</span>(<span class="built_in">int</span>(time() * <span class="number">1000</span>))</span><br><span class="line">    i = r + <span class="built_in">str</span>(random.randint(<span class="number">0</span>, <span class="number">9</span>))</span><br><span class="line">    <span class="keyword">return</span> {</span><br><span class="line">        <span class="string">"lts"</span>: r,</span><br><span class="line">        <span class="string">"bv"</span>: t,</span><br><span class="line">        <span class="string">"salt"</span>: i,</span><br><span class="line">        <span class="string">"sign"</span>: md5(<span class="string">"fanyideskweb"</span> + n + i + <span class="string">"Y2FYu%TNSbMCxc3t2u^XT"</span>)</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
-
 <p>其中的生成sign的最后一串常量会根据用户的Cookie发生变化。我们之前的推测基本都是对的，除了salt。salt是13位时间戳加上随机的一个数字。</p>
 <p>有了几个关键参数的生成代码，我们从Network面板复制出XHR请求的cURL，然后找一个在线的cURL to Python工具，快速生成Python代码，然后补上我们写好的generate_salt_sign方法，运行代码，结果如下：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231453817.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223145314773"></p>
@@ -367,9 +363,8 @@ mjx-container[display="true"] + br {
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231508799.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223150801765"></p>
 <p>找到一个XHR请求，返回结果为明文，不需要解密。参数有2个sign和token，token目测是md5。用第一种方式，打开开发者工具，全局搜索sign，发现搜索出来的结果非常多，主要是存在很多干扰，比如assign。</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231524904.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223152341564"></p>
-<p>这里介绍一个小技巧，如果搜索出来的干扰比较多的时候，不妨搜索“**,关键词:**”试试，为什么如此操作？因为发送XHR请求的时候，data都放在一个object中，我们知道，JS的Object格式都长这样：</p>
+<p>这里介绍一个小技巧，如果搜索出来的干扰比较多的时候，不妨搜索“<strong>,关键词:</strong>”试试，为什么如此操作？因为发送XHR请求的时候，data都放在一个object中，我们知道，JS的Object格式都长这样：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">object = {</span><br><span class="line">	<span class="attr">key1</span>: value,</span><br><span class="line">	<span class="attr">key2</span>: value2</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-
 <p>然后JS文件基本都会压缩，所以要搜索的参数自然前边有个逗号，后边有个封号。我们按照这种方式搜索，结果如下：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231541228.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223154110965"></p>
 <p>可以看到明显搜索结果更加精确了，结果也少了。然后我们逐条分析，最终定位到我们参数生成的代码地方，然后打上断点开始调试：</p>

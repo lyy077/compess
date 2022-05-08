@@ -354,7 +354,7 @@ mjx-container[display="true"] + br {
 <h5 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h5><p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202111525047.png" alt="image-20220211152552978"></p>
 <p>通过点选不同类型比如Ajax，JS，CSS等来过滤不同的请求，同时支持点选多个类型的按钮来在请求列表展示多个类型的请求。</p>
 <p>前面Filter过滤框还提供了定制化筛选的功能，可以通过输入一些路由的关键词去搜索，也可以通过类似于正则的方式去搜索。比如：</p>
-<p>domain:*.nightteam.cn：表示domain为*.nightteam.cn的请求。</p>
+<p>domain:<em>.nightteam.cn：表示domain为\</em>.nightteam.cn的请求。</p>
 <p>status-code:301：表示状态码为301的请求。</p>
 <p>set-cookie-domain:bbs.nightteam.cn：表示进行set-cookie的操作的domain。</p>
 <h5 id="请求列表"><a href="#请求列表" class="headerlink" title="请求列表"></a>请求列表</h5><p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202111538766.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220211153842703"></p>
@@ -364,7 +364,6 @@ mjx-container[display="true"] + br {
 <p>选中某一个请求，然后右键选择Copy-&gt;Copy as cURL得到该请求的cURL命令。</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202111551191.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220211155142085"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">'https://bbs.nightteam.cn/'</span> \</span><br><span class="line">  -H <span class="string">'authority: bbs.nightteam.cn'</span> \</span><br><span class="line">  -H <span class="string">'cache-control: max-age=0'</span> \</span><br><span class="line">  -H <span class="string">'sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="98", "Google Chrome";v="98"'</span> \</span><br><span class="line">  -H <span class="string">'sec-ch-ua-mobile: ?0'</span> \</span><br><span class="line">  -H <span class="string">'sec-ch-ua-platform: "macOS"'</span> \</span><br><span class="line">  -H <span class="string">'upgrade-insecure-requests: 1'</span> \</span><br><span class="line">  -H <span class="string">'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36'</span> \</span><br><span class="line">  -H <span class="string">'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'</span> \</span><br><span class="line">  -H <span class="string">'sec-fetch-site: none'</span> \</span><br><span class="line">  -H <span class="string">'sec-fetch-mode: navigate'</span> \</span><br><span class="line">  -H <span class="string">'sec-fetch-user: ?1'</span> \</span><br><span class="line">  -H <span class="string">'sec-fetch-dest: document'</span> \</span><br><span class="line">  -H <span class="string">'accept-language: zh-CN,zh;q=0.9,en;q=0.8'</span> \</span><br><span class="line">  -H <span class="string">'cookie: __yjs_duid=1_4110af544673b8e7f7ad03205cd2f8dc1644394949170; WoQu_2132_saltkey=YrDr0Zud; WoQu_2132_lastvisit=1644391349; popnotice=ss10; __8qcehdE7ZaRq2q6M__=5df749990f6140450200d728b907dcbe500b; WoQu_2132_sid=uh3oVX; WoQu_2132_st_p=0%7C1644476217%7C06bfc6a3958129a26420eb3777962f3c; WoQu_2132_visitedfid=39D38D37; WoQu_2132_viewid=tid_2275; WoQu_2132_lastact=1644476217%09home.php%09misc'</span> \</span><br><span class="line">  --compressed</span><br></pre></td></tr></table></figure>
-
 <p>可以直接在类Unix系统的控制台中去执行这个cURL命令，也可以把这个命令导入到PostMan中去执行。具体步骤是：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202111556685.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220211155646608"></p>
 <p>点击Shift键，然后鼠标悬停在某一个请求上，如果展示绿色背景，表示绿色背景的请求依赖你当前悬停的请求。如果展示红色背景，表示当前悬停的请求依赖红色背景的请求。</p>
@@ -422,17 +421,16 @@ mjx-container[display="true"] + br {
 </ol>
 <p>打开Page面板下网站的一个JS文件，如果JS是展示在一行，可以点击下面的一对<code>{}</code>进行格式化：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202141406960.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220214140646923"></p>
-<ol start="2">
+<ol>
 <li>添加简单断点</li>
 </ol>
 <p>在我们上边格式化之后的JS文件，选中某一行，单击该行的行号，即可添加断点：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202141408998.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220214140844097"></p>
-<ol start="3">
+<ol>
 <li>添加条件断点</li>
 </ol>
 <p>在前面介绍的Snippets代码片段中添加一个片段文件，内容如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"Script snippet #1 start"</span>);</span><br><span class="line"><span class="keyword">var</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span> (<span class="number">5</span> &gt; i) {</span><br><span class="line">    <span class="built_in">console</span>.log(i)</span><br><span class="line">    <span class="keyword">debugger</span>;</span><br><span class="line">    i++;</span><br><span class="line">}</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Script snippet #1 end"</span>);</span><br></pre></td></tr></table></figure>
-
 <p>这段代码比较简单，当i小于5的时候进入循环，停在断点处。下面开始条件断点的设置：</p>
 <p>先单击要添加条件断点的那一行的行号，右键，选择<code>Add conditional breakpoint</code></p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202141509714.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220214150928211"></p>
@@ -454,7 +452,7 @@ mjx-container[display="true"] + br {
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202141544801.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220214154422755"></p>
 <p>然后我们退出登录后重新点击登录百度，可以看到设置的断点生效了：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202141546839.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220214154605187"></p>
-<ol start="2">
+<ol>
 <li>DOM Breakpoint</li>
 </ol>
 <p>还是以百度为例，切换到元素面板，然后随便选择一个DOM元素，右键Break on：</p>
@@ -462,14 +460,14 @@ mjx-container[display="true"] + br {
 <p>有三种类型的断点，子元素改变/属性改变/节点删除。选择其中一个，即添加成功：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202141554612.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220214155406742"></p>
 <p>由于DOM Breakpoint在逆向中不是很常用，所以做一个了解即可。</p>
-<ol start="3">
+<ol>
 <li>Event Listener Breakpoint</li>
 </ol>
 <p>基于事件监听的断点。同样还是以百度为例，点击登录到登录页面，可以看到页面上是一个登录按钮的，这个登录按钮就是触发的submit事件。我们在调试窗格上找到Event Listener Breakpoints，然后打开Control，选中Submit：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202141600745.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220214160042544"></p>
 <p>然后我们点击登录页面的登录按钮，如无意外，断点成功打上：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202141602842.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220214160209183"></p>
-<ol start="4">
+<ol>
 <li>断点控制按钮</li>
 </ol>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202141603925.png" alt="image-20220214160335416"></p>
@@ -478,16 +476,15 @@ mjx-container[display="true"] + br {
 <p>第三个按钮：点击进入下一个待执行的函数调用中去。</p>
 <p>第四个按钮：跳出当前的函数调用。</p>
 <p>第六个按钮：去除所有断点，恢复正常执行的方法。</p>
-<ol start="5">
+<ol>
 <li>Call Stack</li>
 </ol>
 <p>断点的调用栈列表。下面用一张图说一下调用栈顺序。</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203031119009.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220303111929970"></p>
 <p>为了表述方便，把上边的几个方法分别重新命名，如上图。在栈顶的最后被调用，在栈底的最新被调用。调用顺序如下：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>) </span>{</span><br><span class="line">    B()</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>{</span><br><span class="line">    A()   </span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>{</span><br><span class="line">    XMLHttpRequest.send()  </span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-
 <p>至于XMLHttpRequest.send接下来会调用哪一个方法，我们无从得知。此外，注意到那个蓝色箭头，表示当前调试执行的代码所在的方法，如果我们点开了很多文件，想快速回到我们正在调试的那一行代码可以通过鼠标点击调用栈栈顶的方法即可返回到调用处。</p>
-<ol start="6">
+<ol>
 <li>Scope</li>
 </ol>
 <p>断点所在作用域内容。</p>
@@ -500,7 +497,6 @@ mjx-container[display="true"] + br {
 <p>我们可以在console中使用console.table，以表格形式展示数据。这里做一个示例：</p>
 <p>打开console控制台，定义一个变量，内容如下：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [{<span class="string">"name"</span>: <span class="string">"zhangsan"</span>, <span class="string">"age"</span>: <span class="number">21</span>}, {<span class="string">"name"</span>: <span class="string">"lisi"</span>, <span class="string">"age"</span>: <span class="number">22</span>}]</span><br></pre></td></tr></table></figure>
-
 <p>然后我们调用<code>console.table</code>输出这个变量：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202141630189.png" alt="image-20220214163035142"></p>
 <ul>

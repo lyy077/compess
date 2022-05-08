@@ -349,21 +349,21 @@ mjx-container[display="true"] + br {
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204201143166.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220420114316016"></p>
 <p>返回的是challenge和gt。</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204201144667.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220420114408595"></p>
-<ol start="2">
+<ol>
 <li>gettype.php</li>
 </ol>
 <p>获取验证码类型，传入的是第一个请求返回的gt。</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204201153409.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220420115339355"></p>
 <p>返回的是验证码类型以及一些JS文件：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204201154420.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220420115438377"></p>
-<ol start="3">
+<ol>
 <li>get.php</li>
 </ol>
 <p>入参同样是前边返回的challenge和gt。</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204201231886.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220420123131763"></p>
 <p>返回乱序之后的完整验证码底图和缺口验证码底图，同时返回了一个新的challenge。</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204201502291.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220420150236107"></p>
-<ol start="4">
+<ol>
 <li>ajax.php</li>
 </ol>
 <p>这个是我们手动进行验证码提交时发的包，重要的入参是gt，challenge以及w。其中w是加密字符串，包含滑块的轨迹。challenge是更新之后的那个新的值，即上一步get.php获取到的。</p>
@@ -378,8 +378,7 @@ mjx-container[display="true"] + br {
 </li>
 <li><p>由于无法直接的获取正确的完整底图和带缺口的底图(有些网站上极验验证正确的底图可能是用canvas加载)，所以需要进分析如何从无序的底图变为有序的底图。</p>
 </li>
-<li><p>缺口位置的识别，有2种方案。一种是通过比较完整底图和缺口底图，利用像素点的RGB像素差值，来判断缺口位置；另一种是通过机器学习进行训练，然后得到一个模型用于识别缺口位置。</p>
-</li>
+<li>缺口位置的识别，有2种方案。一种是通过比较完整底图和缺口底图，利用像素点的RGB像素差值，来判断缺口位置；另一种是通过机器学习进行训练，然后得到一个模型用于识别缺口位置。</li>
 </ul>
 <p>上面几点，不管如何偷懒，第三步底图的还原是必然需要的，不然没办法计算缺口位置，没办法生成轨迹，自然没办法进行验证。所以底图还原是整个滑块验证的第一步。</p>
 <h5 id="底图缺口还原"><a href="#底图缺口还原" class="headerlink" title="底图缺口还原"></a>底图缺口还原</h5><p>我们先看下滑块的大小：</p>
@@ -392,7 +391,6 @@ mjx-container[display="true"] + br {
 <p>此外，background-image就是我们抓包分析的第三步获取到的乱序图。</p>
 <p>知道了每一个个div的坐标，以及乱序的背景图，就可以通过从乱序图上裁剪出一个个div，然后再拼接到一起，这样不就构成了正确有序的图片？</p>
 <h5 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">div_offset = [</span><br><span class="line">    {<span class="string">"x"</span>: -<span class="number">157</span>, <span class="string">"y"</span>: -<span class="number">58</span>}, </span><br><span class="line">    <span class="comment"># 省略若干行 </span></span><br><span class="line">    {<span class="string">"x"</span>: -<span class="number">205</span>, <span class="string">"y"</span>: <span class="number">0</span>}</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">restore_pic</span>(<span class="params">pic_path, new_pic_path</span>):</span></span><br><span class="line">    unordered_pic = Image.<span class="built_in">open</span>(pic_path)</span><br><span class="line">    ordered_pic = unordered_pic.copy()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 裁剪并拼接</span></span><br><span class="line">    <span class="keyword">for</span> i, d <span class="keyword">in</span> <span class="built_in">enumerate</span>(div_offset):</span><br><span class="line">        im = unordered_pic.crop((math.fabs(d[<span class="string">'x'</span>]), math.fabs(d[<span class="string">'y'</span>]), math.fabs(d[<span class="string">'x'</span>]) + <span class="number">10</span>, math.fabs(d[<span class="string">'y'</span>]) + <span class="number">58</span>))</span><br><span class="line">        <span class="comment"># 上半区</span></span><br><span class="line">        <span class="keyword">if</span> d[<span class="string">'y'</span>] != <span class="number">0</span>:</span><br><span class="line">            ordered_pic.paste(im, (<span class="number">10</span> * (i % (<span class="built_in">len</span>(div_offset) // <span class="number">2</span>)), <span class="number">0</span>), <span class="literal">None</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ordered_pic.paste(im, (<span class="number">10</span> * (i % (<span class="built_in">len</span>(div_offset) // <span class="number">2</span>)), <span class="number">58</span>), <span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">    ordered_pic.save(new_pic_path)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    restore_pic(<span class="string">"img.png"</span>, <span class="string">"new_img.png"</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>说一下用到的PIL库的几个方法：copy表示复制一张图片；crop表示以矩形区域裁剪，入参是一个四个元素的元组，分别是矩形左上角顶点的x坐标，左上角顶点的y坐标，右下角顶点的x坐标，右下角顶点的y坐标；paste表示粘贴图片。</p>
 <p>罗列一下程序执行的结果，底图乱序与正序如下：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204202003975.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220420200318898"></p>

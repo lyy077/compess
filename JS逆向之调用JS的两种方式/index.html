@@ -339,29 +339,30 @@ mjx-container[display="true"] + br {
 <li>PyV8</li>
 </ol>
 <p>V8是Google开源的一个JavaScript引擎，被使用在了Chrome中。PyV8是V8引擎的一个Python层包装，可以用来调用V8引擎来执行JS代码。最新版本2010，已经年久失修，并且存在内存泄漏的问题，<strong>不推荐使用</strong>。</p>
-<ol start="2">
-<li>Js2Py</li>
+<ol>
+<li><p>Js2Py</p>
+<p>Js2Py是一个纯Python实现的JavaScript解释器和翻译器。虽然2019年依然有更新，但是也是6月份的事情，而且它的issues里有很多的bug未修复(<a class="link" target="_blank" rel="noopener" href="https://github.com/PiotrDabkowski/Js2Py/issues)。">https://github.com/PiotrDabkowski/Js2Py/issues)。<i class="fas fa-external-link-alt"></i></a></p>
+</li>
 </ol>
-<p> Js2Py是一个纯Python实现的JavaScript解释器和翻译器。虽然2019年依然有更新，但是也是6月份的事情，而且它的issues里有很多的bug未修复(<a class="link" target="_blank" rel="noopener" href="https://github.com/PiotrDabkowski/Js2Py/issues)%E3%80%82">https://github.com/PiotrDabkowski/Js2Py/issues)。<i class="fas fa-external-link-alt"></i></a></p>
 <p>解释器部分：性能不高且存在一些bug。翻译器部分：对于高度混淆的大型JS会转换失败，而且转换出来的代码可读性差，性能不高。<strong>不推荐使用</strong>。</p>
-<ol start="3">
+<ol>
 <li>PyMiniRacer</li>
 </ol>
 <p>同样是V8引擎的包装，和PyV8效果一样。一个继任PyExecJS和PyV8的库。而且是一个较新的库，不知道有什么坑。<strong>可以尝试</strong>。</p>
-<ol start="4">
+<ol>
 <li>PyExecJS</li>
 </ol>
 <p>一个最开始诞生于Ruby中的库，后来被移植到了Python上。有多个引擎可选，但一般我们会选择使用Node作为引擎执行代码。</p>
 <p>缺点：执行大型JS时会有点慢，特殊编码的输入或输出参数会出现报错的情况(可以把输入或输出的参数使用Base64编码一下)。总体而言<strong>推荐使用</strong></p>
-<ol start="5">
+<ol>
 <li>Selenium</li>
 </ol>
 <p>一个web自动化测试框架，可以驱动各种浏览器进行模拟人工操作。用于渲染页面以方便提取数据或过验证码。也可以用来执行JS代码。</p>
-<ol start="6">
+<ol>
 <li>Pyppeteer</li>
 </ol>
 <p>Puppeteer的Python版本，是第三方开发的，是一个Web自动化测试框架。原生支持以协程的方式调用，同时性能比Selenium更好。对于使用Asyncio+Aiohttp写爬虫的人而言可以直接使用。可以直接驱动浏览器来执行JS代码。</p>
-<ol start="6">
+<ol>
 <li>Playwright</li>
 </ol>
 <p>微软开发的Web自动化测试框架，有多种语言的版本，支持同步与异步两种方式，也可以直接驱动浏览器来执行JS代码。</p>
@@ -369,37 +370,27 @@ mjx-container[display="true"] + br {
 <h5 id="PyExecJS使用"><a href="#PyExecJS使用" class="headerlink" title="PyExecJS使用"></a>PyExecJS使用</h5><p>环境准备：推荐安装Nodejs，安装方便且执行效率高。然后通过<code>pip install pyexecjs</code>来安装PyExecJS。</p>
 <p>然后打开终端，执行下面2行代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> execjs</span><br><span class="line">execjs.get().name</span><br></pre></td></tr></table></figure>
-
 <p>如果结果如下，证明PyExecJS使用的引擎是NodeJS：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202101601281.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220210160058945"></p>
 <p>如果不是，则需要手动配置一下使用的引擎，编辑系统环境变量设置如下变量即可：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> EXECJS_RUNTIME=<span class="string">"Node"</span></span><br></pre></td></tr></table></figure>
-
 <p>配置好PyExecJS后，看一下使用代码实例：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> execjs</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">js_text = <span class="string">"""</span></span><br><span class="line"><span class="string">function hello(str) { return str; }</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line">ctx = execjs.<span class="built_in">compile</span>(js_text)</span><br><span class="line">res = ctx.call(<span class="string">"hello"</span>, <span class="string">"hello, world!"</span>)</span><br><span class="line"><span class="built_in">print</span>(res)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>首先通过execjs的compile方法将js代码编译好之后保存在一个context中，然后调用context的call方法去执行js代码中的某一个function。</p>
 <h4 id="使用NodeJS调用JS"><a href="#使用NodeJS调用JS" class="headerlink" title="使用NodeJS调用JS"></a>使用NodeJS调用JS</h4><p>简单来说就是，提供一个可以执行JS的HTTP API，然后通过调用这个API来执行JS并获取想要的结果。</p>
 <ol>
 <li>首先将要执行的JS单独封装成一个或者多个文件</li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> add = <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>{</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = {</span><br><span class="line">    add</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-
 <p>这里只是一个演示，实际可能是一段很复杂的代码逻辑。</p>
-<ol start="2">
+<ol>
 <li>然后使用Node搭建一个Express服务</li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">var</span> app = express()</span><br><span class="line"><span class="keyword">var</span> sum = <span class="built_in">require</span>(<span class="string">"./sum"</span>)</span><br><span class="line"><span class="keyword">var</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>)</span><br><span class="line">app.use(bodyParser.json())</span><br><span class="line">app.use(bodyParser.urlencoded({<span class="attr">extended</span>: <span class="literal">false</span>}))</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">"/sum"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>{</span><br><span class="line">    <span class="keyword">let</span> params = req.query</span><br><span class="line">    <span class="keyword">let</span> a = <span class="built_in">parseInt</span>(params.a)</span><br><span class="line">    <span class="keyword">let</span> b = <span class="built_in">parseInt</span>(params.b)</span><br><span class="line">    res.send(sum.add(a, b).toString())</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">8081</span>, <span class="function">() =&gt;</span> {</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="3">
+<ol>
 <li>最后Python客户端去调用这个服务，拿到JS代码执行之后的结果</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">data = {</span><br><span class="line">    <span class="string">"a"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">"b"</span>: <span class="number">2</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">resp = requests.get(<span class="string">"http://127.0.0.1:8081/sum"</span>, params=data)</span><br><span class="line"><span class="built_in">print</span>(resp.text)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
 <p>这种方式存在的问题以及解决方案：</p>
 <ol>
 <li>Window对象</li>
@@ -410,10 +401,7 @@ mjx-container[display="true"] + br {
 </ul>
 <p>看下面代码示例：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 这些对象存在于js，而不存在于nodejs，比如window，document, screen</span></span><br><span class="line"><span class="comment">// 2. 这些对象的属性 是一个值。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="built_in">window</span> = {}</span><br><span class="line"><span class="comment">// window.btoa = function() ...</span></span><br><span class="line"><span class="keyword">var</span> <span class="built_in">document</span> = {}</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span> = {<span class="string">"location"</span>: {<span class="string">"href"</span>: <span class="string">"https://bbs.nightteam.cn/member.php?mod=register"</span>}}</span><br><span class="line"><span class="keyword">var</span> screen = {<span class="string">"width"</span>: <span class="number">900</span>, <span class="string">"height"</span>: <span class="number">1200</span>}</span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="2">
+<ol>
 <li>Base64</li>
 </ol>
 <p>window.btoa在NodeJS中不存在，可以使用Buffer.from(“Python3”).toString(“base64”)来代替。</p>

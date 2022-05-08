@@ -335,7 +335,7 @@ mjx-container[display="true"] + br {
         
 
         <div class="article-content markdown-body">
-            <h4 id="Charlse"><a href="#Charlse" class="headerlink" title="Charlse"></a>Charlse</h4><p><a class="link" target="_blank" rel="noopener" href="http://charlesproxy.com/">Charlse<i class="fas fa-external-link-alt"></i></a>是一个HTTP/HTTPS抓包工具，支持Windows/Linux/Mac平台。功能包含截获请求，过滤请求，重发请求，设置断点，模拟网速，反向代理等。</p>
+            <h4 id="Charlse"><a href="#Charlse" class="headerlink" title="Charlse"></a>Charlse</h4><p><a class="link" target="_blank" rel="noopener" href="http://charlesproxy.com">Charlse<i class="fas fa-external-link-alt"></i></a>是一个HTTP/HTTPS抓包工具，支持Windows/Linux/Mac平台。功能包含截获请求，过滤请求，重发请求，设置断点，模拟网速，反向代理等。</p>
 <h5 id="安装证书"><a href="#安装证书" class="headerlink" title="安装证书"></a>安装证书</h5><p>抓取PC端HTTPS的请求时，如果没有配置Charles证书，会出现如下报错：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202151527989.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220215152744261"></p>
 <p>此时需要安装Charles证书，步骤如下(以Mac环境为例，其他类似)：</p>
@@ -385,14 +385,14 @@ mjx-container[display="true"] + br {
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202151644218.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220215164451184"></p>
 <p>第二种方式，选中某一个请求，然后右键，点击Repeat：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202151646081.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220215164611051"></p>
-<ol start="2">
+<ol>
 <li>编辑请求</li>
 </ol>
 <p>编辑请求后重发，可以方便我们不写一行代码去调研某一个请求的关键点，非常方便我们进行调试，选中某一个请求，点击修改按钮：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202151649499.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220215164921556"></p>
 <p>可以修改请求的URL，请求的参数，请求的Header等等：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202151651143.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220215165128661"></p>
-<ol start="3">
+<ol>
 <li>Repeat Advanced</li>
 </ol>
 <p>选中某一个请求，右键点击Repeat Advanced：</p>
@@ -417,7 +417,7 @@ mjx-container[display="true"] + br {
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202151747859.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220215174742827"></p>
 <p>勾选Enable Reverse Proxies，然后点击Add添加规则。Local Port表示本地的端口，Local address表示本地地址，Remote Host表示远程地址，Remote Port表示远程端口，上图的含义表示将httpbin.org反向代理到本地的localhost:8080地址上。所以此时在浏览器地址栏中访问localhost:8080实际上访问的是httpbin.org：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202151751789.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220215175118759"></p>
-<p>下面介绍第二种方式：相当于如果我们请求一个URL的话，我们可以把这个URL它的一个Response转发到一个Remote地址或者说我们用本地的一个地址。 我们以网址<a class="link" target="_blank" rel="noopener" href="https://quotes.toscrape.com/js/%E4%B8%BA%E4%BE%8B%E3%80%82">https://quotes.toscrape.com/js/为例。<i class="fas fa-external-link-alt"></i></a></p>
+<p>下面介绍第二种方式：相当于如果我们请求一个URL的话，我们可以把这个URL它的一个Response转发到一个Remote地址或者说我们用本地的一个地址。 我们以网址<a class="link" target="_blank" rel="noopener" href="https://quotes.toscrape.com/js/为例。">https://quotes.toscrape.com/js/为例。<i class="fas fa-external-link-alt"></i></a></p>
 <p>重新抓包，看下网页源代码：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202151838695.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220215183821967"></p>
 <p>内容比较简单，我们看到有一块JSON的数据，我们修改把Response映射到本地的一个文本文件，这样我们就可以完成Response的修改了。我们先保存Response到本地的一个文件，然后修改这个文件，主要修改2个地方，第一个是把JSON里面的第一项Text值修改为Hello, world。第二个是在渲染的地方加上debugger关键词，然后保存文件。</p>

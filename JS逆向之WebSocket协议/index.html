@@ -361,10 +361,8 @@ mjx-container[display="true"] + br {
 <h4 id="握手协议"><a href="#握手协议" class="headerlink" title="握手协议"></a>握手协议</h4><p>WebSocket 是独立的、创建在TCP上的协议。Websocket 通过HTTP</p>
 <h5 id="协议说明"><a href="#协议说明" class="headerlink" title="协议说明"></a>协议说明</h5><p>客户端请求：</p>
  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GET /chat HTTP/1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">Origin: http://example.com</span><br><span class="line">Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==</span><br><span class="line">Sec-WebSocket-Protocol: chat, superchat</span><br><span class="line">Sec-WebSocket-Version: 13</span><br></pre></td></tr></table></figure>
-
 <p>服务器回应：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 101 Switching Protocols</span><br><span class="line">Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=</span><br><span class="line">Sec-WebSocket-Protocol: chat</span><br></pre></td></tr></table></figure>
-
 <p>字段说明：</p>
 <ul>
 <li>Connection必须设置Upgrade，表示客户端希望连接升级。</li>
@@ -375,22 +373,15 @@ mjx-container[display="true"] + br {
 </ul>
 <h4 id="WebSocket-NodeJS版的客户端API"><a href="#WebSocket-NodeJS版的客户端API" class="headerlink" title="WebSocket NodeJS版的客户端API"></a>WebSocket NodeJS版的客户端API</h4><h5 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h5><p>客户端代码：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> WebSocket = <span class="built_in">require</span>(<span class="string">'ws'</span>)</span><br><span class="line"><span class="keyword">const</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">'ws://localhost:3000'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接受</span></span><br><span class="line">ws.on(<span class="string">'message'</span>, <span class="function">(<span class="params">message</span>) =&gt;</span> {</span><br><span class="line">    <span class="built_in">console</span>.log(message.toString())</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当数字达到 10 时，断开连接</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">Number</span>.parseInt(message) === <span class="number">10</span>) {</span><br><span class="line">        ws.send(<span class="string">'close'</span>);</span><br><span class="line">        ws.close()</span><br><span class="line">    }</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
-
-
-
 <p>服务端代码：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> WebSocket = <span class="built_in">require</span>(<span class="string">'ws'</span>)</span><br><span class="line"><span class="keyword">const</span> WebSocketServer = WebSocket.Server;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 websocket 服务器 监听在 3000 端口</span></span><br><span class="line"><span class="keyword">const</span> wss = <span class="keyword">new</span> WebSocketServer({<span class="attr">port</span>: <span class="number">3000</span>})</span><br><span class="line"></span><br><span class="line"><span class="comment">// 服务器被客户端连接</span></span><br><span class="line">wss.on(<span class="string">'connection'</span>, <span class="function">(<span class="params">ws</span>) =&gt;</span> {</span><br><span class="line">    <span class="comment">// 通过 ws 对象，就可以获取到客户端发送过来的信息和主动推送信息给客户端</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">setInterval</span>(<span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>{</span><br><span class="line">        ws.send(i++) <span class="comment">// 每隔 1 秒给连接方报一次数</span></span><br><span class="line">    }, <span class="number">1000</span>)</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
-
-
-
 <h5 id="详细API介绍"><a href="#详细API介绍" class="headerlink" title="详细API介绍"></a>详细API介绍</h5><ol>
 <li>WebSocket 构造函数</li>
 </ol>
 <p>WebSocket 对象作为一个构造函数，用于新建 WebSocket 实例。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">'ws://localhost:8080'</span>);</span><br></pre></td></tr></table></figure>
-
 <p>执行上面语句之后，客户端就会与服务器进行连接。</p>
-<ol start="2">
+<ol>
 <li>webSocket.readyState</li>
 </ol>
 <p><code>readyState</code>属性返回实例对象的当前状态，共有四种。</p>
@@ -402,73 +393,47 @@ mjx-container[display="true"] + br {
 </ul>
 <p>下面是一个示例：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (ws.readyState) {</span><br><span class="line">  <span class="keyword">case</span> WebSocket.CONNECTING:</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> WebSocket.OPEN:</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> WebSocket.CLOSING:</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> WebSocket.CLOSED:</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">    <span class="comment">// this never happens</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="3">
+<ol>
 <li>webSocket.onopen</li>
 </ol>
 <p>实例对象的<code>onopen</code>属性，用于指定连接成功后的回调函数。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ws.onopen = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{</span><br><span class="line">  ws.send(<span class="string">'Hello Server!'</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-
 <p>如果要指定多个回调函数，可以使用<code>addEventListener</code>方法。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ws.addEventListener(<span class="string">'open'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>{</span><br><span class="line">  ws.send(<span class="string">'Hello Server!'</span>);</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="4">
+<ol>
 <li>webSocket.onclose</li>
 </ol>
 <p>实例对象的<code>onclose</code>属性，用于指定连接关闭后的回调函数。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ws.onclose = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>{</span><br><span class="line">  <span class="keyword">var</span> code = event.code;</span><br><span class="line">  <span class="keyword">var</span> reason = event.reason;</span><br><span class="line">  <span class="keyword">var</span> wasClean = event.wasClean;</span><br><span class="line">  <span class="comment">// handle close event</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">ws.addEventListener(<span class="string">"close"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>{</span><br><span class="line">  <span class="keyword">var</span> code = event.code;</span><br><span class="line">  <span class="keyword">var</span> reason = event.reason;</span><br><span class="line">  <span class="keyword">var</span> wasClean = event.wasClean;</span><br><span class="line">  <span class="comment">// handle close event</span></span><br><span class="line">});</span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="5">
+<ol>
 <li>webSocket.onmessage</li>
 </ol>
 <p>实例对象的<code>onmessage</code>属性，用于指定收到服务器数据后的回调函数。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>{</span><br><span class="line">  <span class="keyword">var</span> data = event.data;</span><br><span class="line">  <span class="comment">// 处理数据</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">ws.addEventListener(<span class="string">"message"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>{</span><br><span class="line">  <span class="keyword">var</span> data = event.data;</span><br><span class="line">  <span class="comment">// 处理数据</span></span><br><span class="line">});</span><br></pre></td></tr></table></figure>
-
 <p>注意，服务器数据可能是文本，也可能是二进制数据（<code>blob</code>对象或<code>Arraybuffer</code>对象）。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>{</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> event.data === <span class="built_in">String</span>) {</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Received data string"</span>);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(event.data <span class="keyword">instanceof</span> <span class="built_in">ArrayBuffer</span>){</span><br><span class="line">    <span class="keyword">var</span> buffer = event.data;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Received arraybuffer"</span>);</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-
 <p>除了动态判断收到的数据类型，也可以使用<code>binaryType</code>属性，显式指定收到的二进制数据类型。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 收到的是 blob 数据</span></span><br><span class="line">ws.binaryType = <span class="string">"blob"</span>;</span><br><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>{</span><br><span class="line">  <span class="built_in">console</span>.log(e.data.size);</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="comment">// 收到的是 ArrayBuffer 数据</span></span><br><span class="line">ws.binaryType = <span class="string">"arraybuffer"</span>;</span><br><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>{</span><br><span class="line">  <span class="built_in">console</span>.log(e.data.byteLength);</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="6">
+<ol>
 <li>webSocket.send()</li>
 </ol>
 <p>实例对象的<code>send()</code>方法用于向服务器发送数据。</p>
 <p>发送文本的例子。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ws.send(<span class="string">'your message'</span>);</span><br></pre></td></tr></table></figure>
-
 <p>发送 Blob 对象的例子。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> file = <span class="built_in">document</span></span><br><span class="line">  .querySelector(<span class="string">'input[type="file"]'</span>)</span><br><span class="line">  .files[<span class="number">0</span>];</span><br><span class="line">ws.send(file);</span><br></pre></td></tr></table></figure>
-
 <p>发送 ArrayBuffer 对象的例子。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Sending canvas ImageData as ArrayBuffer</span></span><br><span class="line"><span class="keyword">var</span> img = canvas_context.getImageData(<span class="number">0</span>, <span class="number">0</span>, <span class="number">400</span>, <span class="number">320</span>);</span><br><span class="line"><span class="keyword">var</span> binary = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(img.data.length);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; img.data.length; i++) {</span><br><span class="line">  binary[i] = img.data[i];</span><br><span class="line">}</span><br><span class="line">ws.send(binary.buffer);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="7">
+<ol>
 <li>webSocket.bufferedAmount</li>
 </ol>
 <p>实例对象的<code>bufferedAmount</code>属性，表示还有多少字节的二进制数据没有发送出去。它可以用来判断发送是否结束。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = <span class="keyword">new</span> <span class="built_in">ArrayBuffer</span>(<span class="number">10000000</span>);</span><br><span class="line">socket.send(data);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (socket.bufferedAmount === <span class="number">0</span>) {</span><br><span class="line">  <span class="comment">// 发送完毕</span></span><br><span class="line">} <span class="keyword">else</span> {</span><br><span class="line">  <span class="comment">// 发送还没结束</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="8">
+<ol>
 <li>webSocket.onerror</li>
 </ol>
 <p>实例对象的<code>onerror</code>属性，用于指定报错时的回调函数。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">socket.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>{</span><br><span class="line">  <span class="comment">// handle error event</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">socket.addEventListener(<span class="string">"error"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>{</span><br><span class="line">  <span class="comment">// handle error event</span></span><br><span class="line">});</span><br></pre></td></tr></table></figure>
-
-
-
 <h4 id="逆向案例介绍"><a href="#逆向案例介绍" class="headerlink" title="逆向案例介绍"></a>逆向案例介绍</h4><h5 id="蝌蚪聊天室"><a href="#蝌蚪聊天室" class="headerlink" title="蝌蚪聊天室"></a>蝌蚪聊天室</h5><p>网址：<a class="link" target="_blank" rel="noopener" href="http://kedou.workerman.net/">http://kedou.workerman.net/<i class="fas fa-external-link-alt"></i></a></p>
 <p>按照JS逆向的步骤，即抓包，分析包信息，调试，本地运行。先进行抓包，网络面板过滤器选择WS，如下：</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203272250420.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220327225044186"></p>
