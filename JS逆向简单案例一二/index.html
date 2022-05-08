@@ -26,7 +26,119 @@
     KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.jpeg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -219,191 +331,76 @@
         
 
         <div class="article-content markdown-body">
-            <div align="middle"><iframe width="560" height="315" src="https://www.youtube.com/embed/MYFRc6q1bwI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+            <div align="middle"><iframe width="560" height="315" src="https://www.youtube.com/embed/MYFRc6q1bwI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 
 
 
 <blockquote>
 <p>免责声明：<strong>本文章中所有内容仅供学习交流，抓包内容、敏感网址、数据接口均已做脱敏处理，严禁用于商业用途和非法用途，否则由此产生的一切后果均与作者无关，若有侵权，请联系我立即删除！</strong></p>
 </blockquote>
-<p>通过几个简单的案例对<a class="link"   target="_blank" rel="noopener" href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/" >JS逆向从入门到放弃<i class="fas fa-external-link-alt"></i></a>的基础篇的前6章的知识加以运用和巩固。</p>
+<p>通过几个简单的案例对<a class="link" target="_blank" rel="noopener" href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/">JS逆向从入门到放弃<i class="fas fa-external-link-alt"></i></a>的基础篇的前6章的知识加以运用和巩固。</p>
 <h5 id="某道翻译"><a href="#某道翻译" class="headerlink" title="某道翻译"></a>某道翻译</h5><p>网址：aHR0cHM6Ly9mYW55aS55b3VkYW8uY29tLw==</p>
 <p>首先抓包，分析请求的类型，参数特点，返回值特点。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231113102.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223111325964"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231113102.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223111325964"></p>
 <p>通过网络面板Fetch/XHR，找到需要的网络请求。</p>
 <p>查看返回结果为明文，不存在加密。</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">&quot;translateResult&quot;</span>:[[&#123;<span class="attr">&quot;tgt&quot;</span>:<span class="string">&quot;I love you&quot;</span>,<span class="attr">&quot;src&quot;</span>:<span class="string">&quot;我爱你&quot;</span>&#125;]],<span class="attr">&quot;errorCode&quot;</span>:<span class="number">0</span>,<span class="attr">&quot;type&quot;</span>:<span class="string">&quot;zh-CHS2en&quot;</span>,<span class="attr">&quot;smartResult&quot;</span>:&#123;<span class="attr">&quot;entries&quot;</span>:[<span class="string">&quot;&quot;</span>,<span class="string">&quot;I love you\r\n&quot;</span>],<span class="attr">&quot;type&quot;</span>:<span class="number">1</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{<span class="attr">"translateResult"</span>:[[{<span class="attr">"tgt"</span>:<span class="string">"I love you"</span>,<span class="attr">"src"</span>:<span class="string">"我爱你"</span>}]],<span class="attr">"errorCode"</span>:<span class="number">0</span>,<span class="attr">"type"</span>:<span class="string">"zh-CHS2en"</span>,<span class="attr">"smartResult"</span>:{<span class="attr">"entries"</span>:[<span class="string">""</span>,<span class="string">"I love you\r\n"</span>],<span class="attr">"type"</span>:<span class="number">1</span>}}</span><br></pre></td></tr></table></figure>
 
 
 
 <p>查看参数，大部分参数都是常量，只有salt, sign, Its, bv看着像是动态生成的。Its从名字和内容看，推测是13位的时间戳。sign和bv都是32位，且是字母和数字的混合，初步推算是md5加密。salt前13位跟Its一样，多了一位，推测是14位时间戳？🤪</p>
 <p>接下来断点调试参数生成的逻辑。通常有2种方式：第一种是根据参数名称，全局搜索查找相应的JS代码；第二种是根据请求的Initiator调用栈逐步分析参数生成的位置；第三种打上XHR/fetch Breakpoints断点进行调试，然后分析Call Stack。</p>
 <p>第一种方法，打开开发者工具的全局搜索，搜索sign关键词：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231404320.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223140405239"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231404320.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223140405239"></p>
 <p>然后很轻松的找到了发送XHR请求的参数data这个object</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231407464.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223140657071"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231407464.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223140657071"></p>
 <p>鼠标悬停到generateSaltSign(t)这个方法上，然后会展示点击进入到这个方法：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231427262.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223142733567"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231427262.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223142733567"></p>
 <p>可以看到代码比较简单，将它改写成Python代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_salt_sign</span>(<span class="params">content</span>):</span></span><br><span class="line">    n = content[:<span class="number">5000</span>]</span><br><span class="line">    t = md5(navigator[<span class="string">&quot;appVersion&quot;</span>])</span><br><span class="line">    r = <span class="built_in">str</span>(<span class="built_in">int</span>(time() * <span class="number">1000</span>))</span><br><span class="line">    i = r + <span class="built_in">str</span>(random.randint(<span class="number">0</span>, <span class="number">9</span>))</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="string">&quot;lts&quot;</span>: r,</span><br><span class="line">        <span class="string">&quot;bv&quot;</span>: t,</span><br><span class="line">        <span class="string">&quot;salt&quot;</span>: i,</span><br><span class="line">        <span class="string">&quot;sign&quot;</span>: md5(<span class="string">&quot;fanyideskweb&quot;</span> + n + i + <span class="string">&quot;Y2FYu%TNSbMCxc3t2u^XT&quot;</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_salt_sign</span>(<span class="params">content</span>):</span></span><br><span class="line">    n = content[:<span class="number">5000</span>]</span><br><span class="line">    t = md5(navigator[<span class="string">"appVersion"</span>])</span><br><span class="line">    r = <span class="built_in">str</span>(<span class="built_in">int</span>(time() * <span class="number">1000</span>))</span><br><span class="line">    i = r + <span class="built_in">str</span>(random.randint(<span class="number">0</span>, <span class="number">9</span>))</span><br><span class="line">    <span class="keyword">return</span> {</span><br><span class="line">        <span class="string">"lts"</span>: r,</span><br><span class="line">        <span class="string">"bv"</span>: t,</span><br><span class="line">        <span class="string">"salt"</span>: i,</span><br><span class="line">        <span class="string">"sign"</span>: md5(<span class="string">"fanyideskweb"</span> + n + i + <span class="string">"Y2FYu%TNSbMCxc3t2u^XT"</span>)</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
 
 <p>其中的生成sign的最后一串常量会根据用户的Cookie发生变化。我们之前的推测基本都是对的，除了salt。salt是13位时间戳加上随机的一个数字。</p>
 <p>有了几个关键参数的生成代码，我们从Network面板复制出XHR请求的cURL，然后找一个在线的cURL to Python工具，快速生成Python代码，然后补上我们写好的generate_salt_sign方法，运行代码，结果如下：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231453817.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223145314773"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231453817.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223145314773"></p>
 <h5 id="某度翻译"><a href="#某度翻译" class="headerlink" title="某度翻译"></a>某度翻译</h5><p>网址：aHR0cHM6Ly9mYW55aS55b3VkYW8uY29tLw==</p>
 <p>老规矩，先抓包。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231508799.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223150801765"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231508799.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223150801765"></p>
 <p>找到一个XHR请求，返回结果为明文，不需要解密。参数有2个sign和token，token目测是md5。用第一种方式，打开开发者工具，全局搜索sign，发现搜索出来的结果非常多，主要是存在很多干扰，比如assign。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231524904.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223152341564"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231524904.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223152341564"></p>
 <p>这里介绍一个小技巧，如果搜索出来的干扰比较多的时候，不妨搜索“**,关键词:**”试试，为什么如此操作？因为发送XHR请求的时候，data都放在一个object中，我们知道，JS的Object格式都长这样：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">object = &#123;</span><br><span class="line">	<span class="attr">key1</span>: value,</span><br><span class="line">	<span class="attr">key2</span>: value2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">object = {</span><br><span class="line">	<span class="attr">key1</span>: value,</span><br><span class="line">	<span class="attr">key2</span>: value2</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 <p>然后JS文件基本都会压缩，所以要搜索的参数自然前边有个逗号，后边有个封号。我们按照这种方式搜索，结果如下：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231541228.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223154110965"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231541228.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223154110965"></p>
 <p>可以看到明显搜索结果更加精确了，结果也少了。然后我们逐条分析，最终定位到我们参数生成的代码地方，然后打上断点开始调试：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231543795.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223154356745"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231543795.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223154356745"></p>
 <p>没有想到的是token竟然是一个常量。我们看他的值：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231544557.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223154444310"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231544557.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223154444310"></p>
 <p>那就更简单了，只需要找到sign的生成方法即可。可以看到sign是调用了一个L方法生成，接受一个参数e，这个e是我们传入的要翻译的text。我们点击进入L方法：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231546855.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223154647115"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231546855.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223154647115"></p>
 <p>好了，接下来就到了扣JS和补全JS的环节了。我们扣出来这个方法，然后用node去执行：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231621844.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223162130736"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231621844.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223162130736"></p>
 <p>报错，i未定义，我们分析代码，补全i的定义：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231638927.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223163824429"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231638927.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223163824429"></p>
 <p>运行接着报错，意料之中，</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231623640.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223162330599"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231623640.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223162330599"></p>
 <p>u没有定义，我们从这一行代码可以看到，u的值来自于window这个object：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231624988.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223162424396"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231624988.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223162424396"></p>
 <p>这个l是一个固定的字符串，值为”gtk”，然后u这是取得object的这个gtk属性，也是一个定植，那么我们补全这个window即可：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231628932.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223162840470"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231638074.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223163853288"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231628932.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223162840470"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231638074.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223163853288"></p>
 <p>然后接着运行代码，接着报错：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231639894.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223163920006"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231639894.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223163920006"></p>
 <p>n这个方法没有定义，我们回到源码，将n的定义拷贝进来：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231643928.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223164310865"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231643928.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223164310865"></p>
 <p>然后再次运行代码，终于拿到了sign的值：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231657096.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223165713366"
-                ></p>
-<p>这里很明显看到我们扣出来的JS比较大， 如果对代码进行分析然后改写成Python会比较麻烦，所以利用<a class="link"   target="_blank" rel="noopener" href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E8%B0%83%E7%94%A8JS%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/" >JS逆向之调用JS的两种方式<i class="fas fa-external-link-alt"></i></a>，将JS代码用express框架做成一个服务供Python端去调用。效果如下：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231657620.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223165732284"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231657096.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223165713366"></p>
+<p>这里很明显看到我们扣出来的JS比较大， 如果对代码进行分析然后改写成Python会比较麻烦，所以利用<a class="link" target="_blank" rel="noopener" href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E8%B0%83%E7%94%A8JS%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/">JS逆向之调用JS的两种方式<i class="fas fa-external-link-alt"></i></a>，将JS代码用express框架做成一个服务供Python端去调用。效果如下：</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231657620.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223165732284"></p>
 <p>然后就是比较机械性的工作了，复制cURL转成Python代码，然后修改sign通过走接口去获取，最后贴一张最终执行的效果图：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231708067.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220223170807972"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231708067.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220223170807972"></p>
 <h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>通过几个简单的案例，回顾了下开发者面板的一些使用方式，包括全局搜索，断点调试跟踪，调用栈分析，扣JS以及Python调用JS的几种方式。代码已经上传，扫码关注公众号，公众号内回复关键字<code>01</code>，即可获取本文介绍案例的完整代码。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202202231720872.jpg"
-                      alt="qrcode_for_gh_509fdefd3c81_258"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202202231720872.jpg" alt="qrcode_for_gh_509fdefd3c81_258"></p>
 
         </div>
 

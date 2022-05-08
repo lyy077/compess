@@ -26,7 +26,119 @@
     KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.jpeg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -240,7 +352,7 @@
 <h5 id="颜文字网络表情编码解混淆"><a href="#颜文字网络表情编码解混淆" class="headerlink" title="颜文字网络表情编码解混淆"></a>颜文字网络表情编码解混淆</h5><p>将Javascript代码转换为颜文字网络表情的编码以达到混淆的目的。</p>
 <p>原理：这类混淆通常都是使用构造函数将字符串作为代码运行。</p>
 <p>例如：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sum = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;return a + b&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(sum(<span class="number">2</span>, <span class="number">6</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sum = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'return a + b'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(sum(<span class="number">2</span>, <span class="number">6</span>))</span><br></pre></td></tr></table></figure>
 
 
 
@@ -252,7 +364,7 @@
 <h5 id="符号组成的代码反混淆"><a href="#符号组成的代码反混淆" class="headerlink" title="符号组成的代码反混淆"></a>符号组成的代码反混淆</h5><p>将Javascript代码转换成仅由符号组成的代码以达到混淆的目的。</p>
 <p>原理：这类混淆同常使用构造函数将字符串作为代码运行。</p>
 <p>转换流程：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>(<span class="string">&quot;alert(1)&quot;</span>)();</span><br><span class="line">(<span class="number">0</span>)[<span class="string">&quot;constructor&quot;</span>][<span class="string">&quot;constructor&quot;</span>](<span class="string">&quot;alert(1)&quot;</span>)();</span><br><span class="line">$ = <span class="string">&quot;constructor&quot;</span>;</span><br><span class="line">$$ = <span class="string">&quot;alert(1)&quot;</span>;</span><br><span class="line">$_ = ~[];</span><br><span class="line">($_)[$][$]($$)();</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>(<span class="string">"alert(1)"</span>)();</span><br><span class="line">(<span class="number">0</span>)[<span class="string">"constructor"</span>][<span class="string">"constructor"</span>](<span class="string">"alert(1)"</span>)();</span><br><span class="line">$ = <span class="string">"constructor"</span>;</span><br><span class="line">$$ = <span class="string">"alert(1)"</span>;</span><br><span class="line">$_ = ~[];</span><br><span class="line">($_)[$][$]($$)();</span><br></pre></td></tr></table></figure>
 
 <p>解决办法：</p>
 <ol>
@@ -270,7 +382,7 @@
 </li>
 </ol>
 <h5 id="Packed混淆"><a href="#Packed混淆" class="headerlink" title="Packed混淆"></a>Packed混淆</h5><p>将JS代码打包成以eval开头，特征字符串是function(p, a, c, k, e, r)或者是function(p, a, c, k, e, d)的代码。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span>(<span class="function"><span class="keyword">function</span> (<span class="params">p, a, c, k, e, d</span>) </span>&#123;</span><br><span class="line">    e = <span class="function"><span class="keyword">function</span> (<span class="params">c</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (c &lt; a ? <span class="string">&quot;&quot;</span> : e(<span class="built_in">parseInt</span>(c / a))) + ((c = c % a) &gt; <span class="number">35</span> ? <span class="built_in">String</span>.fromCharCode(c + <span class="number">29</span>) : c.toString(<span class="number">36</span>))</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="string">&#x27;&#x27;</span>.replace(<span class="regexp">/^/</span>, <span class="built_in">String</span>)) &#123;</span><br><span class="line">        <span class="keyword">while</span> (c--) d[e(c)] = k[c] || e(c);</span><br><span class="line">        k = [<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> d[e]</span><br><span class="line">        &#125;];</span><br><span class="line">        e = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;\\w+&#x27;</span></span><br><span class="line">        &#125;;</span><br><span class="line">        c = <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ;</span><br><span class="line">    <span class="keyword">while</span> (c--) <span class="keyword">if</span> (k[c]) p = p.replace(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">&#x27;\\b&#x27;</span> + e(c) + <span class="string">&#x27;\\b&#x27;</span>, <span class="string">&#x27;g&#x27;</span>), k[c]);</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;(<span class="string">&#x27;0&#x27;</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="string">&#x27;hello!||&#x27;</span>.split(<span class="string">&#x27;|&#x27;</span>), <span class="number">0</span>, &#123;&#125;))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span>(<span class="function"><span class="keyword">function</span> (<span class="params">p, a, c, k, e, d</span>) </span>{</span><br><span class="line">    e = <span class="function"><span class="keyword">function</span> (<span class="params">c</span>) </span>{</span><br><span class="line">        <span class="keyword">return</span> (c &lt; a ? <span class="string">""</span> : e(<span class="built_in">parseInt</span>(c / a))) + ((c = c % a) &gt; <span class="number">35</span> ? <span class="built_in">String</span>.fromCharCode(c + <span class="number">29</span>) : c.toString(<span class="number">36</span>))</span><br><span class="line">    };</span><br><span class="line">    <span class="keyword">if</span> (!<span class="string">''</span>.replace(<span class="regexp">/^/</span>, <span class="built_in">String</span>)) {</span><br><span class="line">        <span class="keyword">while</span> (c--) d[e(c)] = k[c] || e(c);</span><br><span class="line">        k = [<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>{</span><br><span class="line">            <span class="keyword">return</span> d[e]</span><br><span class="line">        }];</span><br><span class="line">        e = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'\\w+'</span></span><br><span class="line">        };</span><br><span class="line">        c = <span class="number">2</span>;</span><br><span class="line">    }</span><br><span class="line">    ;</span><br><span class="line">    <span class="keyword">while</span> (c--) <span class="keyword">if</span> (k[c]) p = p.replace(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'\\b'</span> + e(c) + <span class="string">'\\b'</span>, <span class="string">'g'</span>), k[c]);</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">}(<span class="string">'0'</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="string">'hello!||'</span>.split(<span class="string">'|'</span>), <span class="number">0</span>, {}))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>反混淆方法：</p>
 <p>将eval改成console.log，在控制台上输出。</p>

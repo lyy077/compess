@@ -26,7 +26,119 @@
     KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.jpeg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -224,44 +336,19 @@
 
         <div class="article-content markdown-body">
             <p>Javascript，它是网站的一部分，我们的网站大部分情况下都会有Javascript的执行。有了它，我们整个网站的功能会变得更加的强大。但是对于我们爬虫来说，比如说我们用requests来请求某一个网站的时候，我们得到的结果实际上可能与浏览器得到的真实看到的结果或者说在浏览器开发者工具Eelements窗口看到的结果是不一样的。这个就是由于Javascript页面的渲染导致的结果不同，这样就会对爬虫产生一个较大的干扰。如果我们能禁用后期的Javascript渲染，就可以在浏览器中看到真实的结果与我们requests请求得到的结果一致了，这样就非常方便了，那么如何做到这一个功能呢？这篇文章就会介绍Toggle Javascript的Chrome插件。</p>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>打开<a class="link"   target="_blank" rel="noopener" href="https://chrome.google.com/webstore/category/extensions?hl=zh-CN" >Chrome 网上商店<i class="fas fa-external-link-alt"></i></a>，搜索Toggle Javascript，然后点击添加至Chrome即可。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>打开<a class="link" target="_blank" rel="noopener" href="https://chrome.google.com/webstore/category/extensions?hl=zh-CN">Chrome 网上商店<i class="fas fa-external-link-alt"></i></a>，搜索Toggle Javascript，然后点击添加至Chrome即可。</p>
 <p>添加完之后，点击浏览器右上角的扩展程序小图标，然后点击Toggle Javascript的固定按钮，将Toggle Javascript固定到菜单栏，方便以后使用。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161513854.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220216151324812"
-                ></p>
-<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>通过点击Toggle Javascript按钮来暂停或恢复JS的执行。以一个小说网站<a class="link"   target="_blank" rel="noopener" href="https://g.hongshu.com/nan.html" >红薯网<i class="fas fa-external-link-alt"></i></a>为例：</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202161513854.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220216151324812"></p>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>通过点击Toggle Javascript按钮来暂停或恢复JS的执行。以一个小说网站<a class="link" target="_blank" rel="noopener" href="https://g.hongshu.com/nan.html">红薯网<i class="fas fa-external-link-alt"></i></a>为例：</p>
 <p>我们随便点开一个小说的某一章：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161520089.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220216152044654"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202161520089.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220216152044654"></p>
 <p>这个页面实际上有部分内容是用Javascript渲染生成的，如果我们用requests请求的话，得到的页面的效果，就是我们禁用掉Javascript之后的效果，我们点击Toggle Javascript小图标：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161523551.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220216152307901"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202161523551.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220216152307901"></p>
 <p>我们可以看到标点符号没了，整个语句也变得不通顺了。我们如果用正常的requests请求的话就会得到这样一个效果。</p>
 <p>打开开发者工具，切换到Network面板，刷新页面，我们查看原生的请求，Preview的结果与我们通过Toggle Javascript禁用JS的结果是一摸一样的。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161526590.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220216152557041"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202161526590.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220216152557041"></p>
 <p>我们再看一下源码，有一些文字有一些span的占位符，后期通过JS渲染替换这些占位符，就可以渲染出真正的页面内容：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="http://img.heshipeng.com/202202161528961.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220216152850619"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="http://img.heshipeng.com/202202161528961.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220216152850619"></p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Toggle Javascript是一款Chrome浏览器插件，其主要功能是禁用或者执行页面的JS，在爬虫开发的过程中，通过该工具可以迅速的得到requests请求之后的页面结果，非常方便。</p>
 
         </div>

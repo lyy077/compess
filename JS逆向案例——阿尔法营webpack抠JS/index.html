@@ -26,7 +26,119 @@
     KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.jpeg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 <body>
@@ -230,86 +342,36 @@
 <h4 id="抠JS过程"><a href="#抠JS过程" class="headerlink" title="抠JS过程"></a>抠JS过程</h4><p>网址：aHR0cHM6Ly9hZXJmYXlpbmcuY29tLw==</p>
 <p>目标：登录接口的请求参数t和s分析。</p>
 <p>老规矩，先抓包。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202204061540833.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220406154058629"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204061540833.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220406154058629"></p>
 <p>可以看到请求参数中username和password都是明文，t参数目测是一个时间戳，s是一串加密之后的密文。</p>
 <p>从请求堆栈Initiator中一个个点进去，看看能否找到s生成的地方。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202204061545622.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220406154534518"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204061545622.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220406154534518"></p>
 <p>点击上面的文件，发现有个报错：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202204061546076.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220406154640011"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204061546076.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220406154640011"></p>
 <p>遇到这种<code>Could not load content for webpack:///</code>的错误，需要更改下浏览器的默认配置，Settings/Preferences/Sources，去掉Enable Javascript source maps的勾选。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202204061546397.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220406154623354"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204061546397.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220406154623354"></p>
 <p>修改配置之后，就可以看到相关JS文件的代码了。找到一块疑似加密的代码，如下：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202204061551050.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220406155132967"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204061551050.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220406155132967"></p>
 <p>window.Blockey.SecuritySalt，w和n都是固定的值。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202204061601020.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220406160129468"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204061601020.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220406160129468"></p>
 <p>根据上面生成s的代码，我们整理代码如下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">window</span> = <span class="built_in">global</span>;</span><br><span class="line"><span class="keyword">var</span> n = <span class="string">&quot;/WebApi/Users/Login&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_sign</span>(<span class="params">username, password</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="string">&quot;DUE$DEHFYE(YRUEHD*&amp;&quot;</span>;</span><br><span class="line">    <span class="keyword">let</span> w = <span class="string">&quot;username=&quot;</span> + username + <span class="string">&quot;&amp;&quot;</span> + <span class="string">&quot;password=&quot;</span> + password;</span><br><span class="line">    <span class="keyword">return</span> c.default((n + <span class="string">&quot;?&quot;</span> + w + x));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">window</span> = <span class="built_in">global</span>;</span><br><span class="line"><span class="keyword">var</span> n = <span class="string">"/WebApi/Users/Login"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_sign</span>(<span class="params">username, password</span>) </span>{</span><br><span class="line">    <span class="keyword">let</span> x = <span class="string">"DUE$DEHFYE(YRUEHD*&amp;"</span>;</span><br><span class="line">    <span class="keyword">let</span> w = <span class="string">"username="</span> + username + <span class="string">"&amp;"</span> + <span class="string">"password="</span> + password;</span><br><span class="line">    <span class="keyword">return</span> c.default((n + <span class="string">"?"</span> + w + x));</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
 
 
 <p>然后我们的目标就很明确了，就是抠出c.default的函数，填入到我们的JS文件，我们浏览器中点进去c.default函数：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202204061607543.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220406160747460"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204061607543.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220406160747460"></p>
 <p>我们上边猜想的t是一个时间戳，不准确，可以看到t是一个时间戳加上了一个固定的数值。然后s参数是一个Sha1算法生成的密文。</p>
 <p>我们继续点进去Sha1.hash函数：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202204061611573.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220406161134381"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204061611573.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220406161134381"></p>
 <p>然后将抠出来的JS函数一个个填充到JS文件中去，缺啥抠啥。具体详细过程不一步步展示了。最终整理的代码如下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="string">&quot;/WebApi/Users/Login&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> c = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> Sha1 = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">Sha1.hash = <span class="function"><span class="keyword">function</span>(<span class="params">n, t</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 代码较长，省略</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Sha1.f = <span class="function"><span class="keyword">function</span>(<span class="params">n, t, i, r</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (n) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> t &amp; i ^ ~t &amp; r;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> t ^ i ^ r;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> t &amp; i ^ t &amp; r ^ i &amp; r;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span> t ^ i ^ r</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Sha1.ROTL = <span class="function"><span class="keyword">function</span>(<span class="params">n, t</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> n &lt;&lt; t | n &gt;&gt;&gt; <span class="number">32</span> - t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Sha1.utf8Encode = <span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">unescape</span>(<span class="built_in">encodeURIComponent</span>(n))</span><br><span class="line">&#125;</span><br><span class="line">;</span><br><span class="line"></span><br><span class="line">c.default = <span class="function"><span class="keyword">function</span>(<span class="params">e, t</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> n = (<span class="keyword">new</span> <span class="built_in">Date</span>).getTime() + <span class="number">2592e6</span> + (t || <span class="number">3e4</span>)</span><br><span class="line">        , r = (e || <span class="string">&quot;&quot;</span>) + <span class="string">&quot;&amp;t=&quot;</span> + n;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">t</span>: n,</span><br><span class="line">        <span class="attr">s</span>: Sha1.hash(r)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_sign</span>(<span class="params">username, password</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="string">&quot;DUE$DEHFYE(YRUEHD*&amp;&quot;</span>;</span><br><span class="line">    <span class="keyword">let</span> w = <span class="string">&quot;username=&quot;</span> + username + <span class="string">&quot;&amp;&quot;</span> + <span class="string">&quot;password=&quot;</span> + password;</span><br><span class="line">    <span class="keyword">return</span> c.default((n + <span class="string">&quot;?&quot;</span> + w + x));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(get_sign(<span class="string">&quot;17777777777&quot;</span>, <span class="string">&quot;123456&quot;</span>));</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="string">"/WebApi/Users/Login"</span>;</span><br><span class="line"><span class="keyword">var</span> c = {};</span><br><span class="line"><span class="keyword">var</span> Sha1 = {};</span><br><span class="line"></span><br><span class="line">Sha1.hash = <span class="function"><span class="keyword">function</span>(<span class="params">n, t</span>) </span>{</span><br><span class="line">    <span class="comment">// 代码较长，省略</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Sha1.f = <span class="function"><span class="keyword">function</span>(<span class="params">n, t, i, r</span>) </span>{</span><br><span class="line">    <span class="keyword">switch</span> (n) {</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> t &amp; i ^ ~t &amp; r;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> t ^ i ^ r;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> t &amp; i ^ t &amp; r ^ i &amp; r;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span> t ^ i ^ r</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Sha1.ROTL = <span class="function"><span class="keyword">function</span>(<span class="params">n, t</span>) </span>{</span><br><span class="line">    <span class="keyword">return</span> n &lt;&lt; t | n &gt;&gt;&gt; <span class="number">32</span> - t</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Sha1.utf8Encode = <span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">unescape</span>(<span class="built_in">encodeURIComponent</span>(n))</span><br><span class="line">}</span><br><span class="line">;</span><br><span class="line"></span><br><span class="line">c.default = <span class="function"><span class="keyword">function</span>(<span class="params">e, t</span>) </span>{</span><br><span class="line">    <span class="keyword">var</span> n = (<span class="keyword">new</span> <span class="built_in">Date</span>).getTime() + <span class="number">2592e6</span> + (t || <span class="number">3e4</span>)</span><br><span class="line">        , r = (e || <span class="string">""</span>) + <span class="string">"&amp;t="</span> + n;</span><br><span class="line">    <span class="keyword">return</span> {</span><br><span class="line">        <span class="attr">t</span>: n,</span><br><span class="line">        <span class="attr">s</span>: Sha1.hash(r)</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_sign</span>(<span class="params">username, password</span>) </span>{</span><br><span class="line">    <span class="keyword">let</span> x = <span class="string">"DUE$DEHFYE(YRUEHD*&amp;"</span>;</span><br><span class="line">    <span class="keyword">let</span> w = <span class="string">"username="</span> + username + <span class="string">"&amp;"</span> + <span class="string">"password="</span> + password;</span><br><span class="line">    <span class="keyword">return</span> c.default((n + <span class="string">"?"</span> + w + x));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(get_sign(<span class="string">"17777777777"</span>, <span class="string">"123456"</span>));</span><br></pre></td></tr></table></figure>
 
 <p>输出结果，跟预期一致：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202204061618301.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220406161810100"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204061618301.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220406161810100"></p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>这个案例比较简单，没有什么难度，提这个案例主要目的有2点，第一就是遇到按照webpack方式组织的JS代码，不一定非得按照前面介绍的分五步走，先找模块加载器，然后编写自执行等等，一些简单的webpack可以直接去抠JS代码的。第二就是遇到``Could not load content for webpack:///`这种报错，需要去修改浏览器配置。</p>
 <h4 id="关于代码"><a href="#关于代码" class="headerlink" title="关于代码"></a>关于代码</h4><p>扫码关注微信号——逆向一步步，公众号内回复关键词<code>04</code>就可以获取本案例的全部代码。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202204061622110.jpg"
-                      alt="qrcode_for_gh_509fdefd3c81_258"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202204061622110.jpg" alt="qrcode_for_gh_509fdefd3c81_258"></p>
 
         </div>
 
