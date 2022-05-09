@@ -14,7 +14,7 @@
     
     
     
-    <title>JS代码安全防护原理——AST混淆原理 | Hexo</title>
+    <title>JS代码安全防护原理——AST混淆原理 | 何仕鹏的个人博客 | health,weath,freedom,lucky</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -25,7 +25,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS代码安全防护原理——AST混淆原理">
 <meta property="og:url" content="https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="何仕鹏的个人博客">
 <meta property="og:description" content="常量的混淆原理本篇所用的demo如下。接下来的案例都是围绕这个demo进行混淆。 12345678910Date.prototype.format &#x3D; function(formatStr) &amp;#123;    var str &#x3D; formatStr;    var Week &#x3D; [&amp;#x27;日&amp;#x27;, &amp;#x27;一&amp;#x27;, &amp;#x27;二&amp;#x27;, &amp;#x27;三&amp;#x27;">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://img.heshipeng.com/202203081500383.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img.heshipeng.com/202203081500383.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
     
-        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/atom.xml">
+        <link rel="alternate" type="application/atom+xml" title="何仕鹏的个人博客" href="/atom.xml">
     
     <link rel="shortcut icon" href="https://img.heshipeng.com/202205092054351.png">
     <link rel="stylesheet" href="/css/style.css?v=1.7.2">
@@ -97,6 +97,13 @@
               <a href="/categories"  >
                 <i class="icon icon-lg icon-th-list"></i>
                 Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/atom.xml"  >
+                <i class="icon icon-lg icon-feed"></i>
+                RSS
               </a>
             </li>
         
@@ -363,7 +370,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/&title=《JS代码安全防护原理——AST混淆原理》 — Hexo&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/&title=《JS代码安全防护原理——AST混淆原理》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -373,7 +380,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/&title=《JS代码安全防护原理——AST混淆原理》 — Hexo&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/&title=《JS代码安全防护原理——AST混淆原理》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -383,7 +390,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS代码安全防护原理——AST混淆原理》 — Hexo&url=https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/&via=https://blog.heshipeng.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS代码安全防护原理——AST混淆原理》 — 何仕鹏的个人博客&url=https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/&via=https://blog.heshipeng.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
@@ -524,7 +531,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/&title=《JS代码安全防护原理——AST混淆原理》 — Hexo&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/&title=《JS代码安全防护原理——AST混淆原理》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -534,7 +541,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/&title=《JS代码安全防护原理——AST混淆原理》 — Hexo&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/&title=《JS代码安全防护原理——AST混淆原理》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -544,7 +551,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS代码安全防护原理——AST混淆原理》 — Hexo&url=https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/&via=https://blog.heshipeng.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS代码安全防护原理——AST混淆原理》 — 何仕鹏的个人博客&url=https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/&via=https://blog.heshipeng.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
