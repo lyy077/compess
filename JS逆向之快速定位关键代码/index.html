@@ -1,751 +1,707 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
+    
+
+    
+
+    
+
+
+
     <meta charset="utf-8">
+    
+    
+    
+    
+    <title>JS逆向之快速定位关键代码 | Hexo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content="Hexo Theme Keep">
-    <meta name="description" content="Hexo Theme Keep">
-    <meta name="author" content="Shipeng He">
-    <meta name="baidu-site-verification" content="code-ALXTDYlBtB" />
-    <meta name="google-site-verification" content="code-ALXTDYlBtB" />
     
-    <title>
-        
-            JS逆向之快速定位关键代码 |
-        
-        拾光的逆羽
-    </title>
+    <meta name="theme-color" content="#3F51B5">
     
-<link rel="stylesheet" href="/css/style.css">
+    
+    <meta name="keywords" content="逆向,JS">
+    <meta name="description" content="快速定位之搜索 DOM元素或者当前页面内容的搜索  Element面板快捷键CTRL+F就可以打开搜索框，搜索DOM元素。                                                                                              image-20220313194959329               全局搜索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS逆向之快速定位关键代码">
+<meta property="og:url" content="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="快速定位之搜索 DOM元素或者当前页面内容的搜索  Element面板快捷键CTRL+F就可以打开搜索框，搜索DOM元素。                                                                                              image-20220313194959329               全局搜索">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img.heshipeng.com/202203131949450.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203131952349.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203131953520.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203140027831.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203140030770.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203141346655.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203141625197.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203141707913.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203141711126.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203141743582.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203150055349.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203150108324.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203150111733.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203150114096.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203150122662.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203150124093.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="og:image" content="https://img.heshipeng.com/202203150127672.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+<meta property="article:published_time" content="2022-03-01T14:23:00.000Z">
+<meta property="article:modified_time" content="2022-03-14T17:29:33.742Z">
+<meta property="article:author" content="拾光的碎羽">
+<meta property="article:tag" content="逆向">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.heshipeng.com/202203131949450.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="https://img.heshipeng.com/202205092054351.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
 
-    <link rel="shortcut icon" href="/images/logo.svg">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
-    <script id="hexo-configurations">
-    let KEEP = window.KEEP || {};
-    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.jpeg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
-    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
-  </script>
-<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
+    <!-- custom head -->
+    
 
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-</head>
-
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 <body>
-<div class="progress-bar-container">
-    
-        <span class="scroll-progress-bar"></span>
-    
+    <div id="loading" class="active"></div>
 
-    
-</div>
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(https://img.heshipeng.com/202205092044923.jpeg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://img.heshipeng.com/202205092042366.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">拾光的碎羽</h5>
+          <a href="mailto:1615433864@qq.com" title="1615433864@qq.com" class="mail">1615433864@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
 
-
-<main class="page-container">
-
-    
-
-    <div class="page-main-content">
-
-        <div class="page-main-content-top">
-            <header class="header-wrapper">
-
-    <div class="header-content">
-        <div class="left">
-            
-            <a class="logo-title" href="/">
-                拾光的逆羽
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JS逆向之快速定位关键代码</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
             </a>
         </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
 
-        <div class="right">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/"
-                            >
-                                首页
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                归档
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/categories"
-                            >
-                                分类
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/tags"
-                            >
-                                标签
-                            </a>
-                        </li>
-                    
-                    
-                        <li class="menu-item search search-popup-trigger">
-                            <i class="fas fa-search"></i>
-                        </li>
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
+    <div class="container fade-scale">
+        <h1 class="title">JS逆向之快速定位关键代码</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2022-03-01T14:23:00.000Z" itemprop="datePublished" class="page-time">
+  2022-03-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JS%E9%80%86%E5%90%91/">JS逆向</a></li></ul>
+
+            
+        </h5>
     </div>
 
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/">首页</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives">归档</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/categories">分类</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/tags">标签</a>
-                </li>
-            
-        </ul>
-    </div>
+    
 
-    <div class="window-mask"></div>
 
 </header>
 
 
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E4%B9%8B%E6%90%9C%E7%B4%A2"><span class="post-toc-number">1.</span> <span class="post-toc-text">快速定位之搜索</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E4%B9%8B%E6%96%AD%E7%82%B9"><span class="post-toc-number">2.</span> <span class="post-toc-text">快速定位之断点</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E4%B9%8Bhook"><span class="post-toc-number">3.</span> <span class="post-toc-text">快速定位之hook</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E4%B9%8B%E5%88%86%E6%9E%90"><span class="post-toc-number">4.</span> <span class="post-toc-text">快速定位之分析</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-JS逆向之快速定位关键代码"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JS逆向之快速定位关键代码</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2022-03-01 22:23:00" datetime="2022-03-01T14:23:00.000Z"  itemprop="datePublished">2022-03-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JS%E9%80%86%E5%90%91/">JS逆向</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
         </div>
-
-        <div class="page-main-content-middle">
-
-            <div class="main-content">
-
-                
-                    <div class="fade-in-down-animation">
-    <div class="article-content-container">
-
-        <div class="article-title">
-            <span class="title-hover-animation">JS逆向之快速定位关键代码</span>
-        </div>
-
-        
-            <div class="article-header">
-                <div class="avatar">
-                    <img src="/images/avatar.jpeg">
-                </div>
-                <div class="info">
-                    <div class="author">
-                        <span class="name">Shipeng He</span>
-                        
-                            <span class="author-label">高级攻城狮</span>
-                        
-                    </div>
-                    <div class="meta-info">
-                        <div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-03-01 22:23:00</span>
-        <span class="mobile">2022-03-01 22:23</span>
-    </span>
-    
-        <span class="article-categories article-meta-item">
-            <i class="fas fa-folder"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/categories/JS%E9%80%86%E5%90%91/">JS逆向</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
-    
-    
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/%E9%80%86%E5%90%91/">逆向</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/JS/">JS</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
-    
-
-    
-    
-        <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>1.1k 字</span>
-        </span>
-    
-    
-        <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>4 分钟</span>
-        </span>
-    
-    
-        <span class="article-pv article-meta-item">
-            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-        </span>
-    
-</div>
-
-                    </div>
-                </div>
-            </div>
-        
-
-        <div class="article-content markdown-body">
+        <div class="post-content" id="post-content" itemprop="postContent">
             <h5 id="快速定位之搜索"><a href="#快速定位之搜索" class="headerlink" title="快速定位之搜索"></a>快速定位之搜索</h5><ol>
 <li>DOM元素或者当前页面内容的搜索</li>
 </ol>
 <p>Element面板快捷键CTRL+F就可以打开搜索框，搜索DOM元素。</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203131949450.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220313194959329"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203131949450.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220313194959329" title="">
+                </div>
+                <div class="image-caption">image-20220313194959329</div>
+            </figure>
 <ol>
 <li>全局搜索</li>
 </ol>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203131952349.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220313195223274"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203131952349.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220313195223274" title="">
+                </div>
+                <div class="image-caption">image-20220313195223274</div>
+            </figure>
 <p>全局搜索包含页面搜索</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203131953520.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220313195307491"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203131953520.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220313195307491" title="">
+                </div>
+                <div class="image-caption">image-20220313195307491</div>
+            </figure>
 <h5 id="快速定位之断点"><a href="#快速定位之断点" class="headerlink" title="快速定位之断点"></a>快速定位之断点</h5><ol>
 <li>XHR断点</li>
 </ol>
-<p>XHR断点只对请求内容为XHR的请求生效。在<a class="link" target="_blank" rel="noopener" href="http://blog.heshipeng.com/Chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E5%B7%A5%E5%85%B7%E4%BD%A0%E7%9F%A5%E5%A4%9A%E5%B0%91/">JS逆向之Chrome浏览器工具你知多少？<i class="fas fa-external-link-alt"></i></a>中介绍过通过网络面板抓包可以看到请求的类型，如下：</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203140027831.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220314002711032"></p>
+<p>XHR断点只对请求内容为XHR的请求生效。在<a href="http://blog.heshipeng.com/Chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E5%B7%A5%E5%85%B7%E4%BD%A0%E7%9F%A5%E5%A4%9A%E5%B0%91/">JS逆向之Chrome浏览器工具你知多少？</a>中介绍过通过网络面板抓包可以看到请求的类型，如下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203140027831.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220314002711032" title="">
+                </div>
+                <div class="image-caption">image-20220314002711032</div>
+            </figure>
 <p>通过抓包得到XHR请求的URL之后，就可以打上XHR断点了。开发者工具切换到Source面板，展开XHR/fetch Breakpoints点击+号新建一个XHR断点。</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203140030770.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220314003042713"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203140030770.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220314003042713" title="">
+                </div>
+                <div class="image-caption">image-20220314003042713</div>
+            </figure>
 <p>XHR断点不填任何字符表示对任何XHR请求都会断上，也可以填一个完整的URL，也可以填URL的一部分，如上图。<strong>注意：通常会去掉URL后边的参数，因为URL后边的参数可能是动态变化的，如果是动态变化的会导致每次都匹配不上，就没法断上。</strong></p>
 <ol>
 <li>DOM断点</li>
 </ol>
 <p>DOM断点一般指的是页面元素的断点。打DOM断点的方式是在Source面板，选中某一个元素右键选择Break on，如下图：</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203141346655.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220314134609560"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203141346655.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220314134609560" title="">
+                </div>
+                <div class="image-caption">image-20220314134609560</div>
+            </figure>
 <p>subtree modifications表示子树发生更改，attribute modifications表示节点属性值发生改变，node removal表示节点被移除。我们也第二个attribute modifications为例，更改百度首页的百度一下，将其替换为谷歌一下。如下图：</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203141625197.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220314162541977"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203141625197.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220314162541977" title="">
+                </div>
+                <div class="image-caption">image-20220314162541977</div>
+            </figure>
 <p>然后就成功断下了。DOM断点的应用场景在哪？比如说有一个Input输入框，然后每次点击submit按钮，Input输出框的value属性都会改变，同时把这个value值提交到后端，这个时候通过DOM断点就可以断到value值发生改变的地方，通过调用栈去查找对应改变value值的代码。</p>
 <ol>
 <li>Event断点</li>
 </ol>
 <p>Event断点在Source面板的Event Listener Breakpoints一栏。</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203141707913.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220314170733786"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203141707913.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220314170733786" title="">
+                </div>
+                <div class="image-caption">image-20220314170733786</div>
+            </figure>
 <p>这里我们以鼠标的click事件为例，选择Mouse/Click事件，然后点击百度一下按钮：</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203141711126.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220314171105093"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203141711126.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220314171105093" title="">
+                </div>
+                <div class="image-caption">image-20220314171105093</div>
+            </figure>
 <p>可以看到成功断上了。</p>
 <h5 id="快速定位之hook"><a href="#快速定位之hook" class="headerlink" title="快速定位之hook"></a>快速定位之hook</h5><ol>
 <li>json</li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> my_stringfy = <span class="built_in">JSON</span>.stringfy;</span><br><span class="line"><span class="built_in">JSON</span>.stringfy = <span class="function"><span class="keyword">function</span>(<span class="params">params</span>) </span>{</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"xxx"</span>, params);</span><br><span class="line">    <span class="keyword">return</span> my_stringfy(params);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> my_parse = <span class="built_in">JSON</span>.parse;</span><br><span class="line"><span class="built_in">JSON</span>.parse = <span class="function"><span class="keyword">function</span>(<span class="params">params</span>) </span>{</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"xxx"</span>, params);</span><br><span class="line">    <span class="keyword">return</span> my_parse(params);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> my_stringfy = <span class="built_in">JSON</span>.stringfy;</span><br><span class="line"><span class="built_in">JSON</span>.stringfy = <span class="function"><span class="keyword">function</span>(<span class="params">params</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;xxx&quot;</span>, params);</span><br><span class="line">    <span class="keyword">return</span> my_stringfy(params);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> my_parse = <span class="built_in">JSON</span>.parse;</span><br><span class="line"><span class="built_in">JSON</span>.parse = <span class="function"><span class="keyword">function</span>(<span class="params">params</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;xxx&quot;</span>, params);</span><br><span class="line">    <span class="keyword">return</span> my_parse(params);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ol>
 <li>cookie</li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cookie_cache = <span class="built_in">document</span>.cookie;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">document</span>, <span class="string">'cookie'</span>, {</span><br><span class="line">    <span class="attr">get</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Getting cookie'</span>);</span><br><span class="line">        <span class="keyword">return</span> cookie_cache;</span><br><span class="line">    },</span><br><span class="line">    <span class="attr">set</span>: <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>{</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Setting cookie'</span>, val);</span><br><span class="line">        <span class="keyword">var</span> cookie = val.split(<span class="string">";"</span>)[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">var</span> ncookie = cookie.split(<span class="string">"="</span>);</span><br><span class="line">        <span class="keyword">var</span> flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">var</span> cache = cookie_cache.split(<span class="string">"; "</span>);</span><br><span class="line">        cache = cache.map(<span class="function"><span class="keyword">function</span>(<span class="params">a</span>)</span>{</span><br><span class="line">            <span class="keyword">if</span> (a.split(<span class="string">"="</span>)[<span class="number">0</span>] === ncookie[<span class="number">0</span>]) {</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">return</span> cookie;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">return</span> a;</span><br><span class="line">        });</span><br><span class="line">        cookie_cache = cache.join(<span class="string">"; "</span>);</span><br><span class="line">        <span class="keyword">if</span> (!flag) {</span><br><span class="line">            cookie_cache += cookie + <span class="string">"; "</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">this</span>._value = val;</span><br><span class="line">        <span class="keyword">return</span> cookie_cache;</span><br><span class="line">    }</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cookie_cache = <span class="built_in">document</span>.cookie;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">document</span>, <span class="string">&#x27;cookie&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">get</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;Getting cookie&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> cookie_cache;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">set</span>: <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;Setting cookie&#x27;</span>, val);</span><br><span class="line">        <span class="keyword">var</span> cookie = val.split(<span class="string">&quot;;&quot;</span>)[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">var</span> ncookie = cookie.split(<span class="string">&quot;=&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">var</span> cache = cookie_cache.split(<span class="string">&quot;; &quot;</span>);</span><br><span class="line">        cache = cache.map(<span class="function"><span class="keyword">function</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (a.split(<span class="string">&quot;=&quot;</span>)[<span class="number">0</span>] === ncookie[<span class="number">0</span>]) &#123;</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">return</span> cookie;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> a;</span><br><span class="line">        &#125;);</span><br><span class="line">        cookie_cache = cache.join(<span class="string">&quot;; &quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (!flag) &#123;</span><br><span class="line">            cookie_cache += cookie + <span class="string">&quot;; &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">this</span>._value = val;</span><br><span class="line">        <span class="keyword">return</span> cookie_cache;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <ol>
 <li>window attr</li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> window_flag_1 = <span class="string">"_t"</span>;</span><br><span class="line"><span class="keyword">var</span> window_flag_2 = <span class="string">"ccc"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> key_value_map = {};</span><br><span class="line"><span class="keyword">var</span> window_value = <span class="built_in">window</span>[window_flag_1];</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">window</span>, window_flag_1, {</span><br><span class="line">    <span class="attr">get</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Getting"</span>, <span class="built_in">window</span>, window_flag_1, <span class="string">"="</span>, window_value);</span><br><span class="line">        <span class="keyword">return</span> window_value;</span><br><span class="line">    },</span><br><span class="line">    <span class="attr">set</span>: <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>{</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Setting"</span>, <span class="built_in">window</span>, window_flag_1, <span class="string">"="</span>, val);</span><br><span class="line">        window_value = val;</span><br><span class="line">        key_value_map[<span class="built_in">window</span>[window_flag_1]] = window_flag_1;</span><br><span class="line">        set_obj_attr(<span class="built_in">window</span>[window_flag_1], window_flag_2);</span><br><span class="line">    },</span><br><span class="line">});</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">set_obj_attr</span>(<span class="params">obj, attr</span>) </span>{</span><br><span class="line">    <span class="keyword">var</span> obj_attr_value = obj[attr];</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(obj, attr, {</span><br><span class="line">        <span class="attr">get</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"Getting"</span>, key_value_map[obj], attr, <span class="string">"="</span>, obj_attr_value);</span><br><span class="line">            <span class="keyword">return</span> obj_attr_value;</span><br><span class="line">        },</span><br><span class="line">        <span class="attr">set</span>: <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>{</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"Setting"</span>, key_value_map[obj], attr, <span class="string">"="</span>, val);</span><br><span class="line">            obj_attr_value = val;</span><br><span class="line">        },</span><br><span class="line">    });</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> window_flag_1 = <span class="string">&quot;_t&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> window_flag_2 = <span class="string">&quot;ccc&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> key_value_map = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> window_value = <span class="built_in">window</span>[window_flag_1];</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">window</span>, window_flag_1, &#123;</span><br><span class="line">    <span class="attr">get</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;Getting&quot;</span>, <span class="built_in">window</span>, window_flag_1, <span class="string">&quot;=&quot;</span>, window_value);</span><br><span class="line">        <span class="keyword">return</span> window_value;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">set</span>: <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;Setting&quot;</span>, <span class="built_in">window</span>, window_flag_1, <span class="string">&quot;=&quot;</span>, val);</span><br><span class="line">        window_value = val;</span><br><span class="line">        key_value_map[<span class="built_in">window</span>[window_flag_1]] = window_flag_1;</span><br><span class="line">        set_obj_attr(<span class="built_in">window</span>[window_flag_1], window_flag_2);</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">set_obj_attr</span>(<span class="params">obj, attr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> obj_attr_value = obj[attr];</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(obj, attr, &#123;</span><br><span class="line">        <span class="attr">get</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;Getting&quot;</span>, key_value_map[obj], attr, <span class="string">&quot;=&quot;</span>, obj_attr_value);</span><br><span class="line">            <span class="keyword">return</span> obj_attr_value;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">set</span>: <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;Setting&quot;</span>, key_value_map[obj], attr, <span class="string">&quot;=&quot;</span>, val);</span><br><span class="line">            obj_attr_value = val;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>简单测试如下：</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203141743582.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220314174331478"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203141743582.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220314174331478" title="">
+                </div>
+                <div class="image-caption">image-20220314174331478</div>
+            </figure>
 <ol>
 <li>eval/Function</li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.__cr_eval = <span class="built_in">window</span>.eval;</span><br><span class="line"><span class="keyword">var</span> my_eval = <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>{</span><br><span class="line">    <span class="built_in">console</span>.log(src);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"============eval end==========="</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">window</span>.__cr_eval(src);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> _my_eval = <span class="built_in">eval</span>.bind(<span class="literal">null</span>);</span><br><span class="line">_my_eval.toString = <span class="built_in">window</span>.__cr_eval.toString;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">window</span>, <span class="string">'eval'</span>, { <span class="attr">value</span>: _my_eval });</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.__cr_fun = <span class="built_in">window</span>.Function;</span><br><span class="line"><span class="keyword">var</span> myfun = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>, <span class="number">0</span>, -<span class="number">1</span>).join(<span class="string">","</span>).src = <span class="built_in">arguments</span>[<span class="built_in">arguments</span>.length - <span class="number">1</span>];</span><br><span class="line">    <span class="built_in">console</span>.log(src);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"===========Function end========="</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">window</span>.__cr_fun.apply(<span class="built_in">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">myfun.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{ <span class="keyword">return</span> <span class="built_in">window</span>.__cr_fun + <span class="string">""</span> }</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">window</span>, <span class="string">'Function'</span>, { <span class="attr">value</span>: myfun })</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.__cr_eval = <span class="built_in">window</span>.eval;</span><br><span class="line"><span class="keyword">var</span> my_eval = <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(src);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;============eval end===========&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">window</span>.__cr_eval(src);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> _my_eval = <span class="built_in">eval</span>.bind(<span class="literal">null</span>);</span><br><span class="line">_my_eval.toString = <span class="built_in">window</span>.__cr_eval.toString;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">window</span>, <span class="string">&#x27;eval&#x27;</span>, &#123; <span class="attr">value</span>: _my_eval &#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.__cr_fun = <span class="built_in">window</span>.Function;</span><br><span class="line"><span class="keyword">var</span> myfun = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>, <span class="number">0</span>, -<span class="number">1</span>).join(<span class="string">&quot;,&quot;</span>).src = <span class="built_in">arguments</span>[<span class="built_in">arguments</span>.length - <span class="number">1</span>];</span><br><span class="line">    <span class="built_in">console</span>.log(src);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;===========Function end=========&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">window</span>.__cr_fun.apply(<span class="built_in">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">myfun.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">window</span>.__cr_fun + <span class="string">&quot;&quot;</span> &#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">window</span>, <span class="string">&#x27;Function&#x27;</span>, &#123; <span class="attr">value</span>: myfun &#125;)</span><br></pre></td></tr></table></figure>
 <p>  简单测试如下：</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203150055349.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220315005512673"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203150055349.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220315005512673" title="">
+                </div>
+                <div class="image-caption">image-20220315005512673</div>
+            </figure>
 <ol>
 <li>websocket</li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">WebSocket.prototype.senda = WebSocket.prototype.send;</span><br><span class="line">WebSocket.prototype.send = <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>{</span><br><span class="line">    <span class="built_in">console</span>.info(<span class="string">"Hook WebSocket, data"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.senda(data);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">WebSocket.prototype.senda = WebSocket.prototype.send;</span><br><span class="line">WebSocket.prototype.send = <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.info(<span class="string">&quot;Hook WebSocket, data&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.senda(data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="快速定位之分析"><a href="#快速定位之分析" class="headerlink" title="快速定位之分析"></a>快速定位之分析</h5><ol>
 <li>Elements Event Listeners</li>
 </ol>
 <p>在Elements面板，右边Event Listeners可以看到全部的事件监听器，如图：</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203150108324.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220315010815283"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203150108324.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220315010815283" title="">
+                </div>
+                <div class="image-caption">image-20220315010815283</div>
+            </figure>
 <ol>
 <li>Network type initator</li>
 </ol>
 <p>在Network网络面板，请求列表的第三列是网络类型，第四列是调用栈。如下图：</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203150111733.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220315011120666"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203150111733.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220315011120666" title="">
+                </div>
+                <div class="image-caption">image-20220315011120666</div>
+            </figure>
 <p>常见的网络类型有xhr(XHR类型的请求)，gif，png，jpeg，stylesheet(css文件)，script(JS文件)，Json等。</p>
 <p>鼠标悬浮任意一个请求的第四列，可以看到该请求的全部调用栈，如下图：</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203150114096.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220315011435032"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203150114096.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220315011435032" title="">
+                </div>
+                <div class="image-caption">image-20220315011435032</div>
+            </figure>
 <p>通常通过网络面板抓包抓到我们需要的请求，然后可以查看它的调用栈，迅速定位到相关的代码。</p>
 <ol>
 <li>Console Log XMLHttpRequests</li>
 </ol>
 <p>打开XMLHttpRequests日志的方法，点击开发者工具上的那个设置按钮：</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203150122662.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220315012217598"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203150122662.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220315012217598" title="">
+                </div>
+                <div class="image-caption">image-20220315012217598</div>
+            </figure>
 <p>找到Console那一部分，选中Log XMLHttpRequests，如下：</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203150124093.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220315012414737"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203150124093.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220315012414737" title="">
+                </div>
+                <div class="image-caption">image-20220315012414737</div>
+            </figure>
 <p>重新刷新页面，可以看到打印出了XMLRequests的请求日志了，点击可以看到调用栈：</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203150127672.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220315012715597"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://img.heshipeng.com/202203150127672.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220315012715597" title="">
+                </div>
+                <div class="image-caption">image-20220315012715597</div>
+            </figure>
 
         </div>
 
+        <blockquote class="post-copyright">
+    
+    <div class="content">
         
-            <div class="post-copyright-info">
-                <div class="article-copyright-info-container">
-    <ul>
-        <li>本文标题：JS逆向之快速定位关键代码</li>
-        <li>本文作者：Shipeng He</li>
-        <li>创建时间：2022-03-01 22:23:00</li>
-        <li>
-            本文链接：https://blog.heshipeng.com/JS逆向之快速定位关键代码/
-        </li>
-        <li>
-            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
-        </li>
+<span class="post-time">
+    Last updated: <time datetime="2022-03-14T17:29:33.742Z" itemprop="dateUpdated">2022-03-15 01:29:33</time>
+</span><br>
+
+
+        
+        关注微信公众号~~逆向一步步~~，第一时间获取更新文章的推送 <br/> 版权声明：本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.heshipeng.com">
+            <img src="https://img.heshipeng.com/202205092042366.jpg" alt="拾光的碎羽">
+            拾光的碎羽
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS/" rel="tag">JS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%86%E5%90%91/" rel="tag">逆向</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81/&title=《JS逆向之快速定位关键代码》 — Hexo&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81/&title=《JS逆向之快速定位关键代码》 — Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向之快速定位关键代码》 — Hexo&url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81/&via=https://blog.heshipeng.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
     </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
 </div>
 
-            </div>
-        
 
-        
-            <ul class="post-tags-box">
-                
-                    <li class="tag-item">
-                        <a href="/tags/%E9%80%86%E5%90%91/">#逆向</a>&nbsp;
-                    </li>
-                
-                    <li class="tag-item">
-                        <a href="/tags/JS/">#JS</a>&nbsp;
-                    </li>
-                
-            </ul>
-        
 
-        
-            <div class="article-nav">
-                
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/JS%E9%80%86%E5%90%91%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BC%96%E7%A0%81%E5%92%8C%E5%8A%A0%E5%AF%86/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">JS逆向中用到的常见的编码和加密</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
-                
-                    <div class="article-next">
-                        <a class="next"
-                           rel="next"
-                           href="/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/"
-                        >
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">JS逆向之无限Debugger</span>
-                                <span class="post-nav-item">下一篇</span>
-                            </span>
-                            <span class="right arrow-icon flex-center">
-                              <i class="fas fa-chevron-right"></i>
-                            </span>
-                        </a>
-                    </div>
-                
-            </div>
-        
-
-        
-            <div class="comment-container">
-                <div class="comments-container">
-    <div id="comment-anchor"></div>
-    <div class="comment-area-title">
-        <i class="fas fa-comments">&nbsp;评论</i>
+        </div>
     </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JS%E9%80%86%E5%90%91%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BC%96%E7%A0%81%E5%92%8C%E5%8A%A0%E5%AF%86/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JS逆向中用到的常见的编码和加密</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JS逆向之无限Debugger</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
     
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
         
-            
-    <div id="gitalk-container"></div>
-    <script 
-            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
-    <script >
-
-        function loadGitalk() {
-            let __gitalk__pathname = decodeURI(location.pathname);
-            const __gitalk__pathnameLength = __gitalk__pathname.length;
-            const __gitalk__pathnameMaxLength = 50;
-            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
-                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
-            }
-
-            try {
-                Gitalk && new Gitalk({
-                    clientID: '5167adeb62c9c9a59956',
-                    clientSecret: '8f4116c8b36633d863779e56e746184d2f795ae4',
-                    repo: 'beyond-heshipeng.github.io',
-                    owner: 'beyond-heshipeng',
-                    admin: ['beyond-heshipeng'],
-                    id: __gitalk__pathname,
-                    language: 'zh-CN'
-                }).render('gitalk-container');
-
-            } catch (e) {
-                window.Gitalk = null;
-            }
-        }
-
-        if ('false') {
-            const loadGitalkTimeout = setTimeout(() => {
-                loadGitalk();
-                clearTimeout(loadGitalkTimeout);
-            }, 1000);
-        } else {
-            window.addEventListener('DOMContentLoaded', loadGitalk);
-        }
-    </script>
-
-
-
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
         
-    
-</div>
-
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
             </div>
+        </label>
         
     </div>
 </div>
 
 
-                
-            </div>
 
-        </div>
+</div>
 
-        <div class="page-main-content-bottom">
-            <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info info-item">
-            &copy;
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
             
-              <span>2021</span>
-              -
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
             
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Shipeng He</a> 版权所有
-        </div>
-        
-            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <div class="website-count info-item">
+            <span>This blog is licensed under a <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>拾光的碎羽 &copy; 2021 - 2022</span>
+            <span>
                 
-                    <span id="busuanzi_container_site_uv">
-                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
-                    </span>
-                
-                
-                    <span id="busuanzi_container_site_pv">
-                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
-                    </span>
-                
-            </div>
-        
-        <div class="theme-info info-item">
-        </div>
-        
-            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">鄂ICP备2022001140号</a></div>
-        
-        
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
     </div>
 </footer>
 
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
-        </div>
-    </div>
 
-    
-        <div class="post-tools">
-            <div class="post-tools-container">
-    <ul class="tools-list">
-        <!-- TOC aside toggle -->
-        
-            <li class="tools-item page-aside-toggle">
-                <i class="fas fa-outdent"></i>
-            </li>
-        
 
-        <!-- go comment -->
-        
-            <li class="go-comment">
-                <i class="fas fa-comment"></i>
-            </li>
-        
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81/&title=《JS逆向之快速定位关键代码》 — Hexo&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81/&title=《JS逆向之快速定位关键代码》 — Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向之快速定位关键代码》 — Hexo&url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81/&via=https://blog.heshipeng.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
     </ul>
-</div>
+ </div>
 
-        </div>
-    
 
-    <div class="right-bottom-side-tools">
-        <div class="side-tools-container">
-    <ul class="side-tools-list">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
-        </li>
-
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
-        </li>
-
-        <li class="tools-item tool-expand-width flex-center">
-            <i class="fas fa-arrows-alt-h"></i>
-        </li>
-
-        <li class="tools-item tool-dark-light-toggle flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-            <li class="tools-item rss flex-center">
-                <a class="flex-center"
-                   href="/atom.xml"
-                   target="_blank"
-                >
-                    <i class="fas fa-rss"></i>
-                </a>
-            </li>
-        
-
-        
-
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="exposed-tools-list">
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
-        
-            <li class="tools-item tool-scroll-to-top flex-center">
-                <i class="arrow-up fas fa-arrow-up"></i>
-                <span class="percent"></span>
-            </li>
-        
-    </ul>
-</div>
-
-    </div>
-
-    
-        <aside class="page-aside">
-            <div class="post-toc-wrap">
-    <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E4%B9%8B%E6%90%9C%E7%B4%A2"><span class="nav-text">快速定位之搜索</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E4%B9%8B%E6%96%AD%E7%82%B9"><span class="nav-text">快速定位之断点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E4%B9%8Bhook"><span class="nav-text">快速定位之hook</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E4%B9%8B%E5%88%86%E6%9E%90"><span class="nav-text">快速定位之分析</span></a></li></ol>
-    </div>
-</div>
-        </aside>
-    
-
-    <div class="image-viewer-container">
-    <img src="">
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81/" alt="微信分享二维码">
 </div>
 
 
-    
-        <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-          <span class="search-input-field-pre">
-            <i class="fas fa-keyboard"></i>
-          </span>
-            <div class="search-input-container">
-                <input autocomplete="off"
-                       autocorrect="off"
-                       autocapitalize="off"
-                       placeholder="搜索..."
-                       spellcheck="false"
-                       type="search"
-                       class="search-input"
-                >
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
             </div>
-            <span class="popup-btn-close">
-                <i class="fas fa-times"></i>
-            </span>
+            <time class="flex-col time">{date}</time>
         </div>
-        <div id="search-result">
-            <div id="no-result">
-                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
-            </div>
-        </div>
-    </div>
-</div>
+    </a>
+</li>
+</template>
 
-    
-
-</main>
+<script src="/js/search.js?v=1.7.2" async></script>
 
 
 
-<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 
 
-    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
 
-    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
-
-
-
-    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
-
-
-<div class="post-scripts">
-    
-        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
-    
-</div>
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
 
 
 
