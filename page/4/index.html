@@ -129,10 +129,6 @@
         </div>
         
         
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg icon-share-alt"></i>
-        </a>
-        
     </div>
 </header>
 <header class="content-header index-header">
@@ -184,239 +180,16 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        <div align="middle"><iframe width="560" height="315" src="https://www.youtube.com/embed/k7akz2hdToY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        
 
 
 
-<h3 id="动态加载"><a href="#动态加载" class="headerlink" title="动态加载"></a>动态加载</h3><p>开始正题之前，在这里可以先给动态加载技术做一个简单的定义。真正的动态加载应该是</p>
-<ol>
-<li>应用在运行的时候通过加载一些<strong>本地不存在</strong>的可执行文件实现一些特定的功能。</li>
-<li>这些可执行文件是<strong>可以替换</strong>的。</li>
-<li>更换静态资源(比如换启动图、换主题、或者用服务器参数开关控制广告的隐藏现实等)<strong>不属于</strong>动态加载。</li>
-<li><code>Android</code>中动态加载的核心思想是动态调用外部的 <strong><code>dex</code>文件</strong>，极端的情况下，<code>Android APK</code>自身带有的<code>Dex</code>文件只是一个程序的入口(或者说空壳)，所有的功能都通过从服务器下载最新的<code>Dex</code>文件完成。</li>
-</ol>
-<h3 id="两个疑问🤔"><a href="#两个疑问🤔" class="headerlink" title="两个疑问🤔"></a>两个疑问🤔</h3><p>提出两个问题，第一，如何在<code>Android</code>程序中加载外部<code>dex</code>的<code>class</code>；第二，对于有生命周期的组件(比如Activity这种类)该如何加载？本文的目的就是通过解决这2个问题从而对<code>Android</code>的动态加载技术有一定的了解。</p>
-<h3 id="类加载器与双亲委派"><a href="#类加载器与双亲委派" class="headerlink" title="类加载器与双亲委派"></a>类加载器与双亲委派</h3><p>要解决这俩问题，首先要了解几个概念。</p>
-<h4 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h4><p>类加载器顾名思义是用来进行类的加载。分别看下JVM的类加载器和Android的类加载器。</p>
-<h5 id="JVM的类加载器"><a href="#JVM的类加载器" class="headerlink" title="JVM的类加载器"></a>JVM的类加载器</h5><p>JVM的类加载器包括3种：</p>
-<ol>
-<li>Bootstrap ClassLoader(引导类加载器)</li>
-</ol>
-<p>C/C++代码实现的加载器，用于加载指定的JDK的核心类库，比如java.lang，java.util等这些系统类。Java虚拟机的启动就是通过Bootstrap，该Classloader在java里无法获取，负责加载/lib下的类。</p>
-<ol>
-<li>Extensions ClassLoader(拓展类加载器)</li>
-</ol>
-<p>Java中的实现类为ExtClassLoader，提供了除了系统类之外的额外功能，可以在Java里获取，负责加载/lib/ext下的类。</p>
-<ol>
-<li>Application ClassLoader(应用程序类加载器)</li>
-</ol>
-<p>Java中的实现类为AppClassLoader，是与我们接触最多的类加载器，开发人员写的代码默认就是由它来加载，ClassLoader.getSystemCLassLoader返回的就是它。</p>
-<p>同时，我们也可以自定义类加载器，只需要通过继承java.lang.ClassLoader类的方式来实现自己的类加载器即可。</p>
-<h5 id="Android中的类加载器"><a href="#Android中的类加载器" class="headerlink" title="Android中的类加载器"></a>Android中的类加载器</h5><p>首先通过一张图，了解各个加载器之间的继承关系。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/202201131046618.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image" title="">
-                </div>
-                <div class="image-caption">image</div>
-            </figure>
-<p>详细看下各个类加载器的作用：</p>
-<ol>
-<li>ClassLoader为抽象类；</li>
-<li>BootClassLoader预加载常用类，单例模式。与Java中的BootClassLoader不同，它并不是由C/C++代码实现，而是由Java实现的；</li>
-<li>BaseDexClassLoader是PathClassLoader, DexClassLoader, InMemoryDexClassLoader的父类，类加载的主要逻辑都是在BaseDexClassLoader完成的；</li>
-<li><p>SecureClassLoader继承了抽象类ClassLoader，拓展了ClassLoader类加入了权限方面的功能，加强了安全性，其子类URLClassLoader是用URL路径从jar文件中加载类和资源。</p>
-</li>
-<li><p>PathClassLoader是Android默认使用的类加载器，一个apk中的Activity等类便是在其中加载。</p>
-</li>
-<li><p>DexClassLoader可以加载任意目录下的dex/jar/apk/zip文件，比PathClassLoader更灵活，是实现插件化，热修复以及dex加壳的重点。</p>
-</li>
-<li><p>InMemoryDexClassLoader是8.0引入的，是用于直接从内存中加载dex。</p>
-</li>
-</ol>
-<p>其中重点关注的是：PathClassLoader和DexClassLoader，因为这2个类加载器是我们解决上面2个问题的关键，也是这个动态加载中非常重要的的类加载器。</p>
-<h5 id="类加载的时机"><a href="#类加载的时机" class="headerlink" title="类加载的时机"></a>类加载的时机</h5><ol>
-<li>隐式加载。</li>
-</ol>
-<ul>
-<li>创建类的实例。</li>
-<li>访问类的静态变量，或者为静态变量赋值。</li>
-<li>调用类的静态方法。</li>
-<li>使用反射方式来强制创建某个类或者接口对应的java.lang.Class对象。</li>
-</ul>
-<ol>
-<li>显式加载。</li>
-</ol>
-<ul>
-<li>使用LoadClass()加载。</li>
-<li>使用forName()加载。</li>
-</ul>
-<h5 id="类加载的步骤"><a href="#类加载的步骤" class="headerlink" title="类加载的步骤"></a>类加载的步骤</h5><ol>
-<li><p>装载。查找和导入Class文件。</p>
-</li>
-<li><p>链接。其中解析步骤是可以选择的。</p>
-</li>
-<li><ul>
-<li>检查：检查载入的class文件数据的正确性。</li>
-<li>准备：给类的静态变量分配存储空间。</li>
-<li>解析：将符号引用转换成直接引用。</li>
-</ul>
-</li>
-<li><p>初始化：即调用<clinit>函数，对静态变量，静态代码块执行初始化工作。</p>
-</li>
-</ol>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/202201131057328.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image" title="">
-                </div>
-                <div class="image-caption">image</div>
-            </figure>
-<h5 id="编写代码测试Android-ClassLoader的继承关系"><a href="#编写代码测试Android-ClassLoader的继承关系" class="headerlink" title="编写代码测试Android ClassLoader的继承关系"></a>编写代码测试Android ClassLoader的继承关系</h5><p>动手之前先通过<a target="_blank" rel="noopener" href="http://androidxref.com">Android源码阅读网站</a>，看下ClassLoader的源码：</p>
-<p><img src="https://img.heshipeng.com/202201131124371.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="android ClassLoader类源码"></p>
-<p>打开AndroidXRef，Definition填写<code>ClassLoader</code>，搜索包位置<code>libcore</code>，如果不确定位置，可以选中全部，只不过搜索出来的结果不比较多，筛选起来麻烦一些。搜索出来一个ClassLoader.java文件，点击进入：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 省略</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">// The parent class loader for delegation</span></span><br><span class="line">    <span class="comment">// Note: VM hardcoded the offset of this field, thus all new fields</span></span><br><span class="line">    <span class="comment">// must be added *after* it.</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ClassLoader parent;</span><br><span class="line">  </span><br><span class="line">  	<span class="meta">@CallerSensitive</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> ClassLoader <span class="title">getParent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> parent;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 省略 </span></span><br><span class="line">&#125;    </span><br></pre></td></tr></table></figure>
-<p>这里关注一个属性和一个成员方法，通过组合关系parent来标识每一个ClassLoader的父亲，这个parent是实现双亲委派的关键，调用getParent成员方法则可以获取到parent属性。</p>
-<p>看了这么多理论，没有动手coding去实践，有一点枯燥，接下来编写一个demo去测试一下Android的ClassLoader之间的继承关系。</p>
-<p>新建一个项目ClassLoaderTest，然后编码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.classloadertest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> androidx.appcompat.app.AppCompatActivity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        testClassLoader();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testClassLoader</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获取当前的ClassLoader</span></span><br><span class="line">        Context context = getApplicationContext();</span><br><span class="line">        ClassLoader thisClassLoader = context.getClassLoader();</span><br><span class="line">        <span class="comment">// 或者使用下面这种方式：</span></span><br><span class="line">        <span class="comment">// ClassLoader thisClassLoader = MainActivity.class.getClassLoader();</span></span><br><span class="line">        Log.i(<span class="string">&quot;kanxue&quot;</span>, <span class="string">&quot;thisClassLoader:&quot;</span> + thisClassLoader);</span><br><span class="line">        ClassLoader tmpClassLoader = <span class="keyword">null</span>;</span><br><span class="line">        ClassLoader parentClassLoader = thisClassLoader.getParent();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 向上遍历classLoader</span></span><br><span class="line">        <span class="keyword">while</span> (parentClassLoader != <span class="keyword">null</span>) &#123;</span><br><span class="line">            Log.i(<span class="string">&quot;kanxue&quot;</span>, <span class="string">&quot;this:&quot;</span> + thisClassLoader + <span class="string">&quot;, parent:&quot;</span> + parentClassLoader);</span><br><span class="line">            tmpClassLoader = parentClassLoader.getParent();</span><br><span class="line">            thisClassLoader = parentClassLoader;</span><br><span class="line">            parentClassLoader = tmpClassLoader;</span><br><span class="line">        &#125;</span><br><span class="line">        Log.i(<span class="string">&quot;kanxue&quot;</span>, <span class="string">&quot;root:&quot;</span> + thisClassLoader);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>代码比较简单，这里也是直接用了上面源码分析的getParent方法，通过getParent方法拿到parent，然后一层层的向上遍历，从而测试出各个ClassLoader的继承关系。</p>
-<p>执行结果如下：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/202201131142562.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image" title="">
-                </div>
-                <div class="image-caption">image</div>
-            </figure>
-<h4 id="双亲委派"><a href="#双亲委派" class="headerlink" title="双亲委派"></a>双亲委派</h4><h5 id="双亲委派的工作原理"><a href="#双亲委派的工作原理" class="headerlink" title="双亲委派的工作原理"></a>双亲委派的工作原理</h5><p>如果一个类加载器收到了类加载请求，它并不会自己先去加载，而是把这个请求委派给父类的加载器去执行，如果父类加载器还存在其父类加载器，则进一步向上委托，依次递归，请求最终将到达顶层的启动类加载器，如果父类加载器可以完成类加载任务，就成功返回，倘若父类加载器无法完成此加载任务，子加载器才会尝试自己去加载，这就是双亲委派模式，即每个儿子都不愿意干活，每次有活就丢给父亲去干，直到父亲说这件事也干不了时，儿子自己想办法去完成，这就是双亲委派。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/202201131058935.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image" title="">
-                </div>
-                <div class="image-caption">image</div>
-            </figure>
-<h5 id="为什么会有双亲委派"><a href="#为什么会有双亲委派" class="headerlink" title="为什么会有双亲委派"></a>为什么会有双亲委派</h5><ol>
-<li>避免重复加载，如果已经加载过一次Class，可以直接读取已经加载的Class</li>
-<li>更加完全，无法自定义类来代替系统的类，可以防止核心API库被随意篡改。</li>
-</ol>
-<h3 id="解决第一个问题"><a href="#解决第一个问题" class="headerlink" title="解决第一个问题"></a>解决第一个问题</h3><p>通过前面的理论知识，我们知道了DexClassLoader可以加载任意目录下的dex/jar/apk/zip文件，所以我们先来解决第一个问题。</p>
-<ol>
-<li>生成一个用来测试的dex文件。</li>
-</ol>
-<p>创建项目<code>DexLoaderTest</code>，然后新建Class：<code>TestCLass</code>。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.dexloadertest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClass</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFunc</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Log.i(<span class="string">&quot;kanxue&quot;</span>, <span class="string">&quot;call from DexLoaderTest.TestClass.testFunc&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>代码比较简单，只是简单的打印了一条日志。</p>
-<p>接着，打包该项目，将生成的apk解压，得到dex文件(如果解压得到多个classes.dex文件，查看下我们编写的TestClass类在哪个classes.dex文件)，然后将这个classes.dex放到手机的内存卡：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb push classes.dex /sdcard/</span><br></pre></td></tr></table></figure>
-<ol>
-<li>加载sdcard上的dex</li>
-</ol>
-<p>修改<code>DexLoaderTest</code>，修改其<code>MainActivity</code>的代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.dexloadertest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> androidx.appcompat.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.os.Environment;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> dalvik.system.DexClassLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        String sdcardPath = Environment.getExternalStorageDirectory().getAbsolutePath();</span><br><span class="line">        dexClassLoaderTest(getApplicationContext(), sdcardPath + File.separator + <span class="string">&quot;classes.dex&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dexClassLoaderTest</span><span class="params">(Context context, String dexFilePath)</span> </span>&#123;</span><br><span class="line">        Class&lt;?&gt; clazz;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            DexClassLoader dexClassLoader = <span class="keyword">new</span> DexClassLoader(dexFilePath, <span class="keyword">null</span>, <span class="keyword">null</span>, MainActivity.class.getClassLoader());</span><br><span class="line">            clazz = dexClassLoader.loadClass(<span class="string">&quot;com.example.dexclass.TestClass&quot;</span>);</span><br><span class="line">            <span class="keyword">if</span> (clazz != <span class="keyword">null</span>) &#123;</span><br><span class="line">                Method testFuncMethod = clazz.getDeclaredMethod(<span class="string">&quot;testFunc&quot;</span>);</span><br><span class="line">                Object obj = clazz.newInstance();</span><br><span class="line">                testFuncMethod.invoke(obj);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException | NoSuchMethodException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InstantiationException | InvocationTargetException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>代码也不复杂，首先实例化一个DexClassLoader对象，然后通过这个对象加载TestClass类，然后拿到testFunc方法，最后通过反射调用这个方法。这里主要关注的是DexClassLoader这个类，我们查看下源码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DexClassLoader</span> <span class="keyword">extends</span> <span class="title">BaseDexClassLoader</span> </span>&#123;</span><br><span class="line"><span class="number">36</span>    <span class="comment">/**</span></span><br><span class="line"><span class="comment">37     * Creates a &#123;<span class="doctag">@code</span> DexClassLoader&#125; that finds interpreted and native</span></span><br><span class="line"><span class="comment">38     * code.  Interpreted classes are found in a set of DEX files contained</span></span><br><span class="line"><span class="comment">39     * in Jar or APK files.</span></span><br><span class="line"><span class="comment">40     *</span></span><br><span class="line"><span class="comment">41     * &lt;p&gt;The path lists are separated using the character specified by the</span></span><br><span class="line"><span class="comment">42     * &#123;<span class="doctag">@code</span> path.separator&#125; system property, which defaults to &#123;<span class="doctag">@code</span> :&#125;.</span></span><br><span class="line"><span class="comment">43     *</span></span><br><span class="line"><span class="comment">44     * <span class="doctag">@param</span> dexPath the list of jar/apk files containing classes and</span></span><br><span class="line"><span class="comment">45     *     resources, delimited by &#123;<span class="doctag">@code</span> File.pathSeparator&#125;, which</span></span><br><span class="line"><span class="comment">46     *     defaults to &#123;<span class="doctag">@code</span> &quot;:&quot;&#125; on Android</span></span><br><span class="line"><span class="comment">47     * <span class="doctag">@param</span> optimizedDirectory this parameter is deprecated and has no effect since API level 26.</span></span><br><span class="line"><span class="comment">48     * <span class="doctag">@param</span> librarySearchPath the list of directories containing native</span></span><br><span class="line"><span class="comment">49     *     libraries, delimited by &#123;<span class="doctag">@code</span> File.pathSeparator&#125;; may be</span></span><br><span class="line"><span class="comment">50     *     &#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment">51     * <span class="doctag">@param</span> parent the parent class loader</span></span><br><span class="line"><span class="comment">52     */</span></span><br><span class="line"><span class="number">53</span>    <span class="function"><span class="keyword">public</span> <span class="title">DexClassLoader</span><span class="params">(String dexPath, String optimizedDirectory,</span></span></span><br><span class="line"><span class="params"><span class="function"><span class="number">54</span>            String librarySearchPath, ClassLoader parent)</span> </span>&#123;</span><br><span class="line"><span class="number">55</span>        <span class="keyword">super</span>(dexPath, <span class="keyword">null</span>, librarySearchPath, parent);</span><br><span class="line"><span class="number">56</span>    &#125;</span><br><span class="line"><span class="number">57</span>&#125;</span><br></pre></td></tr></table></figure>
-<p>其构造函数需要四个参数，第一个参数是包含资源文件的jar/apk/dex等文件的路径，如果有多个路径，通过:分隔。第二个参数已经废弃。第三个参数为native库的路径，这里我们也是置为null。最后一个是parent类加载器，我们设置为当前类加载器即可。</p>
-<p>因为用到对sdcard的读写，所以需要在AndroidManifest.xml中添加相应的权限：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.READ_EXTERNAL_STORAGE&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;</span> <span class="attr">android:maxSdkVersion</span>=<span class="string">&quot;28&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<p>运行程序，结果如下：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/202201131409909.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image" title="">
-                </div>
-                <div class="image-caption">image</div>
-            </figure>
-<h3 id="解决第二个问题"><a href="#解决第二个问题" class="headerlink" title="解决第二个问题"></a>解决第二个问题</h3><p>如果不考虑双亲委派以及Activity生命周期的问题，我们是不是可以用类似于第一个问题的解决方案，采用DexClassLoader加载Activity类，然后使用Intent直接访问这个Activity呢？说干就干。</p>
-<ol>
-<li>生成一个用来测试的dex</li>
-</ol>
-<p>新建一个TestActivity文件，然后让TestActivity继承AppCompatActivty，并重写onCreate方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(<span class="meta">@Nullable</span> Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        Log.d(<span class="string">&quot;TestActivity&quot;</span>, <span class="string">&quot;i am from TestActivity.onCreate&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个方法比较简单，仅仅是打印一条日志。</p>
-<p>同样地，打包该项目，将生成的apk解压，得到dex文件，然后将这个classes.dex放到手机的内存卡。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb push classes3.dex /sdcard/</span><br></pre></td></tr></table></figure>
-<ol>
-<li>加载并启动Activity</li>
-</ol>
-<p>编辑DexClassLoader，修改MainActivity代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        String sdcardPath = Environment.getExternalStorageDirectory().getAbsolutePath();</span><br><span class="line">        startActivityTest(<span class="keyword">this</span>, sdcardPath + File.separator + <span class="string">&quot;classes3.dex&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startActivityTest</span><span class="params">(Context context, String dexFilePath)</span> </span>&#123;</span><br><span class="line">        Class&lt;?&gt; clazz = <span class="keyword">null</span>;</span><br><span class="line">        DexClassLoader dexClassLoader = <span class="keyword">new</span> DexClassLoader(dexFilePath, <span class="keyword">null</span>, <span class="keyword">null</span>, MainActivity.class.getClassLoader());</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clazz = dexClassLoader.loadClass(<span class="string">&quot;com.example.dexclass.TestActivity&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        context.startActivity(<span class="keyword">new</span> Intent(context, clazz));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因为有用到<code>TestActivity</code>，所以需要在AndroidManifest.xml中声明：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">&quot;com.example.dexclass.TestActivity&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<p>运行项目，在手机设置中给应用开启sdcard读写权限，然后重新执行，结果报错：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/202201131612910.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="执行结果" title="">
-                </div>
-                <div class="image-caption">执行结果</div>
-            </figure>
-<p>想想也不可能成功，要是能跟问题一一样解决，那还叫两个问题吗🤪</p>
-<p>那该如何解决第二个问题呢？此时就得从Activity的启动流程说起了，但是这篇文章的目的还是以动态加载为主，Activity以及App的启动流程会有专门的文章去介绍，本文最后给出的参考链接，也会有包含Activity启动流程的介绍。这里挑几个关键链路上的函数简单说下原理：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**  Core implementation of activity launch. */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> Activity <span class="title">performLaunchActivity</span><span class="params">(ActivityClientRecord r, Intent customIntent)</span> </span>&#123;</span><br><span class="line">    ActivityInfo aInfo = r.activityInfo;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (r.packageInfo == <span class="keyword">null</span>) &#123;</span><br><span class="line">        r.packageInfo = getPackageInfo(aInfo.applicationInfo, r.compatInfo,</span><br><span class="line">                Context.CONTEXT_INCLUDE_CODE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  </span><br><span class="line">    Activity activity = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        </span><br><span class="line">        java.lang.ClassLoader cl = appContext.getClassLoader();</span><br><span class="line">        activity = mInstrumentation.newActivity(</span><br><span class="line">                cl, component.getClassName(), r.intent);</span><br><span class="line">        StrictMode.incrementExpectedActivityCount(activity.getClass());</span><br><span class="line">        r.intent.setExtrasClassLoader(cl);</span><br><span class="line">        r.intent.prepareToEnterProcess();</span><br><span class="line">        <span class="keyword">if</span> (r.state != <span class="keyword">null</span>) &#123;</span><br><span class="line">            r.state.setClassLoader(cl);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!mInstrumentation.onException(activity, e)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(</span><br><span class="line">                <span class="string">&quot;Unable to instantiate activity &quot;</span> + component</span><br><span class="line">                + <span class="string">&quot;: &quot;</span> + e.toString(), e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> activity;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>看注释就知道，这个方法是启动Activity的核心方法，在启动Activity之前会通过调用<code>getPackageInfo</code>方法来先获取并解析Activity信息，我们进到这个方法中。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> LoadedApk <span class="title">getPackageInfo</span><span class="params">(ApplicationInfo ai, CompatibilityInfo compatInfo,</span></span></span><br><span class="line"><span class="params"><span class="function">                                      <span class="keyword">int</span> flags)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">return</span> getPackageInfo(ai, compatInfo, <span class="keyword">null</span>, securityViolation, includeCode,</span><br><span class="line">                        registerPackage);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  这个三个参数的<code>getPackageInfo</code>调用了五个参数的<code>getPackageInfo</code>方法，注意第三个参数传的是<code>null</code>，我们继续进入五个参数的<code>getPackageInfo</code>方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> LoadedApk <span class="title">getPackageInfo</span><span class="params">(ApplicationInfo aInfo, CompatibilityInfo compatInfo,</span></span></span><br><span class="line"><span class="params"><span class="function">        ClassLoader baseLoader, <span class="keyword">boolean</span> securityViolation, <span class="keyword">boolean</span> includeCode,</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="keyword">boolean</span> registerPackage)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> differentUser = (UserHandle.myUserId() != UserHandle.getUserId(aInfo.uid));</span><br><span class="line">    <span class="keyword">synchronized</span> (mResourcesManager) &#123;</span><br><span class="line">        WeakReference&lt;LoadedApk&gt; ref;</span><br><span class="line">        <span class="keyword">if</span> (differentUser) &#123;</span><br><span class="line">            <span class="comment">// Caching not supported across users</span></span><br><span class="line">            ref = <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (includeCode) &#123;</span><br><span class="line">            ref = mPackages.get(aInfo.packageName);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            ref = mResourcePackages.get(aInfo.packageName);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        LoadedApk packageInfo = ref != <span class="keyword">null</span> ? ref.get() : <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (packageInfo == <span class="keyword">null</span> || (packageInfo.mResources != <span class="keyword">null</span></span><br><span class="line">                &amp;&amp; !packageInfo.mResources.getAssets().isUpToDate())) &#123;</span><br><span class="line">            <span class="keyword">if</span> (localLOGV) Slog.v(TAG, (includeCode ? <span class="string">&quot;Loading code package &quot;</span></span><br><span class="line">                    : <span class="string">&quot;Loading resource-only package &quot;</span>) + aInfo.packageName</span><br><span class="line">                    + <span class="string">&quot; (in &quot;</span> + (mBoundApplication != <span class="keyword">null</span></span><br><span class="line">                            ? mBoundApplication.processName : <span class="keyword">null</span>)</span><br><span class="line">                    + <span class="string">&quot;)&quot;</span>);</span><br><span class="line">            packageInfo =</span><br><span class="line">                <span class="keyword">new</span> LoadedApk(<span class="keyword">this</span>, aInfo, compatInfo, baseLoader,</span><br><span class="line">                        securityViolation, includeCode &amp;&amp;</span><br><span class="line">                        (aInfo.flags&amp;ApplicationInfo.FLAG_HAS_CODE) != <span class="number">0</span>, registerPackage);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (mSystemThread &amp;&amp; <span class="string">&quot;android&quot;</span>.equals(aInfo.packageName)) &#123;</span><br><span class="line">                packageInfo.installSystemApplicationInfo(aInfo,</span><br><span class="line">                        getSystemContext().mPackageInfo.getClassLoader());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> packageInfo;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>有一个HashMap即mPackages维护包名和LoadedApk的对应关系，即每一个应用有一个键值对对应，如果为null，就新创建一个LoadedApk对象，并将其添加到Map中。第一次执行Activity的时候，很显然是没有这个LoadedApk对象的，所以会生成一个新的LoadedApk对象，然后注意到传入了一个baseLoader，正是上面传的<code>null</code>。</p>
-<p>我们再回头看下<code>performLaunchActivity</code>，当调用完<code>getPackageInfo</code>之后，会调用<code>java.lang.ClassLoader cl = appContext.getClassLoader();</code>去获取<code>classLoader</code>，我们进到<code>ContextImpl.getClassLoader</code>方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ClassLoader <span class="title">getClassLoader</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mClassLoader != <span class="keyword">null</span> ? mClassLoader : (mPackageInfo != <span class="keyword">null</span> ? mPackageInfo.getClassLoader() : ClassLoader.getSystemClassLoader());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>这里的<code>mClassLoader</code>正是上面传入的<code>null</code>，而<code>mPackageInfo</code>是上边生成的<code>LoadedApk</code>对象不为空，所以会调用<code>LoadedApk</code>的<code>getClassLoader</code>方法。这里就不在一层一层的剥开了，因为想节省点笔迹🤪，总之，翻源码到最后，你会发现最终是通过调用<code>ClassLoader.getSystemClassLoader</code>来获取一个<code>classLoader</code>，而这个<code>classLoader</code>正好是<code>PathClassLoader</code>。</p>
-<p>到这里一切真相大白了吧？前面<strong>我们虽然用<code>DexClassLoader</code>通过对APK的动态加载成功加载了<code>TestActivity</code>到虚拟机，但是当系统启动该<code>Activity</code>的时候，依然会出现加载类失败的异常，因为<code>Activity</code>在启动时用到的是<code>PathClassLoader</code></strong>。前面在介绍<code>Android</code>的<code>ClassLoader</code>的时候提到过，<code>PathClassLoader</code>是<code>Android</code>默认使用的类加载器，一个<code>APK</code>中的<code>Activity</code>等类便是在其中加载，但是我们的<code>TestActivity</code>不存在于当前的<code>APK</code>，而是在外部的<code>dex</code>文件上，自然而然的就会出现上边找不到<code>Activity</code>的异常了。</p>
-<p>那我们是不是可以替换掉这个<code>PathClassLoader</code>为<code>DexClassLoader</code>不就好了吗？答案是肯定的。除了这个方案之外，我们还可以利用双亲委派的原理，给出另一种方案。两种解决方案如下：</p>
-<ul>
-<li>替换系统组件类加载器为我们的<code>DexClassLoader</code>，同时设置<code>DexClassLoader</code>的<code>parent</code>为系统组件的类加载器。</li>
-<li>打破原有的双亲关系，在系统组件类加载器和<code>BootClassLoader</code>中插入我们自己的<code>DexClassLoader</code>即可。</li>
-</ul>
-<h4 id="方案一：替换mClassLoader为DexClassLoader"><a href="#方案一：替换mClassLoader为DexClassLoader" class="headerlink" title="方案一：替换mClassLoader为DexClassLoader"></a>方案一：替换<code>mClassLoader</code>为<code>DexClassLoader</code></h4><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/202201152137281.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220115213655318" title="">
-                </div>
-                <div class="image-caption">image-20220115213655318</div>
-            </figure>修改`MainActivity`的代码如下：
+动态加载开始正题之前，在这里可以先给动态加载技术做一个简单的定义。真正的动态加载应该是
 
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        String sdcardPath = Environment.getExternalStorageDirectory().getAbsolutePath();</span><br><span class="line">        startActivityTest(<span class="keyword">this</span>, sdcardPath + File.separator + <span class="string">&quot;classes3.dex&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">replaceClassLoader</span><span class="params">(ClassLoader classLoader)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 加载ActivityThread类</span></span><br><span class="line">            Class&lt;?&gt; ActivityThreadClazz = classLoader.loadClass(<span class="string">&quot;android.app.ActivityThread&quot;</span>);</span><br><span class="line">            <span class="comment">// 获取currentActivityThread方法,从而获取ActivityThread实例</span></span><br><span class="line">            Method currentActivityThreadMethod = ActivityThreadClazz.getDeclaredMethod(<span class="string">&quot;currentActivityThread&quot;</span>);</span><br><span class="line">            currentActivityThreadMethod.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            Object activityThreadObj = currentActivityThreadMethod.invoke(<span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 获取ActivityThread的mPackage属性</span></span><br><span class="line">            Field mPackageField = ActivityThreadClazz.getDeclaredField(<span class="string">&quot;mPackages&quot;</span>);</span><br><span class="line">            mPackageField.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            <span class="comment">// 获取loadedApk对象</span></span><br><span class="line">            ArrayMap mPackageObj = (ArrayMap) mPackageField.get(activityThreadObj);</span><br><span class="line">            WeakReference wr = (WeakReference) mPackageObj.get(<span class="keyword">this</span>.getPackageName());</span><br><span class="line">            Object loadedApkObj = wr.get();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 替换mClassLoader</span></span><br><span class="line">            Class loadedApkClazz = classLoader.loadClass(<span class="string">&quot;android.app.LoadedApk&quot;</span>);</span><br><span class="line">            Field mClassLoader = loadedApkClazz.getDeclaredField(<span class="string">&quot;mClassLoader&quot;</span>);</span><br><span class="line">            mClassLoader.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            mClassLoader.set(loadedApkObj, classLoader);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException | NoSuchMethodException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchFieldException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startActivityTest</span><span class="params">(Context context, String dexFilePath)</span> </span>&#123;</span><br><span class="line">        Class&lt;?&gt; clazz = <span class="keyword">null</span>;</span><br><span class="line">        DexClassLoader dexClassLoader = <span class="keyword">new</span> DexClassLoader(dexFilePath, <span class="keyword">null</span>, <span class="keyword">null</span>, MainActivity.class.getClassLoader());</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            replaceClassLoader(dexClassLoader);</span><br><span class="line">            clazz = dexClassLoader.loadClass(<span class="string">&quot;com.example.dexclass.TestActivity&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        context.startActivity(<span class="keyword">new</span> Intent(context, clazz));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行项目，结果如预期：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/202201152139770.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220115213932649" title="">
-                </div>
-                <div class="image-caption">image-20220115213932649</div>
-            </figure>
-<h4 id="方案二：在mClassLoader和BootClassLoader之间插入DexClassLoader"><a href="#方案二：在mClassLoader和BootClassLoader之间插入DexClassLoader" class="headerlink" title="方案二：在mClassLoader和BootClassLoader之间插入DexClassLoader"></a>方案二：在<code>mClassLoader</code>和<code>BootClassLoader</code>之间插入<code>DexClassLoader</code></h4><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/202201152147745.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220115214708638" title="">
-                </div>
-                <div class="image-caption">image-20220115214708638</div>
-            </figure>
-<p>修改<code>TestActivity</code>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(<span class="meta">@Nullable</span> Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        Log.d(<span class="string">&quot;TestActivity&quot;</span>, <span class="string">&quot;i am from TestActivity.onCreate&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>把<code>AppCompatActivity</code>改为了<code>Activity</code>，防止有一些类重复加载。</p>
-<p>再次修改<code>MainActivity</code>的代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        String sdcardPath = Environment.getExternalStorageDirectory().getAbsolutePath();</span><br><span class="line">        startActivityTest(<span class="keyword">this</span>, sdcardPath + File.separator + <span class="string">&quot;classes3.dex&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startActivityTest</span><span class="params">(Context context, String dexFilePath)</span> </span>&#123;</span><br><span class="line">        Class&lt;?&gt; clazz = <span class="keyword">null</span>;</span><br><span class="line">        ClassLoader pathClassLoader = MainActivity.class.getClassLoader();</span><br><span class="line">        ClassLoader bootClassLoader = MainActivity.class.getClassLoader().getParent();</span><br><span class="line">        <span class="comment">// dexClassLoader的parent为BootClassLoader</span></span><br><span class="line">        DexClassLoader dexClassLoader = <span class="keyword">new</span> DexClassLoader(dexFilePath, <span class="keyword">null</span>, <span class="keyword">null</span>, bootClassLoader);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Field parentField = ClassLoader.class.getDeclaredField(<span class="string">&quot;parent&quot;</span>);</span><br><span class="line">            parentField.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            <span class="comment">// 当前组件的ClassLoader的parent为DexClassLoader</span></span><br><span class="line">            parentField.set(pathClassLoader, dexClassLoader);</span><br><span class="line">            clazz = dexClassLoader.loadClass(<span class="string">&quot;com.example.dexclass.TestActivity&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException | NoSuchFieldException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        context.startActivity(<span class="keyword">new</span> Intent(context, clazz));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行项目，结果也如预期：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/202201152315708.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220115231522507" title="">
-                </div>
-                <div class="image-caption">image-20220115231522507</div>
-            </figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>动态加载就是用到的时候再去加载，也叫懒加载，也就意味着用不到的时候是不会去加载的。动态加载是dex加壳，插件化，热更新的基础。动态加载的dex不具有生命周期特征，App中的Activity, Service等组件无法正常工作，只能完成一般函数的调用；需要对ClassLoader进行修正，App才能正常运行，两种修正方案：</p>
-<ol>
-<li>替换系统组件类加载器为我们的<code>DexClassLoader</code>，同时设置<code>DexClassLoader</code>的<code>parent</code>为系统组件的类加载器。</li>
-<li>打破原有的双亲关系，在系统组件类加载器和<code>BootClassLoader</code>中插入我们自己的<code>DexClassLoader</code>即可。</li>
-</ol>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cauchyweierstrass/article/details/51087198">Android动态加载Activity原理</a></p>
-<p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-252630.htm#msg_header_h2_6">FART：ART环境下基于主动调用的自动化脱壳方案</a></p>
-<p><a target="_blank" rel="noopener" href="http://androidxref.com/9.0.0_r3/xref/frameworks/base/core/java/android/app/ActivityThread.java">ActivityThread源码</a></p>
-<p><a target="_blank" rel="noopener" href="https://samiu.top/2020/04/16/Activity%E7%9A%84%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E6%8E%A2%E7%A9%B6/">Activity的启动流程探究</a></p>
-<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000004062880">Android动态加载基础 ClassLoader工作机制</a></p>
-
+应用在运行的时候通过加载一些本地不存在的可执行文件实现一些特定的功能。
+这些可执行文件是可以替换的。
+更换静态资源(比如换启动图、换主题、或者用服务器参数开关控制广告的隐藏现实等)不属于动态加载。
+Android中动态加载的核心思想是动态调用外部的 dex文件，极端的情况下，Android AP...
     
 
         <a href="/Android%E9%80%86%E5%90%91%E4%B9%8B%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD/" class="post-more waves-effect waves-button">
@@ -463,46 +236,20 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        <div align="middle"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=3560361&auto=1&height=66"></iframe></div>
+        
 
 
 
-<h3 id="什么是大端-什么是小端"><a href="#什么是大端-什么是小端" class="headerlink" title="什么是大端? 什么是小端?"></a>什么是大端? 什么是小端?</h3><p>在搞明白大小端之前，先看2个概念，<strong>高低字节</strong>和<strong>高低地址</strong></p>
-<h4 id="高低字节"><a href="#高低字节" class="headerlink" title="高低字节"></a>高低字节</h4><p><img src="https://img.heshipeng.com/202201051209394.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220105120910483"></p>
-<p>高低字节类似于数字表示的位数，如果把unsigned int看成是千位的话，从左到右依次千位，百位，十位，个位，左高右低。</p>
-<ul>
-<li>对于一个字节的数据(char/unsigned char/bool)而言，没有高低字节之分。</li>
-<li>只有大于一个字节以上的数据才要区分高低字节。</li>
-</ul>
-<h4 id="高低地址"><a href="#高低地址" class="headerlink" title="高低地址"></a>高低地址</h4><p><img src="https://img.heshipeng.com/202201051355138.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220105135527049"></p>
-<ul>
-<li>计算机的基本存储单位是字节(byte)，1byte = 8bit，从00000000到11111111表示的范围是[0,255]。</li>
-<li>对于内存中的每一个字节(byte)，都有一个索引编号，就是指针，也即地址，索引是从0开始，从左到右依次增大，所以左边被称为低地址，右边被称为高地址。</li>
-</ul>
-<h4 id="大端，小端"><a href="#大端，小端" class="headerlink" title="大端，小端"></a>大端，小端</h4><p>盗用维基百科上的2张图来解释下大小端。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/202201051401228.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="大端" title="">
-                </div>
-                <div class="image-caption">大端</div>
-            </figure>
-<p>根据大端的定义：数据的<strong>高字节</strong>保存在内存的低地址中，数据的<strong>低字节</strong>保存在内存的高地址中。</p>
-<p><img src="https://img.heshipeng.com/202201051407227.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="小端"></p>
-<p>根据小端的定义：数据的<strong>低字节</strong>保存在内存的<strong>低地址</strong>中，数据的<strong>高字节</strong>保存在内存的<strong>高地址</strong>中。</p>
-<p>比如十六进制数<code>0xDC6E35FF</code>，从左到右依次是高字节到低字节，因为从左到右同时是由低地址到高地址，如果按照小端存储，则<code>0xDC6E35FF</code>在内存中对应存储为<code>0xFF356EDC</code>，如果按照大端存储，则应该是<code>0xDC6E35FF</code>。</p>
-<h3 id="如何判断大端还是小端"><a href="#如何判断大端还是小端" class="headerlink" title="如何判断大端还是小端"></a>如何判断大端还是小端</h3><p>用<code>python</code>查看：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">&quot;import sys; print(sys.byteorder)&quot;</span></span><br></pre></td></tr></table></figure>
-<p>用<code>c</code>查看：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0x11223344</span>;</span><br><span class="line">    <span class="keyword">char</span> *p;</span><br><span class="line"></span><br><span class="line">    p = (<span class="keyword">char</span> *) &amp;i;</span><br><span class="line">    <span class="keyword">if</span> (*p == <span class="number">0x44</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Little endian\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Big endian\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>参考链接：</p>
-<ul>
-<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lwfcgz/article/details/50476051">判断计算机是大端还是小端</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c41741b5c19d">谈内存</a></p>
-</li>
-</ul>
+什么是大端? 什么是小端?在搞明白大小端之前，先看2个概念，高低字节和高低地址
+高低字节
+高低字节类似于数字表示的位数，如果把unsigned int看成是千位的话，从左到右依次千位，百位，十位，个位，左高右低。
 
+对于一个字节的数据(char/unsigned char/bool)而言，没有高低字节之分。
+只有大于一个字节以上的数据才要区分高低字节。
+
+高低地址
+
+计算机的基本存储...
     
 
         <a href="/%E5%A4%A7%E7%AB%AF%E8%BF%98%E6%98%AF%E5%B0%8F%E7%AB%AF/" class="post-more waves-effect waves-button">
@@ -549,304 +296,16 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        <p><meta name="referrer" content="no-referrer"/></p>
-<div align="middle"><iframe width="560" height="315" src="https://www.youtube.com/embed/tHv9XMzEnjo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        
 
-<h2 id="什么是AAPT2-Android-Asset-Packaging-Tool"><a href="#什么是AAPT2-Android-Asset-Packaging-Tool" class="headerlink" title="什么是AAPT2(Android Asset Packaging Tool)"></a>什么是AAPT2(Android Asset Packaging Tool)</h2><p>在Android开发过程中，我们通过Gradle命令，启动一个构建任务，最终会生成构建产物“APK”文件。常规APK的构建流程如下：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/FmSi0GYeL8d3wSapWsPae4kr28Om?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="android构建.png" title="">
-                </div>
-                <div class="image-caption">android构建.png</div>
-            </figure>
-<p>（引用自Google官方文档）</p>
-<ul>
-<li>编译所有的资源文件，生成资源表和R文件；</li>
-<li>编译Java文件并把class文件打包为dex文件；</li>
-<li>打包资源和dex文件，生成未签名的APK文件；</li>
-<li>签名APK生成正式包。</li>
-</ul>
-<p>老版本的Android默认使用AAPT编译器进行资源编译，从Android Studio 3.0开始，AS默认开启了 AAPT2作为资源编译的编译器，目前看来，AAPT2也是Android发展的主流趋势，学习AAPT2的工作原理可以帮助Android开发更好的掌握APK构建流程，从而帮助解决实际开发中遇到的问题。</p>
-<p>AAPT2的可执行文件随Android SDK的Build Tools一起发布，在Android Studio的build-tools文件夹中就包含AAPT2工具，目录为（SDK目录/build-tools/version/aapt2）。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/Fi1D2FYTzHg-7TmjhGnER91BjQ5H?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="aapt2路径.png" title="">
-                </div>
-                <div class="image-caption">aapt2路径.png</div>
-            </figure>
-<p>所以AAPT的作用，总结起来就是<strong>在APK打包的过程中对静态资源文件进行编译，打包</strong>。</p>
-<p>这里可能会有一个疑问：</p>
-<blockquote>
-<p>Java文件需要编译才能生class文件，这个我能明白，但资源文件编译到底是干什么的？为什么要对资源做编译？</p>
-</blockquote>
-<p>这里先插个眼，带着这个问题去深入学习AAPT，然后慢慢解开这个问题。</p>
-<h2 id="AAPT2如何工作"><a href="#AAPT2如何工作" class="headerlink" title="AAPT2如何工作"></a>AAPT2如何工作</h2><p>和AAPT不同，AAPT2把资源编译打包过程拆分为两部分，即编译和链接：</p>
-<ul>
-<li>编译阶段：将资源文件编译为二进制文件（flat)</li>
-<li>链接阶段：将编译后的文件合并，打包成单独文件。</li>
-</ul>
-<blockquote>
-<p>通过把资源编译拆分为两个部分，AAPT2能够很好的提升资源编译的性能。例如，之前一个资源文件发生变动，AAPT需要做一全量编译，AAPT2只需要重新编译改变的文件，然后和其他未发生改变的文件进行链接即可。</p>
-</blockquote>
-<p>AAPT2常用命令：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">二级命令</th>
-<th style="text-align:center">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">compile</td>
-<td style="text-align:center">编译资源，用于链接</td>
-</tr>
-<tr>
-<td style="text-align:center">link</td>
-<td style="text-align:center">链接资源至一个apk</td>
-</tr>
-<tr>
-<td style="text-align:center">…</td>
-<td style="text-align:center">其它命令，通过<code>aapt2 -h</code>查看</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="Compile命令"><a href="#Compile命令" class="headerlink" title="Compile命令"></a>Compile命令</h3><p>Complie指令用于编译资源，AAPT2提供多个选项与Compile命令搭配使用，如下：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/FnCbyMrXOigcxISFpeojInoEP4Fh?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="aapt2命令选项.png" title="">
-                </div>
-                <div class="image-caption">aapt2命令选项.png</div>
-            </figure>
-<p>Compile的一般用法如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aapt2 compile path-to-input-files [options] -o output-directory/</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Compile 命令会对输入的资源文件的路径做校验，输入文件的路径必须满足path/resource-type[config]/file，否则会编译报错：error: bad resource path.</p>
-</blockquote>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/FqQVM_68gVDZVPVS-x3kVehUf5Po?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="aapt2编译报错.png" title="">
-                </div>
-                <div class="image-caption">aapt2编译报错.png</div>
-            </figure>
-<p>新建一个目录drawable-hdpi，把用来测试的图片放在这个目录下，然后执行命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aapt2 compile drawable-hdpi/aapt2路径.png -o .</span><br></pre></td></tr></table></figure>
-<p>可以看到当前目录多了一个drawable-hdpi_aapt2.flat的文件。</p>
-<p>在Android Studio中，可以在app/build/intermediates/merged_res/debug/ 目录下找到编译生成的.flat文件。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/FtTzF2KXRLIASXXu-IKcovhR9wGH?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="android studio打包产生的flat文件.png" title="">
-                </div>
-                <div class="image-caption">android studio打包产生的flat文件.png</div>
-            </figure>
-<p>当然Compile也支持编译多个文件。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aapt2 compile path-to-input-files1 path-to-input-files2 [options] -o output-directory/</span><br></pre></td></tr></table></figure>
-<p>编译整个目录,需要制定数据文件，编译产物是一个压缩文件，包含目录下所有的资源，通过文件名把资源目录结构扁平化。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aapt2 compile --dir .../res [options] -o output-directory/resource.ap_</span><br></pre></td></tr></table></figure>
-<p>我们找个简单的Android项目测试下，首先进到项目的<code>app/src/main</code>目录下，然后执行命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aapt2 compile --dir ./res -o resource.ap_</span><br></pre></td></tr></table></figure>
-<p>可以看到产生了一个压缩文件，用命令<code>unzip -lv resource.ap_</code>查看，可以看到里面是一堆<code>.flat</code>的文件</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/Fiu1UOXFwhx9Vj8_8jHACQLIXW7N?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="aapt2 compile编译目录.png" title="">
-                </div>
-                <div class="image-caption">aapt2 compile编译目录.png</div>
-            </figure>
-<p>随便找其中的一个文件打开，是乱码的，那么这个FLAT文件是到底是什么？我们先接着看aapt2的链接阶段，晚点再探讨这个话题。</p>
-<h3 id="Link命令"><a href="#Link命令" class="headerlink" title="Link命令"></a>Link命令</h3><p>在链接阶段，AAPT2 会合并在编译阶段生成的所有中间文件（.flat文件），并将它们打包成ZIP包（最终APK的原型，由于不包括DEX文件且未签名，所以无法正常安装）。</p>
-<p>链接资源使用link子命令，如下所示：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">aapt2 link -o build/output.apk \</span><br><span class="line">    -I <span class="variable">$ANDROID_HOME</span>/platforms/android-29/android.jar \</span><br><span class="line">    --manifest build/intermediates/manifests/full/debug/AndroidManifest.xml \</span><br><span class="line">    build/layout_activity_main.xml.flat \</span><br><span class="line">    build/values_styles.arsc.flat \</span><br><span class="line">    build/values_colors.arsc.flat \</span><br><span class="line">    build/values_strings.arsc.flat \</span><br><span class="line">    build/mipmap-xxxhdpi_ic_launcher.png.flat \</span><br><span class="line">    build/mipmap-xxxhdpi_ic_launcher_round.png.flat</span><br></pre></td></tr></table></figure>
-<h3 id="AAPT2容器"><a href="#AAPT2容器" class="headerlink" title="AAPT2容器"></a>AAPT2容器</h3><p>FLAT文件是AAPT2编译的产物文件，也叫做AAPT2容器，文件由文件头和资源项两大部分组成。</p>
-<ol>
-<li>文件头</li>
-</ol>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">Size(in bytes)</th>
-<th style="text-align:center">Field</th>
-<th style="text-align:left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">4</td>
-<td style="text-align:center">magic</td>
-<td style="text-align:left">AAPT2容器文件标识，AAPT或0x54504141</td>
-</tr>
-<tr>
-<td style="text-align:center">4</td>
-<td style="text-align:center">version</td>
-<td style="text-align:left">AAPT2容器版本</td>
-</tr>
-<tr>
-<td style="text-align:center">4</td>
-<td style="text-align:center">entry_count</td>
-<td style="text-align:left">容器中包含的条目数(一个flat文件中可以包含多个资源项)</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>用<code>UltraEdit</code>编辑上面任意一个flat文件，内容如下：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/FsFqakTFKfyvq4U4deD3pwN0AMt6?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="UE打开flat文件.png" title="">
-                </div>
-                <div class="image-caption">UE打开flat文件.png</div>
-            </figure>
-<p>可以看到前4个字节是<code>0x54504141</code>(为啥不是0x41415054?因为是小端机器)，标识该文件是一个AAPT容器文件；紧接着4个字节是<code>0x00000001</code>表示该文件的版本号是1，接着4个字节是<code>0x000000001</code>表示该文件只有一个资源项。</p>
-<blockquote>
-<p>关于二进制文件的逆向工具，类Unix系统都自带<code>xxd</code>命令，可以直接输出二进制文件的十六进制格式：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxd values-de_values-de.arsc.flat</span><br></pre></td></tr></table></figure>
-<p>或者使用<code>Vim</code>打开二进制文件，然后在命令模式中输入：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%!xxd</span><br></pre></td></tr></table></figure>
-<p>在Windows系统中，则可以用UE(UltraEdit)打开二进制文件分析。</p>
-</blockquote>
-<ol>
-<li>资源项</li>
-</ol>
-<p>先用一个表格看下资源项的数据格式：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">Size(in bytes)</th>
-<th style="text-align:center">Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">4</td>
-<td style="text-align:center">entry_type</td>
-<td>资源类型，目前仅支持2种类型，RES_TABLE和RES_FILE</td>
-</tr>
-<tr>
-<td style="text-align:center">8</td>
-<td style="text-align:center">entry_length</td>
-<td>资源文件数据长度</td>
-</tr>
-<tr>
-<td style="text-align:center">若干</td>
-<td style="text-align:center">entry_data</td>
-<td>资源数据</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>entry_type值分为两种类型:</p>
-<ul>
-<li>当entry_type的值等于<code>0x00000000</code>时，为<code>RES_TABLE</code>类型。</li>
-<li>当entry_type的值等于<code>0x00000001</code>时，为<code>RES_FILE</code>类型。</li>
-</ul>
-<p>很显然我们这里打开的文件是一个RES_FILE类型，因为这里的entry_type为<code>0x00000001</code>。</p>
-<p>接着8个字节<code>0x000000000001BFC8</code>表示该资源文件的长度，转为十进制，也即114632个字节。换算成以k为单位，就是111.95k，我们查看资源文件大小也刚好是112k。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/Ft1NO7v_GkvR_Rn5N_cfJYQL4doZ" alt="资源文件大小.png" title="">
-                </div>
-                <div class="image-caption">资源文件大小.png</div>
-            </figure>
-<p>接下来就是资源数据了，接下来看下RES_FILE文件的格式：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">Size(inf bytes)</th>
-<th style="text-align:center">Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">4</td>
-<td style="text-align:center">header_size</td>
-<td>header的长度</td>
-</tr>
-<tr>
-<td style="text-align:center">8</td>
-<td style="text-align:center">data_size</td>
-<td>data的长度</td>
-</tr>
-<tr>
-<td style="text-align:center">header_size</td>
-<td style="text-align:center">header</td>
-<td>表示protobuf序列化的CompiledFile结构</td>
-</tr>
-<tr>
-<td style="text-align:center">x</td>
-<td style="text-align:center">header_padding</td>
-<td>0-3个填充字节，用于data 32位对齐</td>
-</tr>
-<tr>
-<td style="text-align:center">data_size</td>
-<td style="text-align:center">data</td>
-<td>资源文件内容(PNG, 二进制, XML或者protobuf序列化的XmlNode结构)</td>
-</tr>
-<tr>
-<td style="text-align:center">y</td>
-<td style="text-align:center">data_paddning</td>
-<td>0-3个填充字节，用于data 32位对齐</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>可以用一张图看下完整的RES_FILE类型的flat文件的格式：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/FrdQkv6mPBGr6Akv0YhonaOTyH07?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="RES_FILE类型的flat文件格式.png" title="">
-                </div>
-                <div class="image-caption">RES_FILE类型的flat文件格式.png</div>
-            </figure>
-<p>接着看刚才打开的.flat文件，<code>0000003F</code>4个字节，也即63表示该RES_FILE的header长度是63个字节，然后接着8个字节<code>0x000000000001BF7B</code>表示数据文件的长度，也即114555个字节。</p>
-<blockquote>
-<p>这里的data_length和上面的entry_length不是同一个长度，data_length指的是编译之前原始文件的数据长度(这里指原始png文件)，而entry_length指的是编译之后整个flat文件的长度。</p>
-</blockquote>
-<p>接下来就是header部分，前面计算了header的长度是63位，所以这里63个字节表示header，然后紧接着一个<code>00</code>是header_padding用来做32位对齐。</p>
-<p>然后接下来的114555个字节就是原始文件的数据内容(也即是png的内容)，最后一个<code>00</code>是用来填充数据做32位对齐的。</p>
-<p>总结一下，我们前面计算了整个flat文件的大小是114632个字节，114632=4(用来存储header的长度)+8(用来存储data的长度)+63(header)+1(1个填充字节，用来填充header进行32位对齐)+114555(编译之前整个png的文件长度)+1(1个填充字节，用来填充data进行32位对齐)</p>
-<p>最后用一张图看下上边分析的RES_FILE格式：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="https://img.heshipeng.com/FqcguIF45SpTniymtYf6H89zRQQ5" alt="RES_FILE格式图示.png" title="">
-                </div>
-                <div class="image-caption">RES_FILE格式图示.png</div>
-            </figure>
-<p>另一种格式<code>RES_TABLE</code>格式比较简单，其实就是ResourceTable的<code>protobuf</code>序列化结果。数据结构如下：</p>
-<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Top level message representing a resource table.</span></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">ResourceTable</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 字符串池</span></span><br><span class="line">    StringPool source_pool = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 用于生成资源id</span></span><br><span class="line">    <span class="keyword">repeated</span> Package <span class="keyword">package</span> = <span class="number">2</span>;</span><br><span class="line">    <span class="comment">// 资源叠加层相关</span></span><br><span class="line">    <span class="keyword">repeated</span> Overlayable overlayable = <span class="number">3</span>;</span><br><span class="line">    <span class="comment">// 工具版本</span></span><br><span class="line">    <span class="keyword">repeated</span> ToolFingerprint tool_fingerprint = <span class="number">4</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>资源表（ResourceTable）中包含：</p>
-<p><strong>StringPool</strong>：字符串池，字符串常量池是为了把资源文件中的string复用起来，从而减少体积，资源文件中对应的字符串会被替换为字符串池中的索引。</p>
-<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">StringPool</span> </span>&#123;</span><br><span class="line">  <span class="built_in">bytes</span> data = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>Package</strong>：包含资源id的相关信息。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 资源id的包id部分，在 [0x00, 0xff] 范围内</span><br><span class="line">message PackageId &#123;</span><br><span class="line">  uint32 id = 1;</span><br><span class="line">&#125;</span><br><span class="line">// 资源id的命名规则</span><br><span class="line">message Package &#123;</span><br><span class="line">  // [0x02, 0x7f) 简单的说，由系统使用</span><br><span class="line">  // 0x7f 应用使用</span><br><span class="line">  // (0x7f, 0xff] 预留Id</span><br><span class="line">  PackageId package_id = 1;</span><br><span class="line">  // 包名</span><br><span class="line">  string package_name = 2;</span><br><span class="line">  // 资源类型，对应string, layout, xml, dimen, attr等，其对应的资源id区间为[0x01, 0xff]</span><br><span class="line">  repeated Type type = 3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>资源id的命令方式遵循0xPPTTEEEE的规则，其中PP对应PackageId，一般应用使用的资源为7f，TT对应的是资源文件夹的名成，最后4位为资源的id，从0开始。</p>
-</blockquote>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过本文，了解到<em>AAPT2</em>（<em>Android</em> 资源打包工具）是一个构建工具，<em>Android Studio</em> 和 <em>Android Gradle Plugin</em> 使用它来编译和打包应用的资源。<em>AAPT2</em> 会解析资源、为资源编制索引，并将资源编译为针对 Android 平台进行过优化的二进制格式。</p>
-<p>在本文的开头，我们有如下的问题：</p>
-<blockquote>
-<p>Java文件需要编译才能生.class文件，这个我能明白，但资源文件编译到底是干什么的？为什么要对资源做编译？</p>
-</blockquote>
-<p>主要原因在于 <em>AAPT2</em> 将资源打包过程拆分成了两个阶段：「编译阶段」和「链接阶段」，为了在链接阶段得到资源更详细的信息，例如：资源名称、配置信息（<em>Configuration</em>） 等，因此，直接将资源的元信息连同资源本身一同编码进 <em>AAPT2</em> 容器文件中，这样，资源链接的过程可以完全与编译过程解耦了，而且，对于增量构建来说，这样大大提升了资源打包的性能。这样如果只是修改了其中若干个资源文件，则只需要对这些资源文件单独编译然后再链接，而不用对所有的资源文件重新链接，大大提高了性能。</p>
-<p>参考链接：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://booster.johnsonlee.io/architecture/aapt2-output-reversing.html#flat-%E4%B8%8E-aapt-%E4%BA%A7%E7%89%A9%E7%9A%84%E5%85%B3%E7%B3%BB">AAPT2产物逆向</a></li>
-<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040864174">Android构建工具—AAPT2源码解析（一）</a></li>
-</ul>
 
+什么是AAPT2(Android Asset Packaging Tool)在Android开发过程中，我们通过Gradle命令，启动一个构建任务，最终会生成构建产物“APK”文件。常规APK的构建流程如下：
+
+                
+                    
+                    
+                
+            ...
     
 
         <a href="/%E4%B8%80%E6%96%87%E4%BA%86%E8%A7%A3Android%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94AAPT2/" class="post-more waves-effect waves-button">
@@ -893,17 +352,15 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        <div align="middle"><iframe src="//player.bilibili.com/player.html?aid=11251323&bvid=BV1Gx411Y7cz&cid=18609209&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe></div>
+         
 
 
 
-<blockquote>
-<p>泰勒公式（也叫 泰勒展开式、泰勒多项式）<br>泰勒级数</p>
-</blockquote>
-<p>它是<strong>微积分学</strong>下的一个重要概念，与之有关联的有：如<strong>泰勒定理</strong>，<strong>多元泰勒公式</strong>，以<strong>拉格朗日型余项</strong>为代表的各类<strong>余项</strong>，<strong>审敛法</strong>，<strong>牛顿差值公式</strong>（牛顿级数）（列出为了进行树状知识整合和梳理）</p>
-<h4 id="什么是泰勒公式"><a href="#什么是泰勒公式" class="headerlink" title="什么是泰勒公式"></a>什么是泰勒公式</h4><h5 id="基本定义"><a href="#基本定义" class="headerlink" title="基本定义"></a>基本定义</h5><p>泰勒公式为：$f(x)_{Taylor}=\sum_{n=0}^{\infty}{\frac{f^{(n)}(a)}{n!}} \times (x-a)^n=f(a)+\frac{f^\prime(a)}{1!}(x-a)+\frac{f^{(2)}(a)}{2!}(x-a)^2+…+\frac{f^{(n)}(a)}{n!}(x-a)^n+R_n(x)$</p>
-<p>分析下每部分表示的含义：</p>
 
+泰勒公式（也叫 泰勒展开式、泰勒多项式）泰勒级数
+
+它是微积分学下的一个重要概念，与之有关联的有：如泰勒定理，多元泰勒公式，以拉格朗日型余项为代表的各类余项，审敛法，牛顿差值公式（牛顿级数）（列出为了进行树状知识整合和梳理）
+什么是泰勒公式基本定义泰勒公式为：$f(x)_{Taylor}=\sum_{n=0}^{\infty}{\frac{f^{(n)}(a)}{n!}} \ti...
     
 
         <a href="/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E6%B3%B0%E5%8B%92%E5%85%AC%E5%BC%8F/" class="post-more waves-effect waves-button">
@@ -950,74 +407,10 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        <h2 id="偏导数"><a href="#偏导数" class="headerlink" title="偏导数"></a>偏导数</h2><h3 id="回顾导数定义"><a href="#回顾导数定义" class="headerlink" title="回顾导数定义"></a>回顾导数定义</h3><p>在看偏导数的定义之前，回顾下导数的定义：$y=f(x), x_0\in D, f^\prime(x_0)=\lim_{\Delta x -&gt; 0}\frac{\Delta y}{\Delta x}或者f^\prime(x_0) = \lim_{x-&gt;x_0}\frac{f(x) - f(x_0)}{x - x_0}$</p>
-<p>然后还有以下性质：</p>
-<ol>
-<li>$f(x)在x=x_0可导\Rightarrow f(x)在x=x_0连续，反之不成立$</li>
-<li>$f(x)在x=x_0可导 \Leftrightarrow f(x)在x=x_0可微$</li>
-</ol>
-<h3 id="偏导数定义"><a href="#偏导数定义" class="headerlink" title="偏导数定义"></a>偏导数定义</h3><p>$\zeta=f(x, y), ((x, y)\in D), \forall M_0(x_0, y_0)\in D$</p>
-<p>称 $\Delta \zeta_x = f(x_0 + \Delta x, y_0) - f(x_0, y_0)$ 为 $f(x, y)$ 在 $M_0$ 处关于x的<strong>偏增量</strong></p>
-<p>称 $\Delta \zeta_y = f(x_0, y_0 + y_0 + \Delta y) - f(x_0, y_0)$ 为 $f(x, y)$ 在 $M_0$ 处关于y的<strong>偏增量</strong></p>
-<p>称 $\Delta \zeta = f(x_0 + \Delta x, y_0 + \Delta y) - f(x_0, y_0) 或 \Delta \zeta = f(x, y) - f(x_0, y_0)$ 为 $f(x, y)$ 在 $M_0$ 处的<strong>全增量</strong></p>
-<p>若 $\lim_{\Delta x-&gt; 0} \frac{\Delta \zeta x}{\Delta x} \exists 或 \lim_{x-&gt;x_0} \frac{f(x, y_0)-f(x_0, y_0)}{x-x_0} \exists$  称 $f(x, y)$ 在 $M_0$ 处关于x可偏导，极限值称为 $f(x, y)$ 在 $M_0$ 处关于x的偏导数，记为$f^\prime_{x}(x_0, y_0)$ 或者 $\frac{\partial \zeta}{\partial x}|_{(x_0, y_0)}$</p>
-<p>若 $\lim_{\Delta y-&gt; 0} \frac{\Delta \zeta y}{\Delta y} \exists 或 \lim_{y-&gt;y_0} \frac{f(x_0, y)-f(x_0, y_0)}{y-y_0} \exists$  称 $f(x, y)$ 在 $M_0$ 处关于y可偏导，极限值称为 $f(x, y)$ 在 $M_0$ 处关于y的偏导数，记为$f^\prime_{y}(x_0, y_0)$ 或者 $\frac{\partial \zeta}{\partial y}|_{(x_0, y_0)}$</p>
-<p>若 $\forall (x, y) \in D, f(x, y)$ 在 $(x, y)$ 处对x, y皆可以偏导，称 $f^\prime_x(x, y), f^\prime_y(x, y)$ 为 $f(x, y)$ 对 x, y的偏导函数，简称偏导数。</p>
-<h3 id="偏导数的计算"><a href="#偏导数的计算" class="headerlink" title="偏导数的计算"></a>偏导数的计算</h3><p>例. $\zeta = f(x, y) = x^2y + \ln(x+y^2)，求\frac{\partial \zeta}{\partial x}, \frac{\partial \zeta}{\partial y}$</p>
-<p>解：$\frac{\partial \zeta}{\partial x} = 2xy + \frac{1}{x+y^2} $</p>
-<p>$\frac{\partial \zeta}{\partial y} = x^2 + \frac{1}{x+y^2} \cdot 2y$</p>
-<h3 id="偏导数的几何意义"><a href="#偏导数的几何意义" class="headerlink" title="偏导数的几何意义"></a>偏导数的几何意义</h3><p>$\zeta=f(x, y), ((x, y)\in D), \forall M_0(x_0, y_0)\in D$</p>
-<p>$\frac{\partial \zeta}{\partial x}$的几何意义是：通过该点(x, y)且与ZOX平面平行的平面与 $\zeta$ 的交线上，该点(x, y)的效率，如下图：</p>
-<p><img src="https://img.heshipeng.com/202205081039462.png" alt="image-20220508103959300" style="zoom:50%;" /></p>
-<p>之所以取与ZOX平行的平面，是为了保持y方向的增量为0。</p>
-<p>$\frac{\partial \zeta}{\partial y}$ 的几何意义类似。</p>
-<p><img src="https://img.heshipeng.com/202205081044383.png" alt="image-20220508104412299" style="zoom:50%;" /></p>
-<h3 id="高阶偏导数"><a href="#高阶偏导数" class="headerlink" title="高阶偏导数"></a>高阶偏导数</h3><p>设函数 $z=f(x, y)$ 在区域 $D$ 内具有偏导函数 $\frac{\partial z}{\partial x} = f_x(x, y), \ \frac{\partial z}{\partial y} = f_y(x, y)$ ，如果关于偏导函数 $f_x(x, y), \ f_y(x, y)$ 的偏导数也存在，那么称他们是函数 $z=f(x, y)$ 的二阶偏导数，四个二阶偏导数如下：</p>
-<p>$\frac{\partial}{\partial x}(\frac{\partial z}{\partial x}) = f_{xx}(x, y), \ \frac{\partial}{\partial y}(\frac{\partial z}{\partial y}) = f_{yy}(x, y), \ \frac{\partial}{\partial x}(\frac{\partial z}{\partial y}) = f_{yx}(x, y), \ \frac{\partial}{\partial y}(\frac{\partial z}{\partial x}) = f_{xy}(x, y)$</p>
-<p>其中，后边两个偏导数叫做混合偏导数。同样可以得三阶，四阶…以及n阶偏导数，二阶及其以上的偏导数统称为高阶偏导数。</p>
-<h3 id="高阶偏导数的计算"><a href="#高阶偏导数的计算" class="headerlink" title="高阶偏导数的计算"></a>高阶偏导数的计算</h3><p>例. $z=x^3y^2 - 3xy^3 - xy + 1，\ \frac{\partial^2 z}{\partial x^2}? \ \frac{\partial^2 z}{\partial x \partial y}? \ \frac{\partial^2 z}{\partial y \partial x}? \ \frac{\partial^2 z}{\partial y^2}? \ \frac{\partial^3z}{\partial x^3}? $</p>
-<p>解：$\frac{\partial z}{\partial x} = 3x^2y^2 - 3y^3 - y, \ \ \frac{\partial z}{\partial y} = 2x^3y - 9xy^2 - x$</p>
-<p>​        $\frac{\partial^2 z}{\partial x^2}=6xy^2, \ \ \frac{\partial^2 z}{\partial x \partial y} = 6x^2y - 9y^2 - 1, \ \ \frac{\partial^2 z}{\partial y \partial x} = 6x^2y - 9y^2 - 1$</p>
-<p>​        $\frac{\partial^2 z}{\partial y^2} = 2x^3 - 18xy, \ \ \frac{\partial^3z}{\partial x^3} = 6y^2$  </p>
-<h3 id="高阶偏导数的性质"><a href="#高阶偏导数的性质" class="headerlink" title="高阶偏导数的性质"></a>高阶偏导数的性质</h3><p>如果函数 $z=f(x, y)$ 的两个二阶混合偏导数 $z=\frac{\partial^2 z}{\partial x \partial y}$ 及 $\frac{\partial^2 z }{\partial y \partial x}$ 在定义域D内连续，那么该区域内该二阶偏导必然相等。 </p>
-<h2 id="方向导数"><a href="#方向导数" class="headerlink" title="方向导数"></a>方向导数</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p> 假设有$\eta=f(x, y) ((x, y) \in D)$, 其图像在如下图所示，$\eta$的图像是有一个不规则的圆柱体组成，圆柱体的顶面是一个不规则的曲面。</p>
-<p><img src="https://img.heshipeng.com/202205072043452.jpeg" alt="WechatIMG100" style="zoom:20%; align: middle;" /></p>
-<p>在圆柱体的底面任取一点$M_0$，过这个点$M_0$随机作一条射线L，取$M_1(x_0+\Delta x, y_0 + \Delta y) \in L$，如上图所示，则$M_0$到$M_1$的距离$\rho$为$\rho=\sqrt{(\Delta x)^2 + (\Delta y)^2}$。</p>
-<p>过这条射线L作一个垂直于圆柱体底面的平面，这个平面与圆柱体的顶面即不规则的曲面相交产生一条弧线，$M_{0}$和$M_{1}$分别对应弧线上的M和$M^\prime$ 。$M_{0}$M和$M_{1}M^\prime$的高度差记为$\Delta \eta$，则$\Delta \eta=f(x_{0}+\Delta x, y_{0}+\Delta y) - f(x_0, y_0)$</p>
-<p>我们来看看这个$\Delta \eta$，$\Delta \eta&gt;0$相当于沿着这个曲面由地势低的地方往地势高的地方走，就像图中的沿着曲面从M点走到$M^\prime$这个点。反过来，若$\Delta \eta&lt;0$相当于沿着这个曲面从地势高的地方往地势低的地方走，就好比从$M^\prime$走向M。</p>
-<p>我们再看看$\lim_{\rho-&gt;0}{\frac{\Delta \eta}{\rho}}$，这个指标反映从地势高往地势低或地势低往地势高方向上移动的效率，如果这个值越大，表示这个地方(曲面上这极小块区域)越陡峭。如果$\lim_{\rho-&gt;0}{\frac{\Delta \eta}{\rho}}$存在，称此极限为$\eta=f(x, y)$在$M_{0}$处沿射线L的方向导数。记为$\frac{\partial \eta}{\partial L}|_{M_{0}}$ </p>
-<p>即$\frac{\partial \eta}{\partial L}|_{M_{0}}=\lim_{\rho-&gt;0}{\frac{\Delta \eta}{\rho}} 或 \frac{\partial \eta}{\partial L}|_{M_{0}}=\lim_{\rho-&gt;0}{\frac{f(x_{0}+\Delta x, y_{0}+\Delta y) - f(x_0, y_0)}{\rho}}$</p>
-<h3 id="计算公式"><a href="#计算公式" class="headerlink" title="计算公式"></a>计算公式</h3><h5 id="2-dims"><a href="#2-dims" class="headerlink" title="2-dims"></a>2-dims</h5><p> $\zeta = f(x, y)，((x, y)\in D)，M_{0}\in D$ 过 $M_{0}$作射线L，设L的方向角为$\alpha 和 \beta$（方向角的定义如下图），则</p>
-<p>$\frac{\partial \zeta}{\partial L}|_{M_{0}} = \frac{\partial \zeta}{\partial x} \cos{\alpha} + \frac{\partial \zeta}{\partial y} \cos{\beta}$，其中$\frac{\partial \zeta}{\partial x}$表示$\zeta$对x的偏导，$\frac{\partial \zeta}{\partial y}$表示$\zeta$对y的偏导。</p>
-<p><img src="https://img.heshipeng.com/202205072326064.jpeg?" alt="WechatIMG101" style="zoom:20%; align: middle;" /></p>
-<h5 id="3-dims"><a href="#3-dims" class="headerlink" title="3-dims"></a>3-dims</h5><p>$u(x, y, z)$ 在 $M_0(x_0, y_0, z_0)$ 可微，过 $M_0$ 作射线L，L的方向角为 $\alpha \beta \gamma，$ 则 $\frac{\partial u}{\partial L}|_{M_0}=\frac{\partial u}{\partial x}|_{M_0}\cos \alpha + \frac{\partial u}{\partial y}|_{M_0}\cos \beta + \frac{\partial u}{\partial z}|_{M_0}\cos \gamma$        </p>
-<p>例. 求 $\zeta = xe^{2y}在M_0(1, 0)沿从M_0(1, 0)到M(2, -1)的方向导数$</p>
-<p>解：$\frac{\partial \zeta}{\partial x}|_{M_0} = 1, \frac{\partial \zeta}{\partial y}|_{M_0} = 2 $</p>
-<p>$\vec{M_0M} = \{1, -1\}, \cos\alpha = \frac{1}{\sqrt{2}}, \cos\beta = \frac{-1}{\sqrt{2}} $</p>
-<p>$\frac{\partial \zeta}{\partial L}|M_0 = 1 \cdot \frac{1}{\sqrt{2}} + 2 \cdot (-\frac{1}{\sqrt{2}})$</p>
-<h2 id="梯度"><a href="#梯度" class="headerlink" title="梯度"></a>梯度</h2><h3 id="梯度的定义"><a href="#梯度的定义" class="headerlink" title="梯度的定义"></a>梯度的定义</h3><p>$u=f(x, y, z)，M_0(x_0, y_0, z_0)\in \Omega $ 过 $M_0$ 作射线L，产生方向角 $\alpha$ $\beta$ $\gamma$ 。则：</p>
-<p>$\frac{\partial u}{\partial L}|M_0 = \frac{\partial u}{\partial x}|M_0\cos \alpha + \frac{\partial u}{\partial y}|M_0\cos \beta + \frac{\partial u}{\partial z}|M_0\cos \gamma$  </p>
-<p>= $\{\frac{\partial u}{\partial x}, \frac{\partial u}{\partial y}, \frac{\partial u}{\partial z}\} \cdot \{\cos\alpha, \cos\beta, \cos\gamma\}$</p>
-<p>向量 $\{\frac{\partial u}{\partial x}, \frac{\partial u}{\partial y}, \frac{\partial u}{\partial z}\}$ 是一个常向量(固定位置，给定了M_0的坐标，这个向量就是一个确定向量)</p>
-<p>向量 $\{\cos\alpha, \cos\beta, \cos\gamma\}$ 是一个单位向量(与L同向，<strong>任何一个向量，它的方向余弦构成的向量，就是该向量的单位向量，方向与该向量相同，单位是1</strong>)</p>
-<p><img src="https://img.heshipeng.com/202205081142190.jpeg" alt="WechatIMG102" style="zoom:20%;" /></p>
-<p> $\frac{\partial u}{\partial L}|M_0 = \{\frac{\partial u}{\partial x}, \frac{\partial u}{\partial y}, \frac{\partial u}{\partial z}\}  \vec{e} = \sqrt{(\frac{\partial u}{\partial x})^2 + (\frac{\partial u}{\partial y})^2 + (\frac{\partial u}{\partial z})^2}  \cos\theta$ </p>
-<p>$\sqrt{(\frac{\partial u}{\partial x})^2 + (\frac{\partial u}{\partial y})^2 + (\frac{\partial u}{\partial z})^2}$是一个固定的数，当 $\cos\theta = 1$ 即 $\theta=0$时，$\frac{\partial u}{\partial L}|M_0$取最大值</p>
-<p>那么，$u=f(x, y)$ 在 $M_0$ 的梯度即 $grad \ u|M_0$ = $\{\frac{\partial u}{\partial x}, \frac{\partial u}{\partial y}, \frac{\partial u}{\partial z}\}|M_0$ 。一般地，$grad \ u = \{\frac{\partial u}{\partial x}, \frac{\partial u}{\partial y}, \frac{\partial u}{\partial z}\}$</p>
-<p>梯度的方向，即函数增长速度最快的方向，或者方向导数取最大值的方向。</p>
-<h3 id="与方向导数的关系"><a href="#与方向导数的关系" class="headerlink" title="与方向导数的关系"></a>与方向导数的关系</h3><p>函数 $\zeta$ 在 $M_0$ 沿着不同的射线可以得到不同的方向导数，梯度则是过 $M_0$ 点所有这些方向导数取最大值时那个射线的方向。</p>
-<p>用一个动画展示二者的关系：</p>
-<div align="middle">
-   <iframe src="//player.bilibili.com/player.html?aid=19844108&bvid=BV1sW411775X&cid=32363257&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="50%"> </iframe>
-</div>
+        偏导数回顾导数定义在看偏导数的定义之前，回顾下导数的定义：$y=f(x), x_0\in D, f^\prime(x_0)=\lim_{\Delta x -&gt; 0}\frac{\Delta y}{\Delta x}或者f^\prime(x_0) = \lim_{x-&gt;x_0}\frac{f(x) - f(x_0)}{x - x_0}$
+然后还有以下性质：
 
-
-
-<h3 id="梯度的计算"><a href="#梯度的计算" class="headerlink" title="梯度的计算"></a>梯度的计算</h3><p>设 $u=xyz+z^2+5$， 求 $grad \ u$，并求在点M(0, 1, -1)处的方向导数的最大(小)值。</p>
-<p>解：$\because \frac{\partial u}{\partial x} = yz, \frac{\partial u}{\partial y} = xz, \frac{\partial u}{\partial z} = xy + 2z $</p>
-<p>$\therefore grad \ u|_{(0, 1, -1)} = (yz, xz, xy+2z)|_{(0, 1, -1)} = (-1, 0, -2) $</p>
-<p>从而 $max\{\frac{\partial u}{\partial L}|_M\} = ||grad \ u|| = \sqrt{5}, min\{\frac{\partial u}{\partial L}|_M\} = -||grad \ u|| = -\sqrt{5}$</p>
-
+$f(x)在x=x_0...
     
 
         <a href="/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E6%96%B9%E5%90%91%E5%AF%BC%E6%95%B0%E4%B8%8E%E6%A2%AF%E5%BA%A6/" class="post-more waves-effect waves-button">
@@ -1084,55 +477,9 @@
 <a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
 
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/page/4/&title=何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/page/4/&title=何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.heshipeng.com/page/4/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=何仕鹏的个人博客&url=https://blog.heshipeng.com/page/4/&via=https://blog.heshipeng.com" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.heshipeng.com/page/4/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://blog.heshipeng.com/page/4/" alt="微信分享二维码">
-</div>
-
-
-
-
     <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
 
 
 </script>
