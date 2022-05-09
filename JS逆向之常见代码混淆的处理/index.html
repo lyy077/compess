@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Shipeng He">
+    <meta name="baidu-site-verification" content="code-ALXTDYlBtB" />
+    <meta name="google-site-verification" content="code-ALXTDYlBtB" />
+    
+    <title>
+        
+            JS逆向之常见代码混淆的处理 |
+        
+        拾光的逆羽
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.jpeg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                拾光的逆羽
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">JS逆向之常见代码混淆的处理</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpeg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Shipeng He</span>
+                        
+                            <span class="author-label">高级攻城狮</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-02-18 16:37:23</span>
+        <span class="mobile">2022-02-18 16:37</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/JS%E9%80%86%E5%90%91/">JS逆向</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E9%80%86%E5%90%91/">逆向</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JS/">JS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h4 id="加密分析流程总结"><a href="#加密分析流程总结" class="headerlink" title="加密分析流程总结"></a>加密分析流程总结</h4><p>在开始介绍常见代码混淆之前，看下加密分析的流程。</p>
+<ol>
+<li>查看关键包——分析哪些参数是加密的。</li>
+<li>搜索参数。</li>
+</ol>
+<ul>
+<li><p>参数名= / 参数名 = / 参数名: / 参数名 :</p>
+<ul>
+<li>查看网络面板的Initiator(发起)</li>
+<li>xhr断点调试</li>
+<li>hook相关逻辑</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>分析加密。</li>
+<li>补全加密逻辑。</li>
+</ol>
+<h5 id="颜文字网络表情编码解混淆"><a href="#颜文字网络表情编码解混淆" class="headerlink" title="颜文字网络表情编码解混淆"></a>颜文字网络表情编码解混淆</h5><p>将Javascript代码转换为颜文字网络表情的编码以达到混淆的目的。</p>
+<p>原理：这类混淆通常都是使用构造函数将字符串作为代码运行。</p>
+<p>例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sum = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;return a + b&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(sum(<span class="number">2</span>, <span class="number">6</span>))</span><br></pre></td></tr></table></figure>
+<p>解决办法：</p>
+<ol>
+<li>直接将混淆后的代码粘贴至控制台通过VM查看源代码。</li>
+<li>删除代码结尾的”(‘_’)”，替换为toString()或将修改后的代码粘贴至控制台执行。</li>
+</ol>
+<h5 id="符号组成的代码反混淆"><a href="#符号组成的代码反混淆" class="headerlink" title="符号组成的代码反混淆"></a>符号组成的代码反混淆</h5><p>将Javascript代码转换成仅由符号组成的代码以达到混淆的目的。</p>
+<p>原理：这类混淆同常使用构造函数将字符串作为代码运行。</p>
+<p>转换流程：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>(<span class="string">&quot;alert(1)&quot;</span>)();</span><br><span class="line">(<span class="number">0</span>)[<span class="string">&quot;constructor&quot;</span>][<span class="string">&quot;constructor&quot;</span>](<span class="string">&quot;alert(1)&quot;</span>)();</span><br><span class="line">$ = <span class="string">&quot;constructor&quot;</span>;</span><br><span class="line">$$ = <span class="string">&quot;alert(1)&quot;</span>;</span><br><span class="line">$_ = ~[];</span><br><span class="line">($_)[$][$]($$)();</span><br></pre></td></tr></table></figure>
+<p>解决办法：</p>
+<ol>
+<li>直接将混淆后的代码贴到控制台通过VM查看源代码。</li>
+<li>删除代码结尾的()，替换为toString()，将修改后的代码粘贴至控制台运行。</li>
+</ol>
+<h5 id="Jsfuck反混淆"><a href="#Jsfuck反混淆" class="headerlink" title="Jsfuck反混淆"></a>Jsfuck反混淆</h5><p>将JS代码转换成只有6种符号，()[]!+，的编码，以达到混淆的目的。</p>
+<p>解决办法：</p>
+<ol>
+<li><p>直接将混淆后的代码粘贴至控制台通过VM查看源码。</p>
+</li>
+<li><p>删除代码结尾的()替换为toString，修改后粘贴至控制台执行。</p>
+</li>
+<li>如果代码最后不是()，而是)，找到最后一对()包裹的代码，将其抽离出来单独执行。</li>
+</ol>
+<h5 id="Packed混淆"><a href="#Packed混淆" class="headerlink" title="Packed混淆"></a>Packed混淆</h5><p>将JS代码打包成以eval开头，特征字符串是function(p, a, c, k, e, r)或者是function(p, a, c, k, e, d)的代码。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span>(<span class="function"><span class="keyword">function</span> (<span class="params">p, a, c, k, e, d</span>) </span>&#123;</span><br><span class="line">    e = <span class="function"><span class="keyword">function</span> (<span class="params">c</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (c &lt; a ? <span class="string">&quot;&quot;</span> : e(<span class="built_in">parseInt</span>(c / a))) + ((c = c % a) &gt; <span class="number">35</span> ? <span class="built_in">String</span>.fromCharCode(c + <span class="number">29</span>) : c.toString(<span class="number">36</span>))</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="string">&#x27;&#x27;</span>.replace(<span class="regexp">/^/</span>, <span class="built_in">String</span>)) &#123;</span><br><span class="line">        <span class="keyword">while</span> (c--) d[e(c)] = k[c] || e(c);</span><br><span class="line">        k = [<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> d[e]</span><br><span class="line">        &#125;];</span><br><span class="line">        e = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;\\w+&#x27;</span></span><br><span class="line">        &#125;;</span><br><span class="line">        c = <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ;</span><br><span class="line">    <span class="keyword">while</span> (c--) <span class="keyword">if</span> (k[c]) p = p.replace(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">&#x27;\\b&#x27;</span> + e(c) + <span class="string">&#x27;\\b&#x27;</span>, <span class="string">&#x27;g&#x27;</span>), k[c]);</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;(<span class="string">&#x27;0&#x27;</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="string">&#x27;hello!||&#x27;</span>.split(<span class="string">&#x27;|&#x27;</span>), <span class="number">0</span>, &#123;&#125;))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>反混淆方法：</p>
+<p>将eval改成console.log，在控制台上输出。</p>
+<h5 id="AST混淆反混淆"><a href="#AST混淆反混淆" class="headerlink" title="AST混淆反混淆"></a>AST混淆反混淆</h5><p>通过字符串编码，字符串常量编码，数值编码，数组混淆，数组乱序，花指令，流程平坦化，逗号表达式混淆等方式，对JS代码进行混淆。</p>
+<p>处理方式：（扣JS，补JS）</p>
+<ol>
+<li>找到入口方法</li>
+<li>整理主要逻辑</li>
+<li>修改逻辑代码补全缺失的逻辑</li>
+<li>完成代码的整理</li>
+</ol>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>以上几种混淆中常见的是AST混淆，后边会有专门的文章介绍AST混淆的原理，如何手动反混淆以及借助相关的工具实现反混淆。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：JS逆向之常见代码混淆的处理</li>
+        <li>本文作者：Shipeng He</li>
+        <li>创建时间：2022-02-18 16:37:23</li>
+        <li>
+            本文链接：https://blog.heshipeng.com/JS逆向之常见代码混淆的处理/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E9%80%86%E5%90%91/">#逆向</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/JS/">#JS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/JS%E9%80%86%E5%90%91%E7%AE%80%E5%8D%95%E6%A1%88%E4%BE%8B%E4%B8%80%E4%BA%8C/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">JS逆向简单案例一二</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/JS%E9%80%86%E5%90%91%E4%B9%8B%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E7%9A%84%E5%8E%9F%E7%90%86/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">JS逆向之代码混淆的原理</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script 
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script >
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '5167adeb62c9c9a59956',
+                    clientSecret: '8f4116c8b36633d863779e56e746184d2f795ae4',
+                    repo: 'beyond-heshipeng.github.io',
+                    owner: 'beyond-heshipeng',
+                    admin: ['beyond-heshipeng'],
+                    id: __gitalk__pathname,
+                    language: 'zh-CN'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('false') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Shipeng He</a> 版权所有
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+        </div>
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">鄂ICP备2022001140号</a></div>
+        
+        
+    </div>
+</footer>
+
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93"><span class="nav-text">加密分析流程总结</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%A2%9C%E6%96%87%E5%AD%97%E7%BD%91%E7%BB%9C%E8%A1%A8%E6%83%85%E7%BC%96%E7%A0%81%E8%A7%A3%E6%B7%B7%E6%B7%86"><span class="nav-text">颜文字网络表情编码解混淆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E7%BB%84%E6%88%90%E7%9A%84%E4%BB%A3%E7%A0%81%E5%8F%8D%E6%B7%B7%E6%B7%86"><span class="nav-text">符号组成的代码反混淆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Jsfuck%E5%8F%8D%E6%B7%B7%E6%B7%86"><span class="nav-text">Jsfuck反混淆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Packed%E6%B7%B7%E6%B7%86"><span class="nav-text">Packed混淆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AST%E6%B7%B7%E6%B7%86%E5%8F%8D%E6%B7%B7%E6%B7%86"><span class="nav-text">AST混淆反混淆</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>

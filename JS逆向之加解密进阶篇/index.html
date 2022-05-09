@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Shipeng He">
+    <meta name="baidu-site-verification" content="code-ALXTDYlBtB" />
+    <meta name="google-site-verification" content="code-ALXTDYlBtB" />
+    
+    <title>
+        
+            JS逆向之加解密进阶篇 |
+        
+        拾光的逆羽
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.jpeg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                拾光的逆羽
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">JS逆向之加解密进阶篇</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpeg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Shipeng He</span>
+                        
+                            <span class="author-label">高级攻城狮</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-03-22 20:43:08</span>
+        <span class="mobile">2022-03-22 20:43</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/JS%E9%80%86%E5%90%91/">JS逆向</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E9%80%86%E5%90%91/">逆向</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JS/">JS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h4 id="不一样的加密算法"><a href="#不一样的加密算法" class="headerlink" title="不一样的加密算法"></a>不一样的加密算法</h4><h5 id="栅栏密码"><a href="#栅栏密码" class="headerlink" title="栅栏密码"></a>栅栏密码</h5><p>栅栏密码(Rail-fence Cipher)就是把要加密的明文分为N个一组，然后把每组的第一个字符组合，每组的第二个字符组合…每组的第N个(最后一个分组可能不足N个)个字符组合，最后把他们全部连接起来就是密文。这里以2栏栅栏加密为例。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202203221629016.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220322162944513"
+                ></p>
+<p>以一句话Are you ok为例：</p>
+<ol>
+<li>去空格，结果为Areyouok</li>
+<li><p>分组，结果为Ar ey ou ok</p>
+</li>
+<li><p>重组</p>
+<ul>
+<li>第一组：Aeoo</li>
+<li>第二组：ryuk</li>
+</ul>
+</li>
+<li>生成密文，结果为：Aeooryuk</li>
+</ol>
+<p><strong>Python代码演示</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encode</span>(<span class="params">flag, num</span>):</span></span><br><span class="line">    <span class="keyword">from</span> math <span class="keyword">import</span> ceil</span><br><span class="line">    length = <span class="built_in">len</span>(flag)</span><br><span class="line">    lines = ceil(length / num)</span><br><span class="line">    arr = [flag[i:i+num] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, lines * num, num)]</span><br><span class="line">    flag = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(arr[<span class="number">0</span>])):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> arr:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                flag += j[i]</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> flag</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decode</span>(<span class="params">flag, num</span>):</span></span><br><span class="line">    length = <span class="built_in">len</span>(flag)   <span class="comment"># flag的长度</span></span><br><span class="line">    lines = length // num   <span class="comment"># 判断共有几层并减一</span></span><br><span class="line">    remainder = num * (lines + <span class="number">1</span>) - length  <span class="comment"># 相差的数量</span></span><br><span class="line">    <span class="comment"># 补全flag</span></span><br><span class="line">    result = flag[:length-lines*remainder]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(remainder-<span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">        result += flag[length - (i + <span class="number">1</span>) * lines:length - i * lines] + <span class="string">&#x27;*&#x27;</span></span><br><span class="line">    <span class="comment"># 还原flag</span></span><br><span class="line">    lines += <span class="number">1</span></span><br><span class="line">    arr = [result[i:i + lines] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(result), lines)]</span><br><span class="line">    flag = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(arr[<span class="number">0</span>])):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> arr:</span><br><span class="line">            flag += j[i]</span><br><span class="line">    <span class="keyword">return</span> flag[:length]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="built_in">print</span>(encode(<span class="string">&quot;Are you ok&quot;</span>, <span class="number">2</span>))	<span class="comment"># Aeyuor o k</span></span><br><span class="line">    <span class="built_in">print</span>(decode(<span class="string">&quot;Aeyuor o k&quot;</span>, <span class="number">2</span>))	<span class="comment"># Are you ok</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="列位移密码"><a href="#列位移密码" class="headerlink" title="列位移密码"></a>列位移密码</h5><p>列位移密码(Columnar Transposition Cipher)是一种比较简单，易于实现的换位密码，通过一个简单的规则将明文打乱混合成密文。将明文填入事先约定填充的行列数，如果明文不能填充完表格，可以约定使用某个字母进行填充，然后根据密钥在字母表中出现的先后顺序进行编号，根据编码即可推出密文。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202203221940630.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220322194007474"
+                ></p>
+<p>还是以那句话Are you ok为明文，以car为密钥，x为填充字符：</p>
+<ol>
+<li>去空格，结果为：Areyouok</li>
+<li>因为密钥car的长度为3，所以以3个字符为一个单位分组，如下：</li>
+</ol>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">c</th>
+<th style="text-align:center">a</th>
+<th style="text-align:center">r</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:center">r</td>
+<td style="text-align:center">e</td>
+</tr>
+<tr>
+<td style="text-align:center">y</td>
+<td style="text-align:center">o</td>
+<td style="text-align:center">u</td>
+</tr>
+<tr>
+<td style="text-align:center">o</td>
+<td style="text-align:center">k</td>
+<td style="text-align:center">x</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>最后一组只有2个元素不足三个，所以用x填充。由于密钥car的字母顺序排序是a&gt;c&gt;r，所以上述列排序也要根据这个顺序重新排列，如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">a</th>
+<th style="text-align:center">c</th>
+<th style="text-align:center">r</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">r</td>
+<td style="text-align:center">A</td>
+<td style="text-align:center">e</td>
+</tr>
+<tr>
+<td style="text-align:center">o</td>
+<td style="text-align:center">y</td>
+<td style="text-align:center">u</td>
+</tr>
+<tr>
+<td style="text-align:center">k</td>
+<td style="text-align:center">o</td>
+<td style="text-align:center">x</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>重新排序完成之后，从第一列到最后一列按列取值组成的字符串就是密文了，很显然密钥是不能出现在明文中的，填充字符可以出现在明文中，所以每一列的第一个字符被忽略，最终的密文为：rokAyoeux。</p>
+<p><strong>Python代码演示</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pycipher <span class="keyword">import</span> ColTrans</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ColTrans(<span class="string">&quot;car&quot;</span>).encipher(<span class="string">&#x27;Are you ok&#x27;</span>) <span class="comment"># ROKAYOEU</span></span><br><span class="line">ColTrans(<span class="string">&quot;car&quot;</span>).decipher(<span class="string">&#x27;ROKAYOEU&#x27;</span>)   <span class="comment"># AREYOUOK</span></span><br></pre></td></tr></table></figure>
+<h5 id="凯撒密码"><a href="#凯撒密码" class="headerlink" title="凯撒密码"></a>凯撒密码</h5><p>凯撒密码(Caesar Cipher或称凯撒加密，凯撒变换，变换加密，位移加密)是一种替换加密，明文中的所有字母都在字母表上向后(或向前)按照一个固定的数目进行偏移后被替换成密文。例，当偏移量是3的时候，所有的字母A都将被替换成D，B变成E，依此类推。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202203222207955.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220322220707572"
+                ></p>
+<p> 依旧以Are you ok为例：</p>
+<ol>
+<li><p>去除空格，变为Areyouok</p>
+</li>
+<li><p>以5作为偏移映射，A对应F，r对应w，e对应j，依此往下推，转换后的密文为Fwjdtztp。</p>
+</li>
+</ol>
+<p><strong>Python代码演示</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encrypt_char</span>(<span class="params">char, key</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">chr</span>(<span class="built_in">ord</span>(<span class="string">&#x27;A&#x27;</span>) + (<span class="built_in">ord</span>(char) - <span class="built_in">ord</span>(<span class="string">&#x27;A&#x27;</span>) + key) % <span class="number">26</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encrypt_message</span>(<span class="params">message, key</span>):</span></span><br><span class="line">    message = message.upper()</span><br><span class="line">    cipher = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> message:</span><br><span class="line">        <span class="keyword">if</span> char <span class="keyword">not</span> <span class="keyword">in</span> <span class="string">&#x27; ,.&#x27;</span>:</span><br><span class="line">            cipher += encrypt_char(char, key)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            cipher += char</span><br><span class="line">    <span class="keyword">return</span> cipher</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decrypt_char</span>(<span class="params">char, key</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">chr</span>(<span class="built_in">ord</span>(<span class="string">&#x27;A&#x27;</span>) + (<span class="built_in">ord</span>(char) - <span class="built_in">ord</span>(<span class="string">&#x27;A&#x27;</span>) + <span class="number">26</span> - key) % <span class="number">26</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decrypt_message</span>(<span class="params">cipher, key</span>):</span></span><br><span class="line">    cipher = cipher.upper()</span><br><span class="line">    message = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> cipher:</span><br><span class="line">        <span class="keyword">if</span> char <span class="keyword">not</span> <span class="keyword">in</span> <span class="string">&#x27; ,.&#x27;</span>:</span><br><span class="line">            message += decrypt_char(char, key)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            message += char</span><br><span class="line">    <span class="keyword">return</span> message</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="built_in">print</span>(encrypt_message(<span class="string">&quot;Are you ok&quot;</span>, <span class="number">5</span>))	<span class="comment"># FWJ DTZ TP</span></span><br><span class="line">    <span class="built_in">print</span>(decrypt_message(<span class="string">&quot;FWJ DTZ TP&quot;</span>, <span class="number">5</span>)) <span class="comment"># ARE YOU OK</span></span><br></pre></td></tr></table></figure>
+<h5 id="其它加密"><a href="#其它加密" class="headerlink" title="其它加密"></a>其它加密</h5><p>JSfuck仅使用6个字符，即[]+()!，来编写js程序。</p>
+<p>jother是一种可以运用于javascript语言中利用少量字符构造精简的匿名函数方法对于字符串进行的编码方式。其中8个少量字符包括：!+()[]{}。只用这些字符就可以完成任意字符串的编码。</p>
+<p>jjencode将JS代码转换成只有符号的字符串。</p>
+<p>aaencode可以将JS代码转换成常用的网络表情，也就是我们说的颜文字JS加密。</p>
+<h4 id="JS加密上的实例分析与变化"><a href="#JS加密上的实例分析与变化" class="headerlink" title="JS加密上的实例分析与变化"></a>JS加密上的实例分析与变化</h4><h5 id="凯撒加密变种加密算法分析"><a href="#凯撒加密变种加密算法分析" class="headerlink" title="凯撒加密变种加密算法分析"></a>凯撒加密变种加密算法分析</h5><p>密文：lQyjcvi|dcQR pktg t 2 cxl 9tixQR0 wxujzzxg0 gxijgc cxl 9tixQR V t 3 ZYY0rQRR</p>
+<p>算法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_$aU</span>(<span class="params">_$Fj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> _$U4 = _$Fj.length;</span><br><span class="line">    <span class="keyword">var</span> _$_L, _$cu = <span class="keyword">new</span> <span class="built_in">Array</span>(_$U4 - <span class="number">1</span>), _$h9 = _$Fj.charCodeAt(<span class="number">0</span>) - <span class="number">97</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> _$1B = <span class="number">0</span>, _$lp = <span class="number">1</span>; _$lp &lt; _$U4; ++_$lp) &#123;</span><br><span class="line">        _$_L = _$Fj.charCodeAt(_$lp);</span><br><span class="line">        <span class="keyword">if</span> (_$_L &gt;= <span class="number">40</span> &amp;&amp; _$_L &lt; <span class="number">92</span>) &#123;</span><br><span class="line">            _$_L += _$h9;</span><br><span class="line">            <span class="keyword">if</span> (_$_L &gt;= <span class="number">92</span>)</span><br><span class="line">                _$_L -= <span class="number">52</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (_$_L &gt;= <span class="number">97</span> &amp;&amp; _$_L &lt; <span class="number">127</span>) &#123;</span><br><span class="line">            _$_L += _$h9;</span><br><span class="line">            <span class="keyword">if</span> (_$_L &gt;= <span class="number">127</span>)</span><br><span class="line">                _$_L -= <span class="number">30</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        _$cu[_$1B++] = _$_L;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">String</span>.fromCharCode.apply(<span class="literal">null</span>, _$cu);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用上述算法解密密文结果如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202203231807071.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220323180744951"
+                ></p>
+<p>可以看到上面是一个无限debugger的字符串，然后通过eval调用可以达到无限debugger的目的，通过前面学习了凯撒密码之后，我们除了可以使用hook的方式绕过无限debugger，还可以使用凯撒密码达到目的，我们删除密文中的<code>wxujzzxg0</code>，然后执行：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://img.heshipeng.com/202203231813548.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
+                      alt="image-20220323181330460"
+                ></p>
+<p>可以看到，同样干掉了debugger关键字。</p>
+<h4 id="常规加密算法的变种"><a href="#常规加密算法的变种" class="headerlink" title="常规加密算法的变种"></a>常规加密算法的变种</h4><h5 id="借鉴古典密码学改造现在密码学"><a href="#借鉴古典密码学改造现在密码学" class="headerlink" title="借鉴古典密码学改造现在密码学"></a>借鉴古典密码学改造现在密码学</h5><p>看一段AES实际案例(某常见人机验证码代码部分案例)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> CryptoJS = <span class="built_in">require</span>(<span class="string">&quot;crypto-js&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> key = <span class="string">&quot;ABC1234567891234&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> iv = <span class="string">&quot;1234567812345678&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encrypt</span>(<span class="params">text</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> CryptoJS.AES.encrypt(text, CryptoJS.enc.Utf8.parse(key), &#123;</span><br><span class="line">        <span class="attr">iv</span>: CryptoJS.enc.Utf8.parse(iv),</span><br><span class="line">        <span class="attr">mode</span>: CryptoJS.mode.CBC,</span><br><span class="line">        <span class="attr">padding</span>: CryptoJS.pad.Pkcs7</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">decrypt</span>(<span class="params">text</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result = CryptoJS.AES.decrypt(text, CryptoJS.enc.Utf8.parse(key), &#123;</span><br><span class="line">        <span class="attr">iv</span>: CryptoJS.enc.Utf8.parse(iv),</span><br><span class="line">        <span class="attr">mode</span>: CryptoJS.mode.CBC,</span><br><span class="line">        <span class="attr">padding</span>: CryptoJS.pad.Pkcs7</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> result.toString(CryptoJS.enc.Utf8);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> encrypted = encrypt(<span class="string">&quot;123456&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> s = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; encrypted.ciphertext.sigBytes; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> x = encrypted.ciphertext.words[i &gt;&gt;&gt; <span class="number">2</span>] &gt;&gt;&gt; <span class="number">24</span> - i % <span class="number">4</span> * <span class="number">8</span> &amp; <span class="number">255</span>;</span><br><span class="line">    s.push(x)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> data = encrypt(<span class="built_in">String</span>.fromCharCode.apply(<span class="literal">null</span>, s)).toString();</span><br><span class="line"><span class="built_in">console</span>.log(encrypted.toString());	<span class="comment">// 6S3YRylMmp9vIFOplWxypw==</span></span><br><span class="line"><span class="built_in">console</span>.log(data);					<span class="comment">// u79HHbvmZtoSScagKO2JsQzytZH1L5SJGSh338DbaMA=</span></span><br><span class="line"><span class="built_in">console</span>.log(decrypt(data));			<span class="comment">// é-ØG)L  o S© lr§</span></span><br></pre></td></tr></table></figure>
+<p>如上，假如加密代码出现了cryptojs关键字，然后让人以为是传统的cryptojs加密，但是实际上做了一点修改，导致如果直接拿data去做解密，会得到的乱码，达到混淆视听的目的。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：JS逆向之加解密进阶篇</li>
+        <li>本文作者：Shipeng He</li>
+        <li>创建时间：2022-03-22 20:43:08</li>
+        <li>
+            本文链接：https://blog.heshipeng.com/JS逆向之加解密进阶篇/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E9%80%86%E5%90%91/">#逆向</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/JS/">#JS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/JS%E9%80%86%E5%90%91%E4%B9%8BWebSocket%E5%8D%8F%E8%AE%AE/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">JS逆向之WebSocket协议</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/%E4%BD%A0%E4%B8%8D%E5%8F%AF%E4%B8%8D%E7%9F%A5%E7%9A%84CSS%E5%8F%8D%E7%88%AC/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">你不可不知的CSS反爬</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script 
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script >
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '5167adeb62c9c9a59956',
+                    clientSecret: '8f4116c8b36633d863779e56e746184d2f795ae4',
+                    repo: 'beyond-heshipeng.github.io',
+                    owner: 'beyond-heshipeng',
+                    admin: ['beyond-heshipeng'],
+                    id: __gitalk__pathname,
+                    language: 'zh-CN'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('false') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Shipeng He</a> 版权所有
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+        </div>
+        
+            <div class="icp-info info-item"><a target="_blank" rel="nofollow" href="https://beian.miit.gov.cn">鄂ICP备2022001140号</a></div>
+        
+        
+    </div>
+</footer>
+
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E4%B8%80%E6%A0%B7%E7%9A%84%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95"><span class="nav-text">不一样的加密算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%85%E6%A0%8F%E5%AF%86%E7%A0%81"><span class="nav-text">栅栏密码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%97%E4%BD%8D%E7%A7%BB%E5%AF%86%E7%A0%81"><span class="nav-text">列位移密码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%AF%E6%92%92%E5%AF%86%E7%A0%81"><span class="nav-text">凯撒密码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E5%8A%A0%E5%AF%86"><span class="nav-text">其它加密</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JS%E5%8A%A0%E5%AF%86%E4%B8%8A%E7%9A%84%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90%E4%B8%8E%E5%8F%98%E5%8C%96"><span class="nav-text">JS加密上的实例分析与变化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%AF%E6%92%92%E5%8A%A0%E5%AF%86%E5%8F%98%E7%A7%8D%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">凯撒加密变种加密算法分析</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%84%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E7%9A%84%E5%8F%98%E7%A7%8D"><span class="nav-text">常规加密算法的变种</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%80%9F%E9%89%B4%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81%E5%AD%A6%E6%94%B9%E9%80%A0%E7%8E%B0%E5%9C%A8%E5%AF%86%E7%A0%81%E5%AD%A6"><span class="nav-text">借鉴古典密码学改造现在密码学</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
