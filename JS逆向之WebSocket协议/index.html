@@ -20,7 +20,7 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="JS,逆向,WebSockets">
+    <meta name="keywords" content="逆向,JS,WebSockets">
     <meta name="description" content="免责声明：本文章中所有内容仅供学习交流，抓包内容、敏感网址、数据接口均已做脱敏处理，严禁用于商业用途和非法用途，否则由此产生的一切后果均与作者无关，若有侵权，请联系我立即删除！  前言本文的目的不是着重讲WebSockets，而是解决在JS逆向过程中遇到网站使用WebSockets协议的时候如何处理。 WebSocket什么是WebSocketWebSocket是一种网络传输协议，可在单">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS逆向之WebSocket协议">
@@ -39,8 +39,8 @@
 <meta property="article:published_time" content="2022-03-27T09:45:51.000Z">
 <meta property="article:modified_time" content="2022-03-27T15:22:35.255Z">
 <meta property="article:author" content="拾光的碎羽">
-<meta property="article:tag" content="JS">
 <meta property="article:tag" content="逆向">
+<meta property="article:tag" content="JS">
 <meta property="article:tag" content="WebSockets">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img.heshipeng.com/202203272028182.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300">
@@ -136,6 +136,10 @@
             </a>
         </div>
         
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
         
     </div>
 </header>
@@ -393,6 +397,51 @@
 
 
             
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BWebSocket%E5%8D%8F%E8%AE%AE/&title=《JS逆向之WebSocket协议》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BWebSocket%E5%8D%8F%E8%AE%AE/&title=《JS逆向之WebSocket协议》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BWebSocket%E5%8D%8F%E8%AE%AE/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向之WebSocket协议》 — 何仕鹏的个人博客&url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BWebSocket%E5%8D%8F%E8%AE%AE/&via=https://blog.heshipeng.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BWebSocket%E5%8D%8F%E8%AE%AE/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
 
 
         </div>
@@ -438,6 +487,30 @@
 
 
 
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: '5167adeb62c9c9a59956',
+          clientSecret: '8f4116c8b36633d863779e56e746184d2f795ae4',
+          repo: 'beyond-heshipeng.github.io',
+          owner: 'beyond-heshipeng',
+          admin: ['beyond-heshipeng'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
 
 
 
@@ -511,9 +584,55 @@
 <a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
 
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BWebSocket%E5%8D%8F%E8%AE%AE/&title=《JS逆向之WebSocket协议》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BWebSocket%E5%8D%8F%E8%AE%AE/&title=《JS逆向之WebSocket协议》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BWebSocket%E5%8D%8F%E8%AE%AE/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向之WebSocket协议》 — 何仕鹏的个人博客&url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BWebSocket%E5%8D%8F%E8%AE%AE/&via=https://blog.heshipeng.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BWebSocket%E5%8D%8F%E8%AE%AE/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BWebSocket%E5%8D%8F%E8%AE%AE/" alt="微信分享二维码">
+</div>
+
+
+
+
     <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
-var BLOG = { ROOT: '/', SHARE: false, REWARD: true };
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
 
 
 </script>
