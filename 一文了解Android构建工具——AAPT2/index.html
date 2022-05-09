@@ -26,9 +26,119 @@
     KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.jpeg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
 </head>
 
 
@@ -208,6 +318,14 @@
 
     
     
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>2.6k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>9 分钟</span>
+        </span>
     
     
         <span class="article-pv article-meta-item">
@@ -222,16 +340,11 @@
         
 
         <div class="article-content markdown-body">
-            <p><meta name="referrer" content="no-referrer"/></p>
-<div align="middle"><iframe width="560" height="315" src="https://www.youtube.com/embed/tHv9XMzEnjo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+            <p><meta name="referrer" content="no-referrer"></p>
+<div align="middle"><iframe width="560" height="315" src="https://www.youtube.com/embed/tHv9XMzEnjo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 
 <h2 id="什么是AAPT2-Android-Asset-Packaging-Tool"><a href="#什么是AAPT2-Android-Asset-Packaging-Tool" class="headerlink" title="什么是AAPT2(Android Asset Packaging Tool)"></a>什么是AAPT2(Android Asset Packaging Tool)</h2><p>在Android开发过程中，我们通过Gradle命令，启动一个构建任务，最终会生成构建产物“APK”文件。常规APK的构建流程如下：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/FmSi0GYeL8d3wSapWsPae4kr28Om?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="android构建.png"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/FmSi0GYeL8d3wSapWsPae4kr28Om?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="android构建.png"></p>
 <p>（引用自Google官方文档）</p>
 <ul>
 <li>编译所有的资源文件，生成资源表和R文件；</li>
@@ -241,12 +354,7 @@
 </ul>
 <p>老版本的Android默认使用AAPT编译器进行资源编译，从Android Studio 3.0开始，AS默认开启了 AAPT2作为资源编译的编译器，目前看来，AAPT2也是Android发展的主流趋势，学习AAPT2的工作原理可以帮助Android开发更好的掌握APK构建流程，从而帮助解决实际开发中遇到的问题。</p>
 <p>AAPT2的可执行文件随Android SDK的Build Tools一起发布，在Android Studio的build-tools文件夹中就包含AAPT2工具，目录为（SDK目录/build-tools/version/aapt2）。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/Fi1D2FYTzHg-7TmjhGnER91BjQ5H?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="aapt2路径.png"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/Fi1D2FYTzHg-7TmjhGnER91BjQ5H?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="aapt2路径.png"></p>
 <p>所以AAPT的作用，总结起来就是<strong>在APK打包的过程中对静态资源文件进行编译，打包</strong>。</p>
 <p>这里可能会有一个疑问：</p>
 <blockquote>
@@ -287,33 +395,18 @@
 </table>
 </div>
 <h3 id="Compile命令"><a href="#Compile命令" class="headerlink" title="Compile命令"></a>Compile命令</h3><p>Complie指令用于编译资源，AAPT2提供多个选项与Compile命令搭配使用，如下：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/FnCbyMrXOigcxISFpeojInoEP4Fh?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="aapt2命令选项.png"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/FnCbyMrXOigcxISFpeojInoEP4Fh?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="aapt2命令选项.png"></p>
 <p>Compile的一般用法如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aapt2 compile path-to-input-files [options] -o output-directory/</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>Compile 命令会对输入的资源文件的路径做校验，输入文件的路径必须满足path/resource-type[config]/file，否则会编译报错：error: bad resource path.</p>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/FqQVM_68gVDZVPVS-x3kVehUf5Po?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="aapt2编译报错.png"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/FqQVM_68gVDZVPVS-x3kVehUf5Po?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="aapt2编译报错.png"></p>
 <p>新建一个目录drawable-hdpi，把用来测试的图片放在这个目录下，然后执行命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aapt2 compile drawable-hdpi/aapt2路径.png -o .</span><br></pre></td></tr></table></figure>
 <p>可以看到当前目录多了一个drawable-hdpi_aapt2.flat的文件。</p>
 <p>在Android Studio中，可以在app/build/intermediates/merged_res/debug/ 目录下找到编译生成的.flat文件。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/FtTzF2KXRLIASXXu-IKcovhR9wGH?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="android studio打包产生的flat文件.png"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/FtTzF2KXRLIASXXu-IKcovhR9wGH?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="android studio打包产生的flat文件.png"></p>
 <p>当然Compile也支持编译多个文件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aapt2 compile path-to-input-files1 path-to-input-files2 [options] -o output-directory/</span><br></pre></td></tr></table></figure>
 <p>编译整个目录,需要制定数据文件，编译产物是一个压缩文件，包含目录下所有的资源，通过文件名把资源目录结构扁平化。</p>
@@ -321,12 +414,7 @@
 <p>我们找个简单的Android项目测试下，首先进到项目的<code>app/src/main</code>目录下，然后执行命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aapt2 compile --dir ./res -o resource.ap_</span><br></pre></td></tr></table></figure>
 <p>可以看到产生了一个压缩文件，用命令<code>unzip -lv resource.ap_</code>查看，可以看到里面是一堆<code>.flat</code>的文件</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/Fiu1UOXFwhx9Vj8_8jHACQLIXW7N?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="aapt2 compile编译目录.png"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/Fiu1UOXFwhx9Vj8_8jHACQLIXW7N?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="aapt2 compile编译目录.png"></p>
 <p>随便找其中的一个文件打开，是乱码的，那么这个FLAT文件是到底是什么？我们先接着看aapt2的链接阶段，晚点再探讨这个话题。</p>
 <h3 id="Link命令"><a href="#Link命令" class="headerlink" title="Link命令"></a>Link命令</h3><p>在链接阶段，AAPT2 会合并在编译阶段生成的所有中间文件（.flat文件），并将它们打包成ZIP包（最终APK的原型，由于不包括DEX文件且未签名，所以无法正常安装）。</p>
 <p>链接资源使用link子命令，如下所示：</p>
@@ -364,12 +452,7 @@
 </table>
 </div>
 <p>用<code>UltraEdit</code>编辑上面任意一个flat文件，内容如下：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/FsFqakTFKfyvq4U4deD3pwN0AMt6?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="UE打开flat文件.png"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/FsFqakTFKfyvq4U4deD3pwN0AMt6?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="UE打开flat文件.png"></p>
 <p>可以看到前4个字节是<code>0x54504141</code>(为啥不是0x41415054?因为是小端机器)，标识该文件是一个AAPT容器文件；紧接着4个字节是<code>0x00000001</code>表示该文件的版本号是1，接着4个字节是<code>0x000000001</code>表示该文件只有一个资源项。</p>
 <blockquote>
 <p>关于二进制文件的逆向工具，类Unix系统都自带<code>xxd</code>命令，可以直接输出二进制文件的十六进制格式：</p>
@@ -417,12 +500,7 @@
 </ul>
 <p>很显然我们这里打开的文件是一个RES_FILE类型，因为这里的entry_type为<code>0x00000001</code>。</p>
 <p>接着8个字节<code>0x000000000001BFC8</code>表示该资源文件的长度，转为十进制，也即114632个字节。换算成以k为单位，就是111.95k，我们查看资源文件大小也刚好是112k。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/Ft1NO7v_GkvR_Rn5N_cfJYQL4doZ"
-                      alt="资源文件大小.png"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/Ft1NO7v_GkvR_Rn5N_cfJYQL4doZ" alt="资源文件大小.png"></p>
 <p>接下来就是资源数据了，接下来看下RES_FILE文件的格式：</p>
 <div class="table-container">
 <table>
@@ -468,12 +546,7 @@
 </table>
 </div>
 <p>可以用一张图看下完整的RES_FILE类型的flat文件的格式：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/FrdQkv6mPBGr6Akv0YhonaOTyH07?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="RES_FILE类型的flat文件格式.png"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/FrdQkv6mPBGr6Akv0YhonaOTyH07?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="RES_FILE类型的flat文件格式.png"></p>
 <p>接着看刚才打开的.flat文件，<code>0000003F</code>4个字节，也即63表示该RES_FILE的header长度是63个字节，然后接着8个字节<code>0x000000000001BF7B</code>表示数据文件的长度，也即114555个字节。</p>
 <blockquote>
 <p>这里的data_length和上面的entry_length不是同一个长度，data_length指的是编译之前原始文件的数据长度(这里指原始png文件)，而entry_length指的是编译之后整个flat文件的长度。</p>
@@ -482,19 +555,14 @@
 <p>然后接下来的114555个字节就是原始文件的数据内容(也即是png的内容)，最后一个<code>00</code>是用来填充数据做32位对齐的。</p>
 <p>总结一下，我们前面计算了整个flat文件的大小是114632个字节，114632=4(用来存储header的长度)+8(用来存储data的长度)+63(header)+1(1个填充字节，用来填充header进行32位对齐)+114555(编译之前整个png的文件长度)+1(1个填充字节，用来填充data进行32位对齐)</p>
 <p>最后用一张图看下上边分析的RES_FILE格式：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/FqcguIF45SpTniymtYf6H89zRQQ5"
-                      alt="RES_FILE格式图示.png"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/FqcguIF45SpTniymtYf6H89zRQQ5" alt="RES_FILE格式图示.png"></p>
 <p>另一种格式<code>RES_TABLE</code>格式比较简单，其实就是ResourceTable的<code>protobuf</code>序列化结果。数据结构如下：</p>
-<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Top level message representing a resource table.</span></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">ResourceTable</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 字符串池</span></span><br><span class="line">    StringPool source_pool = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 用于生成资源id</span></span><br><span class="line">    <span class="keyword">repeated</span> Package <span class="keyword">package</span> = <span class="number">2</span>;</span><br><span class="line">    <span class="comment">// 资源叠加层相关</span></span><br><span class="line">    <span class="keyword">repeated</span> Overlayable overlayable = <span class="number">3</span>;</span><br><span class="line">    <span class="comment">// 工具版本</span></span><br><span class="line">    <span class="keyword">repeated</span> ToolFingerprint tool_fingerprint = <span class="number">4</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Top level message representing a resource table.</span></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">ResourceTable</span> </span>{</span><br><span class="line">    <span class="comment">// 字符串池</span></span><br><span class="line">    StringPool source_pool = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 用于生成资源id</span></span><br><span class="line">    <span class="keyword">repeated</span> Package <span class="keyword">package</span> = <span class="number">2</span>;</span><br><span class="line">    <span class="comment">// 资源叠加层相关</span></span><br><span class="line">    <span class="keyword">repeated</span> Overlayable overlayable = <span class="number">3</span>;</span><br><span class="line">    <span class="comment">// 工具版本</span></span><br><span class="line">    <span class="keyword">repeated</span> ToolFingerprint tool_fingerprint = <span class="number">4</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <p>资源表（ResourceTable）中包含：</p>
 <p><strong>StringPool</strong>：字符串池，字符串常量池是为了把资源文件中的string复用起来，从而减少体积，资源文件中对应的字符串会被替换为字符串池中的索引。</p>
-<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">StringPool</span> </span>&#123;</span><br><span class="line">  <span class="built_in">bytes</span> data = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">StringPool</span> </span>{</span><br><span class="line">  <span class="built_in">bytes</span> data = <span class="number">1</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <p><strong>Package</strong>：包含资源id的相关信息。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 资源id的包id部分，在 [0x00, 0xff] 范围内</span><br><span class="line">message PackageId &#123;</span><br><span class="line">  uint32 id = 1;</span><br><span class="line">&#125;</span><br><span class="line">// 资源id的命名规则</span><br><span class="line">message Package &#123;</span><br><span class="line">  // [0x02, 0x7f) 简单的说，由系统使用</span><br><span class="line">  // 0x7f 应用使用</span><br><span class="line">  // (0x7f, 0xff] 预留Id</span><br><span class="line">  PackageId package_id = 1;</span><br><span class="line">  // 包名</span><br><span class="line">  string package_name = 2;</span><br><span class="line">  // 资源类型，对应string, layout, xml, dimen, attr等，其对应的资源id区间为[0x01, 0xff]</span><br><span class="line">  repeated Type type = 3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 资源id的包id部分，在 [0x00, 0xff] 范围内</span><br><span class="line">message PackageId {</span><br><span class="line">  uint32 id = 1;</span><br><span class="line">}</span><br><span class="line">// 资源id的命名规则</span><br><span class="line">message Package {</span><br><span class="line">  // [0x02, 0x7f) 简单的说，由系统使用</span><br><span class="line">  // 0x7f 应用使用</span><br><span class="line">  // (0x7f, 0xff] 预留Id</span><br><span class="line">  PackageId package_id = 1;</span><br><span class="line">  // 包名</span><br><span class="line">  string package_name = 2;</span><br><span class="line">  // 资源类型，对应string, layout, xml, dimen, attr等，其对应的资源id区间为[0x01, 0xff]</span><br><span class="line">  repeated Type type = 3;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>资源id的命令方式遵循0xPPTTEEEE的规则，其中PP对应PackageId，一般应用使用的资源为7f，TT对应的是资源文件夹的名成，最后4位为资源的id，从0开始。</p>
 </blockquote>
@@ -506,8 +574,8 @@
 <p>主要原因在于 <em>AAPT2</em> 将资源打包过程拆分成了两个阶段：「编译阶段」和「链接阶段」，为了在链接阶段得到资源更详细的信息，例如：资源名称、配置信息（<em>Configuration</em>） 等，因此，直接将资源的元信息连同资源本身一同编码进 <em>AAPT2</em> 容器文件中，这样，资源链接的过程可以完全与编译过程解耦了，而且，对于增量构建来说，这样大大提升了资源打包的性能。这样如果只是修改了其中若干个资源文件，则只需要对这些资源文件单独编译然后再链接，而不用对所有的资源文件重新链接，大大提高了性能。</p>
 <p>参考链接：</p>
 <ul>
-<li><a class="link"   target="_blank" rel="noopener" href="https://booster.johnsonlee.io/architecture/aapt2-output-reversing.html#flat-%E4%B8%8E-aapt-%E4%BA%A7%E7%89%A9%E7%9A%84%E5%85%B3%E7%B3%BB" >AAPT2产物逆向<i class="fas fa-external-link-alt"></i></a></li>
-<li><a class="link"   target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040864174" >Android构建工具—AAPT2源码解析（一）<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link" target="_blank" rel="noopener" href="https://booster.johnsonlee.io/architecture/aapt2-output-reversing.html#flat-%E4%B8%8E-aapt-%E4%BA%A7%E7%89%A9%E7%9A%84%E5%85%B3%E7%B3%BB">AAPT2产物逆向<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link" target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040864174">Android构建工具—AAPT2源码解析（一）<i class="fas fa-external-link-alt"></i></a></li>
 </ul>
 
         </div>

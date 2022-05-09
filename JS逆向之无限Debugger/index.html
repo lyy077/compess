@@ -26,9 +26,119 @@
     KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.jpeg","favicon":"/images/logo.svg","article_img_align":"center","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+<meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
 </head>
 
 
@@ -208,6 +318,14 @@
 
     
     
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>2.3k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>8 分钟</span>
+        </span>
     
     
         <span class="article-pv article-meta-item">
@@ -252,7 +370,7 @@
 <li>直接在方法中使用debugger关键字或者通过eval执行，比如eval(“debugger”)</li>
 <li>重度混淆，通过对debugger字符串进行混淆，然后使用eval执行，从而在全局搜索中搜索不到debugger关键字。</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>(<span class="string">&quot;debugger&quot;</span>).call()/apply() 或赋值 bind()</span><br><span class="line">xxx.constructor(<span class="string">&quot;debugger&quot;</span>).call(<span class="string">&quot;action&quot;</span>)</span><br><span class="line">Fuction.constructor(<span class="string">&quot;debugger&quot;</span>).call(<span class="string">&quot;action&quot;</span>)</span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> !![];&#125;[<span class="string">&quot;constructor&quot;</span>](<span class="string">&quot;debugger&quot;</span>)[<span class="string">&quot;call&quot;</span>](<span class="string">&quot;action&quot;</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>(<span class="string">"debugger"</span>).call()/apply() 或赋值 bind()</span><br><span class="line">xxx.constructor(<span class="string">"debugger"</span>).call(<span class="string">"action"</span>)</span><br><span class="line">Fuction.constructor(<span class="string">"debugger"</span>).call(<span class="string">"action"</span>)</span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{<span class="keyword">return</span> !![];}[<span class="string">"constructor"</span>](<span class="string">"debugger"</span>)[<span class="string">"call"</span>](<span class="string">"action"</span>))</span><br></pre></td></tr></table></figure>
 <ol>
 <li>其它的方式</li>
 </ol>
@@ -264,139 +382,59 @@
 <ol>
 <li>替换debugger关键字</li>
 </ol>
-<p>如果debugger关键字非常多，贯穿多个JS文件，这时候一个个手动去除断点就显得非常麻烦了，这时候我们考虑保存相应的JS文件到本地，然后全局替换里面的debugger关键字，比如说把debugger关键字替换为false或者替换成debugger字符串，然后通过<a class="link"   target="_blank" rel="noopener" href="http://blog.heshipeng.com/Chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E5%B7%A5%E5%85%B7%E4%BD%A0%E7%9F%A5%E5%A4%9A%E5%B0%91/" >JS逆向之Chrome浏览器工具你知多少？<i class="fas fa-external-link-alt"></i></a>介绍的override面板，把相应的请求代理到本地文件，或者说通过<a class="link"   target="_blank" rel="noopener" href="http://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BCharles%E5%B7%A5%E5%85%B7%E7%AF%87/" >JS逆向之Charles工具篇<i class="fas fa-external-link-alt"></i></a>介绍的Chares，利用其反向代理，也可以达到同样的目的，这样就可以屏蔽debugger关键字了。</p>
+<p>如果debugger关键字非常多，贯穿多个JS文件，这时候一个个手动去除断点就显得非常麻烦了，这时候我们考虑保存相应的JS文件到本地，然后全局替换里面的debugger关键字，比如说把debugger关键字替换为false或者替换成debugger字符串，然后通过<a class="link" target="_blank" rel="noopener" href="http://blog.heshipeng.com/Chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E5%B7%A5%E5%85%B7%E4%BD%A0%E7%9F%A5%E5%A4%9A%E5%B0%91/">JS逆向之Chrome浏览器工具你知多少？<i class="fas fa-external-link-alt"></i></a>介绍的override面板，把相应的请求代理到本地文件，或者说通过<a class="link" target="_blank" rel="noopener" href="http://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BCharles%E5%B7%A5%E5%85%B7%E7%AF%87/">JS逆向之Charles工具篇<i class="fas fa-external-link-alt"></i></a>介绍的Chares，利用其反向代理，也可以达到同样的目的，这样就可以屏蔽debugger关键字了。</p>
 <ol>
 <li>hook某些方法</li>
 </ol>
 <p>手动置空包含debugger关键字的方法或者重写这个方法，这样做的前提是这个方法里面不包含有效的业务逻辑，不然虽然去除了无限debugger，但是相应的业务逻辑被修改了，导致我们无法调试正确的结果。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxx = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxx = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{}</span><br></pre></td></tr></table></figure>
 <h4 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h4><h5 id="某气网"><a href="#某气网" class="headerlink" title="某气网"></a>某气网</h5><p>网址：aHR0cHM6Ly93d3cuYXFpc3R1ZHkuY24vaGlzdG9yeWRhdGEvZGF5ZGF0YS5waHA/Y2l0eT0lRTYlOUQlQUQlRTUlQjclOUUmbW9udGg9MjAyMjAy</p>
 <p>打开浏览器输入网址然后本打算按照往常调出开发者工具，结果</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203011429562.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220301142911458"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203011429562.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220301142911458"></p>
 <p>😮有意思，第一次遇到这样的网站，google了下遇到这种情况，首先打开一个空的tab，调出开发者工具，然后再输入网址，发现成功断上了。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203011437352.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220301143747259"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203011437352.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220301143747259"></p>
 <p>这里就出现了一个无限debugger，右键第三行然后选择Never pause here，接着往下调试：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203011451282.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220301145120187"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203011451282.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220301145120187"></p>
 <p>又出现了一个无限debugger，递归调用自己。我们在console控制台，把txsdefwsw这个方法置空：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">txsdefwsw = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">txsdefwsw = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{}</span><br></pre></td></tr></table></figure>
 <p>接着往下调试，接着又遇到一系列的检测：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203011454862.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220301145404806"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203011454862.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220301145404806"></p>
 <p>我们依次把方法重写：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">endebug = <span class="function"><span class="keyword">function</span>(<span class="params">off, code</span>) </span>&#123;&#125; </span><br><span class="line"><span class="built_in">document</span>.onkeydown = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="built_in">document</span>.oncontextmenu = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">endebug = <span class="function"><span class="keyword">function</span>(<span class="params">off, code</span>) </span>{} </span><br><span class="line"><span class="built_in">document</span>.onkeydown = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{}</span><br><span class="line"><span class="built_in">document</span>.oncontextmenu = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{}</span><br></pre></td></tr></table></figure>
 <p>接着往下调试，会发现有一段代码通过检测窗口的outerHeight与innerHeight的差值判断是否打开了开发者工具：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203021440132.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220302144052945"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203021440132.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220302144052945"></p>
 <p>这里我们把window.innerHeight设置为1200。上边还有一个检测时间差值的我们重写这个getTime方法：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.innerHeight = <span class="number">1400</span></span><br><span class="line"><span class="built_in">Date</span>.prototype.getTime = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br></pre></td></tr></table></figure>
-<p>综合以上的分析，我们可以利用<a class="link"   target="_blank" rel="noopener" href="http://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BTampermonkey%E5%B7%A5%E5%85%B7%E7%AF%87/" >JS逆向之Tampermonkey工具篇<i class="fas fa-external-link-alt"></i></a>介绍的油猴插件，更加方便的进行代码分析，油猴插件脚本内容如下：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203021518960.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220302151850796"
-                ></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.innerHeight = <span class="number">1400</span></span><br><span class="line"><span class="built_in">Date</span>.prototype.getTime = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{ <span class="keyword">return</span> <span class="number">0</span>; }</span><br></pre></td></tr></table></figure>
+<p>综合以上的分析，我们可以利用<a class="link" target="_blank" rel="noopener" href="http://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BTampermonkey%E5%B7%A5%E5%85%B7%E7%AF%87/">JS逆向之Tampermonkey工具篇<i class="fas fa-external-link-alt"></i></a>介绍的油猴插件，更加方便的进行代码分析，油猴插件脚本内容如下：</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203021518960.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220302151850796"></p>
 <p>解释下上面for循环代码的含义，由于前面我们提到的无论是txsdefwsw还是endebug方法，都是通过匿名定时器来实现无限debugger的，<strong>匿名定时器无法根据定时器的名字来取消定时器，但是定时器的id基本都是1～1000，所以我们穷举这1000个id暴力取消这些匿名定时器</strong>。这不妨也是一种小技巧。</p>
 <p>启用之后，我们刷新页面，就可以看到页面上已经加载出来数据了：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203021521617.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220302152127528"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203021521617.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220302152127528"></p>
 <p>我们再来分析网络请求，看看能否抓取到数据包。没有发现XHR请求。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203021524337.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220302152404276"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203021524337.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220302152404276"></p>
 <p>我们找到一个daydata.php的请求，然后里面有2个通过eval计算字符串的代码，如上图。我们在当前html页面并没有找到dUHTtbN9Om和dwDMxkUh0FG方法，那就很明显这两个方法在其它的JS文件里面，我们查看下这个html页面看看它引入了哪些JS文件，找到一个可疑的js文件de8qI5LXFNehN.min.js，我们找到这个文件，查看其内容：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203021542199.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220302154247031"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203021542199.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220302154247031"></p>
 <p>然后用eval执行，得到文件内容如下：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203021544313.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220302154446239"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203021544313.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220302154446239"></p>
 <p>我们阅读下代码，发现以下几点：</p>
 <ol>
 <li>里面有一个Ajax请求是获取数据的。</li>
 </ol>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203021545551.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220302154557476"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203021545551.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220302154557476"></p>
 <ol>
 <li>有一段读取本地缓存的逻辑，如果读取本地缓存没有数据然后再发Ajax请求去获取数据：</li>
 </ol>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203021550437.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220302155002354"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203021550437.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220302155002354"></p>
 <p>这也就解释了之前为啥没有XHR请求，只是有一个php请求，我们删除localStorage测试下：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203021551951.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220302155104877"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203021551951.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220302155104877"></p>
 <p>然后重新刷新页面，果然看到了XHR请求：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203021552862.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220302155235769"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203021552862.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220302155235769"></p>
 <ol>
 <li>前面找不到的dUHTtbN9Om和dwDMxkUh0FG方法，在这个文件中找到了。我们利用JS文件中找到的这2个方法，解开php中两串神秘的代码：</li>
 </ol>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203021603310.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220302160300199"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203021603310.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220302160300199"></p>
 <p>第一段是反爬检测的代码。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203021603182.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="image-20220302160331099"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203021603182.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="image-20220302160331099"></p>
 <p>第二段是数据解密的代码。</p>
 <p>😶‍🌫️分析了这么多，是不是感觉有一点混乱，那我们理理头绪，看看这个JS文件与PHP文件的关系。数据获取在JS文件里面，先读本地缓存，如果有的话取本地缓存数据；如果没有的话，发送Ajax请求。无论是Ajax请求来的还是本地读取的数据，都是加密的，解密的算法放在JS文件里面，然后渲染到PHP页面上去，整个JS文件的入口在PHP文件里面。总结下来就是JS文件包含数据的加密(Ajax参数)，解密(Ajax返回数据)和发送请求代码，PHP里则是存放JS的入口方法。</p>
 <p>在分析的过程中有一点需要注意，这个网站大概几分钟会重新加载一次dom，这样混淆的代码名字又会变了，所以调试的时候将文件保存在本地，然后再进行分析。</p>
@@ -410,12 +448,7 @@
 <li>aHR0cHM6Ly9iei56enptaC5jbi9pbmRleA==</li>
 </ol>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文介绍了常见的几种无限debugger的形式以及对应的几种解决方案。然后通过一个相对复杂的例子做了一个演示，这个网站通过检测浏览器高度，代码执行延迟来反调试，仔细阅读相关的代码我们还可以找到其对无头浏览器也做了检测，这样如果想用playwright之类的浏览器工具的话可能也会被检测到，而且请求的参数以及返回的数据也是做了动态的加密，总体而言反爬还是比较严的。本文的相关代码已经上传，关注公众号，回复关键字“代码 某气网”，即可获取案例完整代码。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://img.heshipeng.com/202203021721122.jpg?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300"
-                      alt="qrcode_for_gh_509fdefd3c81_258"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://img.heshipeng.com/202203021721122.jpg?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300" alt="qrcode_for_gh_509fdefd3c81_258"></p>
 
         </div>
 
