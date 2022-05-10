@@ -3844,7 +3844,7 @@ pre .javascript .function {
   text-align: center;
 }
 .post-content .image-caption {
-  display: inline-block;
+  display: none;
   margin-top: 10px;
   color: #757575;
 }
@@ -3885,22 +3885,25 @@ pre .javascript .function {
   color: #757575;
 }
 .post-content h1 {
-  font-size: 24px;
+  border-bottom: 2px solid rgba(50, 50, 50, 0.9);
+  font-size: 26px;
 }
 .post-content h2 {
-  font-size: 22px;
+  border-bottom: 1.5px solid rgba(50, 50, 50, 0.6);
+  font-size: 24px;
 }
 .post-content h3 {
-  font-size: 20px;
+  border-bottom: 1px solid rgba(50, 50, 50, 0.3);
+  font-size: 22px;
 }
 .post-content h4 {
-  font-size: 18px;
+  font-size: 20px;
 }
 .post-content h5 {
-  font-size: 16px;
+  font-size: 18px;
 }
 .post-content h6 {
-  font-size: 14px;
+  font-size: 16px;
 }
 .post-content h1,
 .post-content h2,
