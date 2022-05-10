@@ -4,7 +4,6 @@ top: false
 cover: false
 toc: true
 mathjax: true
-sticky: 1
 date: 2022-02-11 14:46:51
 password:
 summary:
@@ -38,7 +37,7 @@ categories: [JS逆向]
 
 ##### 控制器面板
 
-![image-20220211145738994](http://img.heshipeng.com/202202111457134.png)
+![image-20220211145738994](http://img.heshipeng.com/202202111457134.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 * 第一个按钮控制浏览器是否抓包，如果为红色表示正在抓包，点击之后变灰色表示停止抓包。
 * 第二个按钮表示清除按钮，点击之后会清除请求列表。
@@ -68,7 +67,7 @@ set-cookie-domain:bbs.nightteam.cn：表示进行set-cookie的操作的domain。
 
 ##### 请求列表
 
-![image-20220211153842703](http://img.heshipeng.com/202202111538766.png)
+![image-20220211153842703](http://img.heshipeng.com/202202111538766.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 标题栏里面比较关键的是Initiator这一栏，表示请求是由哪里发起的。Other表示发起者通过动作发起，而不是某一个具体的JS发起。bbs.nightteam.cn是我们通过浏览器地址栏输入地址后回车发起的，所以这里显示other，而其它的请求都是可以找到具体调用的JS文件。通过定位到某一个请求的发起文件，我们可以在该文件中增加断点进行调试，所以这一栏比较重要。
 
@@ -76,13 +75,13 @@ set-cookie-domain:bbs.nightteam.cn：表示进行set-cookie的操作的domain。
 
 点击某一个具体的请求，可以看到它的请求头信息，响应头信息，预览页面，耗时，Cookie信息等。
 
-![image-20220211154903286](http://img.heshipeng.com/202202111549405.png)
+![image-20220211154903286](http://img.heshipeng.com/202202111549405.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
 选中某一个请求，然后右键选择Copy->Copy as cURL得到该请求的cURL命令。
 
-![image-20220211155142085](http://img.heshipeng.com/202202111551191.png)
+![image-20220211155142085](http://img.heshipeng.com/202202111551191.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 ```bash
 curl 'https://bbs.nightteam.cn/' \
@@ -105,13 +104,13 @@ curl 'https://bbs.nightteam.cn/' \
 
 可以直接在类Unix系统的控制台中去执行这个cURL命令，也可以把这个命令导入到PostMan中去执行。具体步骤是：
 
-![image-20220211155646608](http://img.heshipeng.com/202202111556685.png)
+![image-20220211155646608](http://img.heshipeng.com/202202111556685.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
 点击Shift键，然后鼠标悬停在某一个请求上，如果展示绿色背景，表示绿色背景的请求依赖你当前悬停的请求。如果展示红色背景，表示当前悬停的请求依赖红色背景的请求。
 
-![image-20220211160819614](http://img.heshipeng.com/202202111608727.png)
+![image-20220211160819614](http://img.heshipeng.com/202202111608727.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 ![image-20220211160845852](http://img.heshipeng.com/202202111608906.png)
 
@@ -127,13 +126,13 @@ source面板分为三个部分：文件导航窗口，代码编辑器窗格， �
 
 调试窗格：包含调试所用的常用选项。
 
-![image-20220211165847739](http://img.heshipeng.com/202202111658856.png)
+![image-20220211165847739](http://img.heshipeng.com/202202111658856.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
 ##### 文件导航窗格
 
-![image-20220214103607974](http://img.heshipeng.com/202202141036679.png)
+![image-20220214103607974](http://img.heshipeng.com/202202141036679.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 * page面板
 
@@ -147,11 +146,11 @@ source面板分为三个部分：文件导航窗口，代码编辑器窗格， �
 
 第一步：点击`Add folder to workspace`
 
-![image-20220214104511894](http://img.heshipeng.com/202202141045585.png)
+![image-20220214104511894](http://img.heshipeng.com/202202141045585.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 第二步：选择要上传的文件夹
 
-![image-20220214104624359](http://img.heshipeng.com/202202141046182.png)
+![image-20220214104624359](http://img.heshipeng.com/202202141046182.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 第三步：点击允许，让开发者工具具备读写该文件夹的权限
 
@@ -159,7 +158,7 @@ source面板分为三个部分：文件导航窗口，代码编辑器窗格， �
 
 然后就可以看到我们上传的文件夹以及相关的JS文件了：
 
-![image-20220214105309274](http://img.heshipeng.com/202202141053302.png)
+![image-20220214105309274](http://img.heshipeng.com/202202141053302.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 我们可对其进行编辑修改，打上断点调试等。
 
@@ -171,23 +170,23 @@ Overrides面板可以很容易的将远程资源下载一份在本地，然后�
 
 前三步跟FileSystem类似：点击`Select folder for overrides`，然后选择本地文件夹，之后点击允许赋予开发者工具读写该文件夹的权限。接着要点击选中`Enable Local Overrides`：
 
-![image-20220214112558071](http://img.heshipeng.com/202202141126711.png)
+![image-20220214112558071](http://img.heshipeng.com/202202141126711.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 然后回到Network面板，点击浏览器刷新按钮刷新当前页面，选中一个我们需要代理到本地的请求，右键选择`Save for overrides`：
 
-![image-20220214113204817](http://img.heshipeng.com/202202141132844.png)
+![image-20220214113204817](http://img.heshipeng.com/202202141132844.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 这时，我们刚才添加的文件夹里面就有了保存的代理请求：
 
-![image-20220214113325024](http://img.heshipeng.com/202202141133043.png)
+![image-20220214113325024](http://img.heshipeng.com/202202141133043.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 然后我们修改本地的这个文件，比如将这个页面的`招聘求职`改为`MLGJ求职`：
 
-![image-20220214113851477](http://img.heshipeng.com/202202141138509.png)
+![image-20220214113851477](http://img.heshipeng.com/202202141138509.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 然后，保存刷新这个页面，就成功的将该请求代理到本地文件：
 
-![image-20220214113954313](http://img.heshipeng.com/202202141140600.png)
+![image-20220214113954313](http://img.heshipeng.com/202202141140600.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
@@ -201,7 +200,7 @@ chrome插件加载的一些脚本，如果有过chrome浏览器插件开发的�
 
 我们都知道，有时候需要调试一行JS代码，会在浏览器的Console控制台上去调试，如果需要在浏览器中调试一个代码片段呢？在Console中一行行的输入执行就显得很麻烦了。这个Snippets就可以帮我们解决这个问题，可以通过点击`New snippet`按钮，添加一些代码片段，然后选中某一个代码片段文件，右键`Run`去执行该代码片段：
 
-![image-20220214115844902](http://img.heshipeng.com/202202141158016.png)
+![image-20220214115844902](http://img.heshipeng.com/202202141158016.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
@@ -213,7 +212,7 @@ chrome插件加载的一些脚本，如果有过chrome浏览器插件开发的�
 
 打开Page面板下网站的一个JS文件，如果JS是展示在一行，可以点击下面的一对`{}`进行格式化：
 
-![image-20220214140646923](http://img.heshipeng.com/202202141406960.png)
+![image-20220214140646923](http://img.heshipeng.com/202202141406960.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
@@ -221,7 +220,7 @@ chrome插件加载的一些脚本，如果有过chrome浏览器插件开发的�
 
 在我们上边格式化之后的JS文件，选中某一行，单击该行的行号，即可添加断点：
 
-![image-20220214140844097](http://img.heshipeng.com/202202141408998.png)
+![image-20220214140844097](http://img.heshipeng.com/202202141408998.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
@@ -244,23 +243,23 @@ console.log("Script snippet #1 end");
 
 先单击要添加条件断点的那一行的行号，右键，选择`Add conditional breakpoint`
 
-![image-20220214150928211](http://img.heshipeng.com/202202141509714.png)
+![image-20220214150928211](http://img.heshipeng.com/202202141509714.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 然后在这个条件输入框中，输入一个条件，比如这里我们是`i = 10`:
 
-![image-20220214145305065](http://img.heshipeng.com/202202141453523.png)
+![image-20220214145305065](http://img.heshipeng.com/202202141453523.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 设置好条件断点之后，断点会变成黄色，区别于普通断点：
 
-![image-20220214145448231](http://img.heshipeng.com/202202141454079.png)
+![image-20220214145448231](http://img.heshipeng.com/202202141454079.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 为了便于观察i的值，可以在最右边的调试窗格变量监控一栏添加观察i的值。
 
-![image-20220214145615800](http://img.heshipeng.com/202202141456576.png)
+![image-20220214145615800](http://img.heshipeng.com/202202141456576.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 最后右键运行该文件，如果条件断点正确的打上的话，变量监控值会看到i的值为10：
 
-![image-20220214151148079](http://img.heshipeng.com/202202141511114.png)
+![image-20220214151148079](http://img.heshipeng.com/202202141511114.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
@@ -272,15 +271,15 @@ XHR断点触发需要满足2个条件：一个是基于XHR的生命周期发生�
 
 打开百度网站首页，点击登录，然后打开Network面板，选择Fetch/XHR，我们进行一个抓包，只抓XHR请求的包，结果如下：
 
-![image-20220214154210085](http://img.heshipeng.com/202202141542127.png)
+![image-20220214154210085](http://img.heshipeng.com/202202141542127.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 我们选择其中任意一个，比如下面一个请求，回到调试窗格，然后点击新增一个XHR断点，填入该请求的URL或者一部分：
 
-![image-20220214154422755](http://img.heshipeng.com/202202141544801.png)
+![image-20220214154422755](http://img.heshipeng.com/202202141544801.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 然后我们退出登录后重新点击登录百度，可以看到设置的断点生效了：
 
-![image-20220214154605187](http://img.heshipeng.com/202202141546839.png)
+![image-20220214154605187](http://img.heshipeng.com/202202141546839.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
@@ -288,11 +287,11 @@ XHR断点触发需要满足2个条件：一个是基于XHR的生命周期发生�
 
 还是以百度为例，切换到元素面板，然后随便选择一个DOM元素，右键Break on：
 
-![image-20220214155229706](http://img.heshipeng.com/202202141552746.png)
+![image-20220214155229706](http://img.heshipeng.com/202202141552746.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 有三种类型的断点，子元素改变/属性改变/节点删除。选择其中一个，即添加成功：
 
-![image-20220214155406742](http://img.heshipeng.com/202202141554612.png)
+![image-20220214155406742](http://img.heshipeng.com/202202141554612.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 由于DOM Breakpoint在逆向中不是很常用，所以做一个了解即可。
 
@@ -302,11 +301,11 @@ XHR断点触发需要满足2个条件：一个是基于XHR的生命周期发生�
 
 基于事件监听的断点。同样还是以百度为例，点击登录到登录页面，可以看到页面上是一个登录按钮的，这个登录按钮就是触发的submit事件。我们在调试窗格上找到Event Listener Breakpoints，然后打开Control，选中Submit：
 
-![image-20220214160042544](http://img.heshipeng.com/202202141600745.png)
+![image-20220214160042544](http://img.heshipeng.com/202202141600745.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 然后我们点击登录页面的登录按钮，如无意外，断点成功打上：
 
-![image-20220214160209183](http://img.heshipeng.com/202202141602842.png)
+![image-20220214160209183](http://img.heshipeng.com/202202141602842.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
@@ -328,7 +327,27 @@ XHR断点触发需要满足2个条件：一个是基于XHR的生命周期发生�
 
 5. Call Stack
 
-断点的调用栈列表。
+断点的调用栈列表。下面用一张图说一下调用栈顺序。
+
+![image-20220303111929970](https://img.heshipeng.com/202203031119009.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
+
+为了表述方便，把上边的几个方法分别重新命名，如上图。在栈顶的最后被调用，在栈底的最新被调用。调用顺序如下：
+
+```js
+function C() {
+    B()
+}
+
+function B() {
+    A()   
+}
+
+function A() {
+    XMLHttpRequest.send()  
+}
+```
+
+至于XMLHttpRequest.send接下来会调用哪一个方法，我们无从得知。此外，注意到那个蓝色箭头，表示当前调试执行的代码所在的方法，如果我们点开了很多文件，想快速回到我们正在调试的那一行代码可以通过鼠标点击调用栈栈顶的方法即可返回到调用处。
 
 
 
@@ -342,7 +361,7 @@ XHR断点触发需要满足2个条件：一个是基于XHR的生命周期发生�
 
 在逆向中，console这个交互环境，经常用来输出一些变量的值。有一个方法`console.count`提一下，经常用来统计某一个方法的调用次数。用法比较简单，如下：
 
-![image-20220214162607942](http://img.heshipeng.com/202202141626994.png)
+![image-20220214162607942](http://img.heshipeng.com/202202141626994.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
@@ -380,7 +399,7 @@ $$可以当作document.querySelectAll来使用。
 
 $x可以当作xpath选择器来使用。
 
-![image-20220214163953998](http://img.heshipeng.com/202202141639033.png)
+![image-20220214163953998](http://img.heshipeng.com/202202141639033.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
@@ -388,4 +407,13 @@ $x可以当作xpath选择器来使用。
 
 本文介绍了浏览器开发者工具的使用技巧，主要介绍了三个面板：Console面板，Network面板和Source面板，是JS逆向必须掌握的知识。
 
-![开发者工具的使用介绍和技巧](http://img.heshipeng.com/202202141656805.png)
+![开发者工具的使用介绍和技巧](http://img.heshipeng.com/202202141656805.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
+
+
+
+#### 参考
+
+[Chrome Tools花式玩法（一）](https://juejin.cn/post/6914551244270878733)
+
+[Chrome Tools花式玩法（二）](https://juejin.cn/post/6917901400908005389)
+

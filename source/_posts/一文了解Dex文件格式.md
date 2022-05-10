@@ -4,7 +4,6 @@ top: false
 cover: false
 toc: true
 mathjax: true
-sticky: 1
 date: 2022-01-17 17:27:25
 password:
 summary:
@@ -28,7 +27,7 @@ categories: [Android]
 
 Java代码转化为dex文件的流程如下：
 
-![img](https://img.heshipeng.com/202201191407214.png)
+![img](https://img.heshipeng.com/202201191407214.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 可以形象理解为Java源代码编译成`.class`文件，然后通过`dx`工具生成`dex`文件。
 
@@ -74,7 +73,7 @@ dx --dex --output=Hello.dex Hello.class
 
 先看下`dex`文件的整体布局:
 
-![image-20220120110317295](https://img.heshipeng.com/202201201103425.png)
+![image-20220120110317295](https://img.heshipeng.com/202201201103425.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
@@ -576,11 +575,11 @@ enum {
 
 dex文件层次结构图：
 
-![img](https://img.heshipeng.com/202201211830586.png)
+![img](https://img.heshipeng.com/202201211830586.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 dex文件结构思维导图：
 
-![img](https://img.heshipeng.com/202201211832915.awebp)
+![img](https://img.heshipeng.com/202201211832915.awebp?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 

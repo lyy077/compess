@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
-description: ''
-keywords:
-author: John Doe
-language: zh-CN
+title: 何仕鹏的个人博客
+subtitle: 'healthy,weathy,freedom,lucky,happy'
+description: '专注于爬虫,机器学习,深度学习,算法,后端等领域的学习'
+keywords: ['python', 'golang', 'machine learning', 'crawler', 'mysql', 'redis']
+author: 拾光的碎羽
+language: en
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://blog.heshipeng.com
 permalink: :title/
 permalink_defaults:
 pretty_urls:
@@ -97,7 +97,9 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: keep
+# theme: keep
+theme: indigo
+# theme: async
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -124,4 +126,23 @@ live2d:
     show: true
   react:
     opacity: 0.7
+
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: true
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: false
+    tags: true
 

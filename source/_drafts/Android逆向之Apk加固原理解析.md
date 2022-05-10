@@ -22,7 +22,7 @@ categories: [Android]
 
 先用一张图片总体概括下App进程的创建流程：
 
-![img](http://img.heshipeng.com/202201171911278.png)
+![img](http://img.heshipeng.com/202201171911278.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 当点击桌面`app`的时候，发起进程`Launcher`调用`startActivity/startService`等方法通过`binder`通信发送消息给`system_server`进程，告诉`system_server`启动哪一个`app`，`system_server`调用`Process.start(android.app.ActivityThread)`，而后通过`socket`通信告知`Zygote`进程去`fork`子进程，即`app`进程，进程创建后将`ActivityThread`加载进去，执行`ActivityThread.main()`方法。看下`ActivityThread`这个类：
 
@@ -124,7 +124,7 @@ private void handleBindApplication(AppBindData data) {
 
 站在`ClassLoader`的角度看整个`App`加载的流程如下：
 
-![image-20220118141628602](https://img.heshipeng.com/202201181416237.png)
+![image-20220118141628602](https://img.heshipeng.com/202201181416237.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 如果一个`app`没有加壳，在第二步`PathClassLoader`自然而然的加载的是`app`所有的类信息，如果加壳了，则`PathClassLoader`加载的只有壳的代码，当前还没有加载`app` 真正的代码，也就是壳解密后释放的代码。
 
@@ -134,7 +134,7 @@ private void handleBindApplication(AppBindData data) {
 
 通过前面`app`运行流程的了解可以知道`app`最先获得执行权限的是`app`中声明的`Application`类中的`attachBaseContext`和`onCreate`函数。因此，壳要想完成应用中加固代码的解密以及应用执行权的交付就都是在这两个函数上做文章。下面这张图大致讲了加壳应用的运行流程。
 
-![下载](https://img.heshipeng.com/202201181444463.png)
+![下载](https://img.heshipeng.com/202201181444463.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 当壳在函数`attachBaseContext`和`onCreate`中执行完加密的`dex`文件的解密后，通过自定义的`Classloader`在内存中加载解密后的`dex`文件。为了解决后续应用在加载执行解密后的`dex`文件中的`Class`和`Method`的问题，接下来就是通过利用`java`的反射修复一系列的变量。其中最为重要的一个变量就是应用运行中的`Classloader`，只有`Classloader`被修正后，应用才能够正常的加载并调用`dex`中的类和方法，否则的话由于`Classloader`的双亲委派机制，最终会报`ClassNotFound`异常，应用崩溃退出。
 
@@ -144,7 +144,7 @@ private void handleBindApplication(AppBindData data) {
 
 第一代壳也称落地加载，简单来说就是对源APK进行加密，然后再套上一层壳，在运行时对源APK进行解密并动态加载。整个流程如下图：
 
-![第一代加壳](https://img.heshipeng.com/202201251726564.png)
+![第一代加壳](https://img.heshipeng.com/202201251726564.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 可以看到我们一个需要三个对象，首先是源Apk也就是待加固的Apk，然后是壳程序Apk，作用是对源Apk进行解密，最后是加密工具，负责加密源Apk与壳Dex合并成新的Dex。
 

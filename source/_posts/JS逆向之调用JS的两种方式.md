@@ -4,7 +4,6 @@ top: false
 cover: false
 toc: true
 mathjax: true
-sticky: 1
 date: 2022-02-10 15:17:03
 password:
 summary:
@@ -69,7 +68,7 @@ execjs.get().name
 
 如果结果如下，证明PyExecJS使用的引擎是NodeJS：
 
-![image-20220210160058945](http://img.heshipeng.com/202202101601281.png)
+![image-20220210160058945](http://img.heshipeng.com/202202101601281.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 如果不是，则需要手动配置一下使用的引擎，编辑系统环境变量设置如下变量即可：
 

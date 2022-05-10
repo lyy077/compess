@@ -4,7 +4,6 @@ top: false
 cover: false
 toc: true
 mathjax: true
-sticky: 1
 date: 2022-02-15 13:51:15
 password:
 summary:
@@ -24,39 +23,39 @@ categories: [JS逆向]
 
 抓取PC端HTTPS的请求时，如果没有配置Charles证书，会出现如下报错：
 
-![image-20220215152744261](http://img.heshipeng.com/202202151527989.png)
+![image-20220215152744261](http://img.heshipeng.com/202202151527989.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 此时需要安装Charles证书，步骤如下(以Mac环境为例，其他类似)：
 
-![image-20220215153015985](http://img.heshipeng.com/202202151530578.png)
+![image-20220215153015985](http://img.heshipeng.com/202202151530578.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 打开Charlse，选择Help->SSL Proxying->Install Charles Root Certicate
 
 然后弹出一个证书选项：
 
-![image-20220215153449694](http://img.heshipeng.com/202202151534426.png)
+![image-20220215153449694](http://img.heshipeng.com/202202151534426.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 更改钥匙串的保存位置为登录，然后点击添加。之后打开钥匙串访问应用：
 
-![image-20220215153741168](http://img.heshipeng.com/202202151537203.png)
+![image-20220215153741168](http://img.heshipeng.com/202202151537203.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 找到登录选项，然后证书这一栏，如上。可以看到刚才添加的Charles证书前面有一个叉叉，双击这个证书。点击信任：
 
-![image-20220215153936079](http://img.heshipeng.com/202202151539110.png)
+![image-20220215153936079](http://img.heshipeng.com/202202151539110.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 接着把使用此证书时改为始终信任，如下图。然后关闭并且保存修改。
 
-![image-20220215154022123](http://img.heshipeng.com/202202151540154.png)
+![image-20220215154022123](http://img.heshipeng.com/202202151540154.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 添加完证书后，需要修改SSL Proxying设置，将我们具体要抓的请求地址与端口添加进来。具体步骤：
 
 点击Proxy->SSL Proxying Settings
 
-![image-20220215154322329](http://img.heshipeng.com/202202151543359.png)
+![image-20220215154322329](http://img.heshipeng.com/202202151543359.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 然后在Include这一栏点击Add按钮，Host和Port都填通配符*，表示抓包时不限制ip以及端口。
 
-![image-20220215154509908](http://img.heshipeng.com/202202151545317.png)
+![image-20220215154509908](http://img.heshipeng.com/202202151545317.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 以上两个重要设置都修改好后，重新刷新我们刚才抓包时报握手错误的页面，发现可以正常抓包了。
 
@@ -66,7 +65,7 @@ categories: [JS逆向]
 
 安装好证书，配置好SSL Proxing之后，就可以正常的截获请求了。这里介绍一个网站——httpbin.org。httpbin.org是一个可以进行模拟请求的网站。
 
-![image-20220215160208105](http://img.heshipeng.com/202202151602139.png)
+![image-20220215160208105](http://img.heshipeng.com/202202151602139.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 * HTTP Methods 可以模拟发送请求方法为DELETE/GET/PATCH/POST/PUT的请求。
 * Auth 可以模拟发送包含各种需要验证的请求，比如Bearer token。
@@ -78,11 +77,11 @@ categories: [JS逆向]
 
 这里我们用httpbin.org发送一个GET请求：点击HTTP Methods，点击GET，点击Try it out，点击Execute，就成功发送了一个HTTP请求。
 
-![image-20220215160836694](http://img.heshipeng.com/202202151608677.png)
+![image-20220215160836694](http://img.heshipeng.com/202202151608677.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 我们可以在Charles上成功截获到这个请求：
 
-![image-20220215161001335](http://img.heshipeng.com/202202151610254.png)
+![image-20220215161001335](http://img.heshipeng.com/202202151610254.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
@@ -92,11 +91,11 @@ categories: [JS逆向]
 
 1. 在filter栏填写需要过滤出来的域名
 
-   ![image-20220215161256609](http://img.heshipeng.com/202202151612133.png)
+   ![image-20220215161256609](http://img.heshipeng.com/202202151612133.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 2. 固定某一个域名
 
-![image-20220215161421619](http://img.heshipeng.com/202202151614409.png)
+![image-20220215161421619](http://img.heshipeng.com/202202151614409.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 找到我们需要的那一个域名，然后右键选择Focus，这个时候当前域名就会置顶，并且其它所有域名都变为Other Hosts。
 
@@ -110,11 +109,11 @@ categories: [JS逆向]
 
 第一种方式，选中某一个请求，然后点击刷新按钮：
 
-![image-20220215164451184](http://img.heshipeng.com/202202151644218.png)
+![image-20220215164451184](http://img.heshipeng.com/202202151644218.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 第二种方式，选中某一个请求，然后右键，点击Repeat：
 
-![image-20220215164611051](http://img.heshipeng.com/202202151646081.png)
+![image-20220215164611051](http://img.heshipeng.com/202202151646081.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
@@ -122,21 +121,21 @@ categories: [JS逆向]
 
 编辑请求后重发，可以方便我们不写一行代码去调研某一个请求的关键点，非常方便我们进行调试，选中某一个请求，点击修改按钮：
 
-![image-20220215164921556](http://img.heshipeng.com/202202151649499.png)
+![image-20220215164921556](http://img.heshipeng.com/202202151649499.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 可以修改请求的URL，请求的参数，请求的Header等等：
 
-![image-20220215165128661](http://img.heshipeng.com/202202151651143.png)
+![image-20220215165128661](http://img.heshipeng.com/202202151651143.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 3. Repeat Advanced
 
 选中某一个请求，右键点击Repeat Advanced：
 
-![image-20220215165303797](http://img.heshipeng.com/202202151653707.png)
+![image-20220215165303797](http://img.heshipeng.com/202202151653707.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 iterations填入重复的次数，Concurrency填入请求的并发数，Repeat delay表示每个请求之间的延迟。勾选Use ranges还可以设置延迟在一个范围内，即保证延迟的随机性。
 
-![image-20220215165446565](http://img.heshipeng.com/202202151654252.png)
+![image-20220215165446565](http://img.heshipeng.com/202202151654252.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 这个功能可以帮助我们在开发爬虫的时候不用编写代码就可以调试爬虫的是否有访问频率上的限制，应做出来的延时策略是怎样的等等。
 
@@ -148,15 +147,15 @@ iterations填入重复的次数，Concurrency填入请求的并发数，Repeat d
 
 选中某一个请求，然后右键点击Breakpoints：
 
-![image-20220215170854304](http://img.heshipeng.com/202202151708346.png)
+![image-20220215170854304](http://img.heshipeng.com/202202151708346.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 也可以直接通过点击Proxy->Breakpoint Settings，然后添加一个断点。
 
-![image-20220215170941208](http://img.heshipeng.com/202202151709351.png)
+![image-20220215170941208](http://img.heshipeng.com/202202151709351.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 添加好断点之后，我们可以再次发起请求，可以看到我们的请求一直处于等待状态。
 
-![image-20220215171458730](http://img.heshipeng.com/202202151715186.png)
+![image-20220215171458730](http://img.heshipeng.com/202202151715186.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 我们可以编辑该请求从而达到断点调试的功能。
 
@@ -168,7 +167,7 @@ iterations填入重复的次数，Concurrency填入请求的并发数，Repeat d
 
 点击Proxy->Throttle Settings，然后勾选Enable Throttling开启模拟网速：
 
-![image-20220215172549357](http://img.heshipeng.com/202202151725407.png)
+![image-20220215172549357](http://img.heshipeng.com/202202151725407.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
@@ -180,11 +179,11 @@ iterations填入重复的次数，Concurrency填入请求的并发数，Repeat d
 
 下面介绍第一种方式：点击Proxy->Reverse Proxies Settings
 
-![image-20220215174742827](http://img.heshipeng.com/202202151747859.png)
+![image-20220215174742827](http://img.heshipeng.com/202202151747859.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 勾选Enable Reverse Proxies，然后点击Add添加规则。Local Port表示本地的端口，Local address表示本地地址，Remote Host表示远程地址，Remote Port表示远程端口，上图的含义表示将httpbin.org反向代理到本地的localhost:8080地址上。所以此时在浏览器地址栏中访问localhost:8080实际上访问的是httpbin.org：
 
-![image-20220215175118759](http://img.heshipeng.com/202202151751789.png)
+![image-20220215175118759](http://img.heshipeng.com/202202151751789.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 
 
@@ -192,20 +191,20 @@ iterations填入重复的次数，Concurrency填入请求的并发数，Repeat d
 
 重新抓包，看下网页源代码：
 
-![image-20220215183821967](http://img.heshipeng.com/202202151838695.png)
+![image-20220215183821967](http://img.heshipeng.com/202202151838695.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 内容比较简单，我们看到有一块JSON的数据，我们修改把Response映射到本地的一个文本文件，这样我们就可以完成Response的修改了。我们先保存Response到本地的一个文件，然后修改这个文件，主要修改2个地方，第一个是把JSON里面的第一项Text值修改为Hello, world。第二个是在渲染的地方加上debugger关键词，然后保存文件。
 
-![image-20220215184356182](http://img.heshipeng.com/202202151843755.png)
+![image-20220215184356182](http://img.heshipeng.com/202202151843755.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
-![image-20220215184835283](http://img.heshipeng.com/202202151848021.png)
+![image-20220215184835283](http://img.heshipeng.com/202202151848021.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 然后我们在Charles中选中刚才的那个请求，右键选择Map Local，然后更改Local Path选择我们刚才保存的那个文件：
 
-![image-20220215184655514](http://img.heshipeng.com/202202151846549.png)
+![image-20220215184655514](http://img.heshipeng.com/202202151846549.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 保存，然后刷新页面，可以看到正常显示了我们更改的内容，并且进入了debug模式：
 
-![image-20220215185015800](http://img.heshipeng.com/202202151850830.png)
+![image-20220215185015800](http://img.heshipeng.com/202202151850830.png?watermark/2/text/5YWz5rOo5b6u5L-h5YWs5LyX5Y-377ya6YCG5ZCR5LiA5q2l5q2l/font/5a6L5L2T/fontsize/300)
 
 第二种方式类似于在[JS逆向之Chrome浏览器工具你知多少？](http://blog.heshipeng.com/Chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E5%B7%A5%E5%85%B7%E4%BD%A0%E7%9F%A5%E5%A4%9A%E5%B0%91/)中介绍的文件导航窗格Overrides面板的功能。
