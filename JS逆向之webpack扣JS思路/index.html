@@ -24,7 +24,7 @@
     <meta name="description" content="前言这篇文章通过站在逆向的角度，解决遇到JS文件如果通过webpack的方式去组织代码模块如何扣JS代码，进行逆向分析的问题。 关于webpackJS的自执行函数IIFE 全称 Immediately-invoked Function Expressions，即自执行函数。这种模式本质上就是函数表达式（命名的或者匿名的）在创建后立即执行。当函数变成立即执行的函数表达式时，表达式中的变量不能">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS逆向之webpack扣JS思路">
-<meta property="og:url" content="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/index.html">
+<meta property="og:url" content="http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/index.html">
 <meta property="og:site_name" content="何仕鹏的个人博客">
 <meta property="og:description" content="前言这篇文章通过站在逆向的角度，解决遇到JS文件如果通过webpack的方式去组织代码模块如何扣JS代码，进行逆向分析的问题。 关于webpackJS的自执行函数IIFE 全称 Immediately-invoked Function Expressions，即自执行函数。这种模式本质上就是函数表达式（命名的或者匿名的）在创建后立即执行。当函数变成立即执行的函数表达式时，表达式中的变量不能">
 <meta property="og:locale" content="en_US">
@@ -377,7 +377,7 @@
     </div>
     
     <footer>
-        <a href="https://blog.heshipeng.com">
+        <a href="http://example.com">
             <img src="https://img.heshipeng.com/202205092042366.jpg" alt="拾光的碎羽">
             拾光的碎羽
         </a>
@@ -403,7 +403,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/&title=《JS逆向之webpack扣JS思路》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/&title=《JS逆向之webpack扣JS思路》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -413,22 +413,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/&title=《JS逆向之webpack扣JS思路》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/&title=《JS逆向之webpack扣JS思路》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向之webpack扣JS思路》 — 何仕鹏的个人博客&url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/&via=https://blog.heshipeng.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向之webpack扣JS思路》 — 何仕鹏的个人博客&url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/&via=http://example.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -568,7 +568,7 @@
         </p>
     </div>
     <div class="bottom">
-        <p><span>拾光的碎羽 &copy; 2021 - 2022</span>
+        <p><span>拾光的碎羽 &copy; 2021 - 2023</span>
             <span>
                 
                 <a href="http://www.miitbeian.gov.cn/" target="_blank">鄂ICP备2022001140号</a><br>
@@ -588,7 +588,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/&title=《JS逆向之webpack扣JS思路》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/&title=《JS逆向之webpack扣JS思路》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -598,22 +598,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/&title=《JS逆向之webpack扣JS思路》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/&title=《JS逆向之webpack扣JS思路》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向之webpack扣JS思路》 — 何仕鹏的个人博客&url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/&via=https://blog.heshipeng.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向之webpack扣JS思路》 — 何仕鹏的个人博客&url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/&via=http://example.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -624,7 +624,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8Bwebpack%E6%89%A3JS%E6%80%9D%E8%B7%AF/" alt="微信分享二维码">
 </div>
 
 

@@ -24,7 +24,7 @@
     <meta name="description" content="如果不了解JS混淆原理以及常见的混淆手段，可以戳我以前写过的2篇文章：JS代码安全防护原理——AST混淆原理 和 JS逆向之代码混淆的原理  开篇先回答一个问题，为什么需要反混淆？因为一般具有防护的JS代码都会经过混淆处理，虽然经过混淆的代码完全可以不处理混淆依旧对其进行逆向，但是由于字符串，数字都是混淆的，同时源码中冗余了很多无关的代码，控制流程平台化的存在更是让我们在代码的阅读上有了很大的障">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一文教你如何利用AST还原JS混淆">
-<meta property="og:url" content="https://blog.heshipeng.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/index.html">
+<meta property="og:url" content="http://example.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/index.html">
 <meta property="og:site_name" content="何仕鹏的个人博客">
 <meta property="og:description" content="如果不了解JS混淆原理以及常见的混淆手段，可以戳我以前写过的2篇文章：JS代码安全防护原理——AST混淆原理 和 JS逆向之代码混淆的原理  开篇先回答一个问题，为什么需要反混淆？因为一般具有防护的JS代码都会经过混淆处理，虽然经过混淆的代码完全可以不处理混淆依旧对其进行逆向，但是由于字符串，数字都是混淆的，同时源码中冗余了很多无关的代码，控制流程平台化的存在更是让我们在代码的阅读上有了很大的障">
 <meta property="og:locale" content="en_US">
@@ -196,7 +196,7 @@
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             <blockquote>
-<p>如果不了解JS混淆原理以及常见的混淆手段，可以戳我以前写过的2篇文章：<a href="https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/">JS代码安全防护原理——AST混淆原理</a> 和 <a href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E7%9A%84%E5%8E%9F%E7%90%86/">JS逆向之代码混淆的原理</a></p>
+<p>如果不了解JS混淆原理以及常见的混淆手段，可以戳我以前写过的2篇文章：<a target="_blank" rel="noopener" href="https://blog.heshipeng.com/JS%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94AST%E6%B7%B7%E6%B7%86%E5%8E%9F%E7%90%86/">JS代码安全防护原理——AST混淆原理</a> 和 <a target="_blank" rel="noopener" href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E7%9A%84%E5%8E%9F%E7%90%86/">JS逆向之代码混淆的原理</a></p>
 </blockquote>
 <p>开篇先回答一个问题，为什么需要反混淆？因为一般具有防护的JS代码都会经过混淆处理，虽然经过混淆的代码完全可以不处理混淆依旧对其进行逆向，但是由于字符串，数字都是混淆的，同时源码中冗余了很多无关的代码，控制流程平台化的存在更是让我们在代码的阅读上有了很大的障碍，这样下来导致逆向源码耗费的时间需要成倍的增加。如果有一种方式，能够让我们获得的源码就是高可阅读性，也没有冗余的代码，能帮我们不止一点点地提高逆向源码的效率，你学还是不学？</p>
 <h1 id="什么是AST？"><a href="#什么是AST？" class="headerlink" title="什么是AST？"></a>什么是AST？</h1><p>所谓磨刀不误砍材功，既然反混淆是必要的，那跟AST有啥关系？不着急，容我慢慢解释。试想一下，要反混淆的话，是不是得处理JS源码？对于源码而言，如果只是一个文本文件，是不是非常不好处理(变量，常量，函数，分支什么的都是分散的)？所以我们必须把源码预处理成一种利于解混淆的形式，比如JSON格式？如果大学有接触过编译原理的话，一定有接触一个概念叫做语法树。没错，AST（Abstract Syntax Tree），中文抽象语法树，简称语法树（Syntax Tree），是源代码的抽象语法结构的树状表现形式，树上的每个节点都表示源代码中的一种结构。</p>
@@ -422,7 +422,7 @@
     </div>
     
     <footer>
-        <a href="https://blog.heshipeng.com">
+        <a href="http://example.com">
             <img src="https://img.heshipeng.com/202205092042366.jpg" alt="拾光的碎羽">
             拾光的碎羽
         </a>
@@ -448,7 +448,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/&title=《一文教你如何利用AST还原JS混淆》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/&title=《一文教你如何利用AST还原JS混淆》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -458,22 +458,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/&title=《一文教你如何利用AST还原JS混淆》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/&title=《一文教你如何利用AST还原JS混淆》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.heshipeng.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一文教你如何利用AST还原JS混淆》 — 何仕鹏的个人博客&url=https://blog.heshipeng.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/&via=https://blog.heshipeng.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一文教你如何利用AST还原JS混淆》 — 何仕鹏的个人博客&url=http://example.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/&via=http://example.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.heshipeng.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://example.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -613,7 +613,7 @@
         </p>
     </div>
     <div class="bottom">
-        <p><span>拾光的碎羽 &copy; 2021 - 2022</span>
+        <p><span>拾光的碎羽 &copy; 2021 - 2023</span>
             <span>
                 
                 <a href="http://www.miitbeian.gov.cn/" target="_blank">鄂ICP备2022001140号</a><br>
@@ -633,7 +633,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/&title=《一文教你如何利用AST还原JS混淆》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/&title=《一文教你如何利用AST还原JS混淆》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -643,22 +643,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/&title=《一文教你如何利用AST还原JS混淆》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/&title=《一文教你如何利用AST还原JS混淆》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.heshipeng.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一文教你如何利用AST还原JS混淆》 — 何仕鹏的个人博客&url=https://blog.heshipeng.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/&via=https://blog.heshipeng.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《一文教你如何利用AST还原JS混淆》 — 何仕鹏的个人博客&url=http://example.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/&via=http://example.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.heshipeng.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://example.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -669,7 +669,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://blog.heshipeng.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://example.com/%E4%B8%80%E6%96%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8AST%E8%BF%98%E5%8E%9FJS%E6%B7%B7%E6%B7%86/" alt="微信分享二维码">
 </div>
 
 

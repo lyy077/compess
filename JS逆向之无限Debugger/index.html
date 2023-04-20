@@ -24,7 +24,7 @@
     <meta name="description" content="免责声明：本文章中所有内容仅供学习交流，抓包内容、敏感网址、数据接口均已做脱敏处理，严禁用于商业用途和非法用途，否则由此产生的一切后果均与作者无关，若有侵权，请联系我立即删除！  关于无限debugger在进入无限debugger之前先看下三个问题。 在什么情况下会遇到debugger在分析网络请求，查看元素的事件监听器，跟踪JS等需求下，第一步就是打开浏览器的开发者工具，而打开浏览器工具就可能">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS逆向之无限Debugger">
-<meta property="og:url" content="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/index.html">
+<meta property="og:url" content="http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/index.html">
 <meta property="og:site_name" content="何仕鹏的个人博客">
 <meta property="og:description" content="免责声明：本文章中所有内容仅供学习交流，抓包内容、敏感网址、数据接口均已做脱敏处理，严禁用于商业用途和非法用途，否则由此产生的一切后果均与作者无关，若有侵权，请联系我立即删除！  关于无限debugger在进入无限debugger之前先看下三个问题。 在什么情况下会遇到debugger在分析网络请求，查看元素的事件监听器，跟踪JS等需求下，第一步就是打开浏览器的开发者工具，而打开浏览器工具就可能">
 <meta property="og:locale" content="en_US">
@@ -247,7 +247,7 @@
 <ol>
 <li>替换debugger关键字</li>
 </ol>
-<p>如果debugger关键字非常多，贯穿多个JS文件，这时候一个个手动去除断点就显得非常麻烦了，这时候我们考虑保存相应的JS文件到本地，然后全局替换里面的debugger关键字，比如说把debugger关键字替换为false或者替换成debugger字符串，然后通过<a href="http://blog.heshipeng.com/Chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E5%B7%A5%E5%85%B7%E4%BD%A0%E7%9F%A5%E5%A4%9A%E5%B0%91/">JS逆向之Chrome浏览器工具你知多少？</a>介绍的override面板，把相应的请求代理到本地文件，或者说通过<a href="http://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BCharles%E5%B7%A5%E5%85%B7%E7%AF%87/">JS逆向之Charles工具篇</a>介绍的Chares，利用其反向代理，也可以达到同样的目的，这样就可以屏蔽debugger关键字了。</p>
+<p>如果debugger关键字非常多，贯穿多个JS文件，这时候一个个手动去除断点就显得非常麻烦了，这时候我们考虑保存相应的JS文件到本地，然后全局替换里面的debugger关键字，比如说把debugger关键字替换为false或者替换成debugger字符串，然后通过<a target="_blank" rel="noopener" href="http://blog.heshipeng.com/Chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E5%B7%A5%E5%85%B7%E4%BD%A0%E7%9F%A5%E5%A4%9A%E5%B0%91/">JS逆向之Chrome浏览器工具你知多少？</a>介绍的override面板，把相应的请求代理到本地文件，或者说通过<a target="_blank" rel="noopener" href="http://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BCharles%E5%B7%A5%E5%85%B7%E7%AF%87/">JS逆向之Charles工具篇</a>介绍的Chares，利用其反向代理，也可以达到同样的目的，这样就可以屏蔽debugger关键字了。</p>
 <ol>
 <li>hook某些方法</li>
 </ol>
@@ -300,7 +300,7 @@
             </figure>
 <p>这里我们把window.innerHeight设置为1200。上边还有一个检测时间差值的我们重写这个getTime方法：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.innerHeight = <span class="number">1400</span></span><br><span class="line"><span class="built_in">Date</span>.prototype.getTime = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br></pre></td></tr></table></figure>
-<p>综合以上的分析，我们可以利用<a href="http://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BTampermonkey%E5%B7%A5%E5%85%B7%E7%AF%87/">JS逆向之Tampermonkey工具篇</a>介绍的油猴插件，更加方便的进行代码分析，油猴插件脚本内容如下：</p>
+<p>综合以上的分析，我们可以利用<a target="_blank" rel="noopener" href="http://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BTampermonkey%E5%B7%A5%E5%85%B7%E7%AF%87/">JS逆向之Tampermonkey工具篇</a>介绍的油猴插件，更加方便的进行代码分析，油猴插件脚本内容如下：</p>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
@@ -434,7 +434,7 @@
     </div>
     
     <footer>
-        <a href="https://blog.heshipeng.com">
+        <a href="http://example.com">
             <img src="https://img.heshipeng.com/202205092042366.jpg" alt="拾光的碎羽">
             拾光的碎羽
         </a>
@@ -460,7 +460,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/&title=《JS逆向之无限Debugger》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/&title=《JS逆向之无限Debugger》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -470,22 +470,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/&title=《JS逆向之无限Debugger》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/&title=《JS逆向之无限Debugger》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向之无限Debugger》 — 何仕鹏的个人博客&url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/&via=https://blog.heshipeng.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向之无限Debugger》 — 何仕鹏的个人博客&url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/&via=http://example.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -625,7 +625,7 @@
         </p>
     </div>
     <div class="bottom">
-        <p><span>拾光的碎羽 &copy; 2021 - 2022</span>
+        <p><span>拾光的碎羽 &copy; 2021 - 2023</span>
             <span>
                 
                 <a href="http://www.miitbeian.gov.cn/" target="_blank">鄂ICP备2022001140号</a><br>
@@ -645,7 +645,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/&title=《JS逆向之无限Debugger》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/&title=《JS逆向之无限Debugger》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -655,22 +655,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/&title=《JS逆向之无限Debugger》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/&title=《JS逆向之无限Debugger》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向之无限Debugger》 — 何仕鹏的个人博客&url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/&via=https://blog.heshipeng.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向之无限Debugger》 — 何仕鹏的个人博客&url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/&via=http://example.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -681,7 +681,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://example.com/JS%E9%80%86%E5%90%91%E4%B9%8B%E6%97%A0%E9%99%90Debugger/" alt="微信分享二维码">
 </div>
 
 

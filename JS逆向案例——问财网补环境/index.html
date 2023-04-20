@@ -24,7 +24,7 @@
     <meta name="description" content="免责声明：本文章中所有内容仅供学习交流，抓包内容、敏感网址、数据接口均已做脱敏处理，严禁用于商业用途和非法用途，否则由此产生的一切后果均与作者无关，若有侵权，请联系我立即删除！  前言本篇文章通过一个案例介绍JS逆向过程中抠JS之后的补环境工作。 逆向过程目标网址：aHR0cDovL3d3dy5pd2VuY2FpLmNvbS91bmlmaWVkd2FwL3Jlc3VsdD93PSVFNyVCQi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS逆向案例——问财网补环境">
-<meta property="og:url" content="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:url" content="http://example.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/index.html">
 <meta property="og:site_name" content="何仕鹏的个人博客">
 <meta property="og:description" content="免责声明：本文章中所有内容仅供学习交流，抓包内容、敏感网址、数据接口均已做脱敏处理，严禁用于商业用途和非法用途，否则由此产生的一切后果均与作者无关，若有侵权，请联系我立即删除！  前言本篇文章通过一个案例介绍JS逆向过程中抠JS之后的补环境工作。 逆向过程目标网址：aHR0cDovL3d3dy5pd2VuY2FpLmNvbS91bmlmaWVkd2FwL3Jlc3VsdD93PSVFNyVCQi">
 <meta property="og:locale" content="en_US">
@@ -234,13 +234,13 @@
 <ol>
 <li>使用油猴插件</li>
 </ol>
-<p>油猴插件的使用参照：<a href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BTampermonkey%E5%B7%A5%E5%85%B7%E7%AF%87/">JS逆向之Tampermonkey工具篇</a></p>
+<p>油猴插件的使用参照：<a target="_blank" rel="noopener" href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BTampermonkey%E5%B7%A5%E5%85%B7%E7%AF%87/">JS逆向之Tampermonkey工具篇</a></p>
 <p>插件内容为：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ==UserScript==</span></span><br><span class="line"><span class="comment">// @name         hook iwencai</span></span><br><span class="line"><span class="comment">// @namespace    http://tampermonkey.net/</span></span><br><span class="line"><span class="comment">// @version      0.1</span></span><br><span class="line"><span class="comment">// @description  try to take over the world!</span></span><br><span class="line"><span class="comment">// @author       You</span></span><br><span class="line"><span class="comment">// @include      *</span></span><br><span class="line"><span class="comment">// @icon         https://www.google.com/s2/favicons?sz=64&amp;domain=aqistudy.cn</span></span><br><span class="line"><span class="comment">// @grant        none</span></span><br><span class="line"><span class="comment">// ==/UserScript==</span></span><br><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="meta">    &#x27;use strict&#x27;</span>;</span><br><span class="line">    <span class="comment">//endebug = function(off, code) &#123;&#125;;</span></span><br><span class="line">    <span class="keyword">var</span> cookie_cache = <span class="built_in">document</span>.cookie;</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(<span class="built_in">document</span>, <span class="string">&#x27;cookie&#x27;</span>, &#123;</span><br><span class="line">        <span class="attr">get</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;Getting cookie&#x27;</span>);</span><br><span class="line">            <span class="keyword">return</span> cookie_cache;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">set</span>: <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;Setting cookie&#x27;</span>, val);</span><br><span class="line">            <span class="keyword">if</span> (val.indexOf(<span class="string">&quot;v=&quot;</span>) != -<span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">debugger</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">var</span> cookie = val.split(<span class="string">&quot;;&quot;</span>)[<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">var</span> ncookie = cookie.split(<span class="string">&quot;=&quot;</span>);</span><br><span class="line">            <span class="keyword">var</span> flag = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">var</span> cache = cookie_cache.split(<span class="string">&quot;; &quot;</span>);</span><br><span class="line">            cache = cache.map(<span class="function"><span class="keyword">function</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (a.split(<span class="string">&quot;=&quot;</span>)[<span class="number">0</span>] === ncookie[<span class="number">0</span>]) &#123;</span><br><span class="line">                    flag = <span class="literal">true</span>;</span><br><span class="line">                    <span class="keyword">return</span> cookie;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> a;</span><br><span class="line">            &#125;);</span><br><span class="line">            cookie_cache = cache.join(<span class="string">&quot;; &quot;</span>);</span><br><span class="line">            <span class="keyword">if</span> (!flag) &#123;</span><br><span class="line">                cookie_cache += cookie + <span class="string">&quot;; &quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">this</span>._value = val;</span><br><span class="line">            <span class="keyword">return</span> cookie_cache;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// Your code here...</span></span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
 <ol>
 <li>使用FD编程猫插件</li>
 </ol>
-<p>FD编程猫插件用法参照：<a href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BFiddler%E7%BC%96%E7%A8%8B%E7%8C%AB%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8/">JS逆向之Fiddler编程猫插件使用</a></p>
+<p>FD编程猫插件用法参照：<a target="_blank" rel="noopener" href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8BFiddler%E7%BC%96%E7%A8%8B%E7%8C%AB%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8/">JS逆向之Fiddler编程猫插件使用</a></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//当前版本hook工具只支持Content-Type为html的自动hook</span></span><br><span class="line"><span class="comment">//下面是一个示例:这个示例演示了hook全局的cookie设置点</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//严谨模式 检查所有错误</span></span><br><span class="line"><span class="meta">    &#x27;use strict&#x27;</span>;</span><br><span class="line">    <span class="comment">//document 为要hook的对象   这里是hook的cookie</span></span><br><span class="line">	<span class="keyword">var</span> cookieTemp = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(<span class="built_in">document</span>, <span class="string">&#x27;cookie&#x27;</span>, &#123;</span><br><span class="line">		<span class="comment">//hook set方法也就是赋值的方法 </span></span><br><span class="line">		<span class="attr">set</span>: <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">            	<span class="keyword">if</span> (val.indexOf(<span class="string">&quot;v=&quot;</span>)) &#123;</span><br><span class="line">                    <span class="keyword">debugger</span>;</span><br><span class="line">                &#125;</span><br><span class="line">				<span class="comment">//这样就可以快速给下面这个代码行下断点</span></span><br><span class="line">				<span class="comment">//从而快速定位设置cookie的代码</span></span><br><span class="line">				<span class="built_in">console</span>.log(<span class="string">&#x27;Hook捕获到cookie设置-&gt;&#x27;</span>, val);</span><br><span class="line">				cookieTemp = val;</span><br><span class="line">				<span class="keyword">return</span> val;</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="comment">//hook get方法也就是取值的方法 </span></span><br><span class="line">		<span class="attr">get</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> cookieTemp;</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
 <h5 id="逆向分析"><a href="#逆向分析" class="headerlink" title="逆向分析"></a>逆向分析</h5><p>无论是采用哪一种方式，都可以成功断住，如下图：</p>
 <figure class="image-bubble">
@@ -333,7 +333,7 @@
                 </div>
                 <div class="image-caption">image-20220413161327925</div>
             </figure>
-<h5 id="补环境"><a href="#补环境" class="headerlink" title="补环境"></a>补环境</h5><p>按照<a href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bvscode%E6%97%A0%E7%8E%AF%E5%A2%83%E8%81%94%E8%B0%83/">JS逆向之vscode无环境联调</a>介绍的，把整个JS代码粘贴到VS Code中，然后开启DevTools，运行之后报document不存在：</p>
+<h5 id="补环境"><a href="#补环境" class="headerlink" title="补环境"></a>补环境</h5><p>按照<a target="_blank" rel="noopener" href="https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E4%B9%8Bvscode%E6%97%A0%E7%8E%AF%E5%A2%83%E8%81%94%E8%B0%83/">JS逆向之vscode无环境联调</a>介绍的，把整个JS代码粘贴到VS Code中，然后开启DevTools，运行之后报document不存在：</p>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
@@ -587,7 +587,7 @@
     </div>
     
     <footer>
-        <a href="https://blog.heshipeng.com">
+        <a href="http://example.com">
             <img src="https://img.heshipeng.com/202205092042366.jpg" alt="拾光的碎羽">
             拾光的碎羽
         </a>
@@ -613,7 +613,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/&title=《JS逆向案例——问财网补环境》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/&title=《JS逆向案例——问财网补环境》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -623,22 +623,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/&title=《JS逆向案例——问财网补环境》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/&title=《JS逆向案例——问财网补环境》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向案例——问财网补环境》 — 何仕鹏的个人博客&url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/&via=https://blog.heshipeng.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向案例——问财网补环境》 — 何仕鹏的个人博客&url=http://example.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/&via=http://example.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://example.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -778,7 +778,7 @@
         </p>
     </div>
     <div class="bottom">
-        <p><span>拾光的碎羽 &copy; 2021 - 2022</span>
+        <p><span>拾光的碎羽 &copy; 2021 - 2023</span>
             <span>
                 
                 <a href="http://www.miitbeian.gov.cn/" target="_blank">鄂ICP备2022001140号</a><br>
@@ -798,7 +798,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/&title=《JS逆向案例——问财网补环境》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/&title=《JS逆向案例——问财网补环境》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -808,22 +808,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/&title=《JS逆向案例——问财网补环境》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/&title=《JS逆向案例——问财网补环境》 — 何仕鹏的个人博客&source=专注于爬虫,机器学习,深度学习,算法,后端等领域的学习" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向案例——问财网补环境》 — 何仕鹏的个人博客&url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/&via=https://blog.heshipeng.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS逆向案例——问财网补环境》 — 何仕鹏的个人博客&url=http://example.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/&via=http://example.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://example.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -834,7 +834,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://blog.heshipeng.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://example.com/JS%E9%80%86%E5%90%91%E6%A1%88%E4%BE%8B%E2%80%94%E2%80%94%E9%97%AE%E8%B4%A2%E7%BD%91%E8%A1%A5%E7%8E%AF%E5%A2%83/" alt="微信分享二维码">
 </div>
 
 
