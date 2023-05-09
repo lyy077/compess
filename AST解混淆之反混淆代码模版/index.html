@@ -20,7 +20,7 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="逆向,JS,AST">
+    <meta name="keywords" content="AST,JS,逆向">
     <meta name="description" content="话不多说，直接上模版： 12345678910111213141516171819202122232425262728293031323334&#x2F;&#x2F;babel库及文件模块导入const fs &#x3D; require(&amp;#x27;fs&amp;#x27;);&#x2F;&#x2F;babel库相关，解析，转换，构建，生产const parser &#x3D; require(&quot;@babel&#x2F;parser&quot;);const t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AST解混淆之反混淆代码模版">
@@ -31,14 +31,14 @@
 <meta property="article:published_time" content="2022-05-26T14:32:54.000Z">
 <meta property="article:modified_time" content="2022-06-30T02:59:16.554Z">
 <meta property="article:author" content="拾光的碎羽">
-<meta property="article:tag" content="逆向">
-<meta property="article:tag" content="JS">
 <meta property="article:tag" content="AST">
+<meta property="article:tag" content="JS">
+<meta property="article:tag" content="逆向">
 <meta name="twitter:card" content="summary">
     
         <link rel="alternate" type="application/atom+xml" title="何仕鹏的个人博客" href="/atom.xml">
     
-    <link rel="shortcut icon" href="https://img.heshipeng.com/202205092054351.png">
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/beyond-heshipeng/blg-pic/main/pic/202205092054351.png">
     <link rel="stylesheet" href="/css/style.css?v=1.7.2">
     <script>window.lazyScripts=[]</script>
 
@@ -55,10 +55,10 @@
     <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
         <i class="icon icon-lg icon-close"></i>
     </a>
-    <div class="brand-wrap" style="background-image:url(https://img.heshipeng.com/202205092044923.jpeg)">
+    <div class="brand-wrap" style="background-image:url(https://raw.githubusercontent.com/beyond-heshipeng/blg-pic/main/pic/202205092044923.jpeg)">
       <div class="brand">
         <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="https://img.heshipeng.com/202205092042366.jpg">
+          <img src="https://raw.githubusercontent.com/beyond-heshipeng/blg-pic/main/pic/202205092042366.jpg">
         </a>
         <hgroup class="introduce">
           <h5 class="nickname">拾光的碎羽</h5>
@@ -207,7 +207,7 @@
     
     <footer>
         <a href="http://example.com">
-            <img src="https://img.heshipeng.com/202205092042366.jpg" alt="拾光的碎羽">
+            <img src="https://raw.githubusercontent.com/beyond-heshipeng/blg-pic/main/pic/202205092042366.jpg" alt="拾光的碎羽">
             拾光的碎羽
         </a>
     </footer>
@@ -232,7 +232,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/AST%E8%A7%A3%E6%B7%B7%E6%B7%86%E4%B9%8B%E5%8F%8D%E6%B7%B7%E6%B7%86%E4%BB%A3%E7%A0%81%E6%A8%A1%E7%89%88/&title=《AST解混淆之反混淆代码模版》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/AST%E8%A7%A3%E6%B7%B7%E6%B7%86%E4%B9%8B%E5%8F%8D%E6%B7%B7%E6%B7%86%E4%BB%A3%E7%A0%81%E6%A8%A1%E7%89%88/&title=《AST解混淆之反混淆代码模版》 — 何仕鹏的个人博客&pic=https://raw.githubusercontent.com/beyond-heshipeng/blg-pic/main/pic/202205092042366.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -356,12 +356,12 @@
     <div class="reward-content">
         
         <div class="reward-code">
-            <img id="rewardCode" src="https://img.heshipeng.com/202205100208236.jpg" alt="打赏二维码">
+            <img id="rewardCode" src="https://raw.githubusercontent.com/beyond-heshipeng/blg-pic/main/pic/202205100208236.jpg" alt="打赏二维码">
         </div>
         
         <label class="reward-toggle">
             <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
-                data-wechat="https://img.heshipeng.com/202205100208236.jpg" data-alipay="https://img.heshipeng.com/202205100209914.jpg">
+                data-wechat="https://raw.githubusercontent.com/beyond-heshipeng/blg-pic/main/pic/202205100208236.jpg" data-alipay="https://raw.githubusercontent.com/beyond-heshipeng/blg-pic/main/pic/202205100209914.jpg">
             <div class="reward-toggle-ctrol">
                 <span class="reward-toggle-item wechat">微信</span>
                 <span class="reward-toggle-label"></span>
@@ -417,7 +417,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/AST%E8%A7%A3%E6%B7%B7%E6%B7%86%E4%B9%8B%E5%8F%8D%E6%B7%B7%E6%B7%86%E4%BB%A3%E7%A0%81%E6%A8%A1%E7%89%88/&title=《AST解混淆之反混淆代码模版》 — 何仕鹏的个人博客&pic=https://img.heshipeng.com/202205092042366.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/AST%E8%A7%A3%E6%B7%B7%E6%B7%86%E4%B9%8B%E5%8F%8D%E6%B7%B7%E6%B7%86%E4%BB%A3%E7%A0%81%E6%A8%A1%E7%89%88/&title=《AST解混淆之反混淆代码模版》 — 何仕鹏的个人博客&pic=https://raw.githubusercontent.com/beyond-heshipeng/blg-pic/main/pic/202205092042366.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
